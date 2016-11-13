@@ -1,0 +1,26 @@
+{% block grid %}
+
+    {% if groups is empty %}
+        {% trans %}<h4>no_groups</h4>{% endtrans %}
+    {% else %}
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <thead>
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric">{% trans %}name{% endtrans %}</th>
+                    <th class="mdl-data-table__cell--non-numeric">{% trans %}code{% endtrans %}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for group in groups %}
+                <tr data-uri="{{ path('editGroup', {'id': group.id}) }}" class="pointertr">
+                    <td class="mdl-data-table__cell--non-numeric">{{ group.name }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ group.code }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+{% endblock %}

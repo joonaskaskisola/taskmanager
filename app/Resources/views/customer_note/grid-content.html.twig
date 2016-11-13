@@ -1,0 +1,28 @@
+{% block grid %}
+
+    {% if notes is empty %}
+        {% trans %}<h4>no_notes</h4>{% endtrans %}
+    {% else %}
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <thead>
+            <tr>
+                <th width="100px" class="mdl-data-table__cell--non-numeric">{% trans %}createdAt{% endtrans %}</th>
+                <th width="250px" class="mdl-data-table__cell--non-numeric">{% trans %}creator{% endtrans %}</th>
+                <th class="mdl-data-table__cell--non-numeric">{% trans %}note{% endtrans %}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for note in notes %}
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric">{{ note.createdAt|date('d.m.Y H:i') }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ note.creator.fullName }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ note.note }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,161 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
+use FOS\UserBundle\Model\User as BaseUser;
+
+/**
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ */
+class User extends BaseUser implements \Serializable
+{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\JoinColumn(name="customer", referencedColumnName="id")
+     */
+    protected $customer;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    protected $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    protected $lastName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\JoinColumn(name="country", referencedColumnName="id")
+     */
+    protected $country;
+
+    /**
+     * @ORM\Column(type="string", length=30, unique=false, nullable=true)
+     */
+    protected $phone;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * @param mixed $country
+     * @return User
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param mixed $phone
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $phoneUtil = PhoneNumberUtil::getInstance();
+        $number = $phoneUtil->parse($phone, $this->getCountry()->getCode());
+        if ($phoneUtil->isValidNumber($number)) {
+            $this->phone = $phoneUtil->format($number, PhoneNumberFormat::INTERNATIONAL);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param mixed $firstName
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param mixed $lastName
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->getLastName() . ' ' . $this->getFirstName();
+    }
+
+    /**
+     * @param mixed $customer
+     * @return User
+     */
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+}

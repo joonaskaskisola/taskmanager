@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="grid-header">
+        <button id="link-to-grid" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-js-ripple-effect">
+            <i class="material-icons">navigate_before</i>
+        </button>
+
+        <button data-uri="{{ path('listCustomer') }}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-js-ripple-effect">
+            <i class="material-icons">view_list</i> Customer list
+        </button>
+
+        <button data-uri="{{ path('newCustomerNote', {'customer': form.vars.data.id}) }}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-js-ripple-effect">
+            <i class="material-icons">event_note</i> New note
+        </button>
+
+        <div id="grid-right">
+            <a class="mdl-button mdl-js-button mdl-button--primary">
+                {{ app.request.get('_route') }}
+            </a>
+        </div>
+    </div>
+
+    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        <div class="mdl-tabs__tab-bar">
+            <a href="#information-panel" class="mdl-tabs__tab is-active">Information</a>
+            <a href="#notes-panel" class="mdl-tabs__tab">
+                {% if notes|length > 0 %}
+                    <span class="mdl-badge" data-badge="{{ notes|length }}">Notes</span>
+                {% else %}
+                    Notes
+                {% endif %}
+            </a>
+            <a href="#tasks-panel" class="mdl-tabs__tab">
+                {% if tasks|length > 0 %}
+                    <span class="mdl-badge" data-badge="{{ tasks|length }}">Tasks</span>
+                {% else %}
+                    Tasks
+                {% endif %}
+            </a>
+            <a href="#users-panel" class="mdl-tabs__tab">
+                {% if users|length > 0 %}
+                    <span class="mdl-badge" data-badge="{{ users|length }}">Users</span>
+                {% else %}
+                    Users
+                {% endif %}
+            </a>
+        </div>
+
+        <div class="mdl-tabs__panel is-active" id="information-panel">
+            <div class="form-card mdl-card mdl-shadow--2dp">
+                <div class="mdl-card__supporting-text">
+                    <div class="mdl-textfield">
+                        {# customer info form #}
+                        {{ form_start(form) }}
+
+                        {% include 'customer/form-content.html.twig' %}
+
+                        {{ form_end(form) }}
+                        {# end #}
+                    </div>
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect btn-submit-form">
+                        Submit <i class="material-icons">navigate_next</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-tabs__panel" id="notes-panel">
+            {# notes grid #}
+            {% include 'customer_note/grid-content.html.twig' %}
+            {# end #}
+        </div>
+        <div class="mdl-tabs__panel" id="users-panel">
+            {# users grid #}
+            {% include 'user/grid-content.html.twig' with {'nocustomername': true} %}
+            {# end #}
+        </div>
+        <div class="mdl-tabs__panel" id="tasks-panel">
+            {# tasks grid #}
+            {% include 'task/grid-content.html.twig' with {'nocustomername': true} %}
+            {# end #}
+        </div>
+    </div>
+
+{% endblock %}

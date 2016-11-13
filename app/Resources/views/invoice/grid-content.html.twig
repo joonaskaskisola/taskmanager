@@ -1,0 +1,30 @@
+{% block grid %}
+
+    {% if invoices is empty %}
+        {% trans %}<h4>no_invoices</h4>{% endtrans %}
+    {% else %}
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <thead>
+                <tr>
+                    <th>{% trans %}id{% endtrans %}</th>
+                    <th class="mdl-data-table__cell--non-numeric">{% trans %}reference{% endtrans %}</th>
+                    <th class="mdl-data-table__cell--non-numeric">{% trans %}createdAt{% endtrans %}</th>
+                    <th>{% trans %}price{% endtrans %}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for invoice in invoices %}
+                <tr data-uri="{{ path('showInvoice', {'id': invoice.id}) }}" class="pointertr">
+                    <td>{{ invoice.id }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ invoice.reference }}</td>
+                    <td class="mdl-data-table__cell--non-numeric">{{ invoice.createdAt|date('d.m.Y H:i') }}</td>
+                    <td>{{ invoice.price|number_format(2, ',', '') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+{% endblock %}

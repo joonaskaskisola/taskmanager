@@ -1,0 +1,7 @@
+{% block formdata %}
+
+    {{ form_row(form.toUser) }}
+    {{ include('fields/text.html.twig', {field: form.subject}, with_context = false) }}
+    {{ include('fields/textarea.html.twig', {field: form.message}, with_context = false) }}
+
+{% endblock %}

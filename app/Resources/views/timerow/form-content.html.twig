@@ -1,0 +1,7 @@
+{% block formdata %}
+
+    {{ include('fields/text.html.twig', {field: form.description}, with_context = false) }}
+
+    {{ form_widget(form) }}
+
+{% endblock %}

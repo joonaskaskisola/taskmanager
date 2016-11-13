@@ -1,0 +1,114 @@
+.pointertr {
+    cursor: pointer;
+}
+
+.mdl-data-table {
+    padding-top: 10px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-content {
+    padding: 10px;
+}
+
+div > .mdl-button-fix {
+    display: none;
+    position: relative !important;
+    margin-top: 20px;
+}
+
+form > div > div {
+    padding: 5px;
+}
+
+form > div > div > label {
+    padding: 3px;
+}
+
+form > div > div > input {
+    padding: 3px;
+}
+
+select {
+    border-radius: 5px;
+    border: 1px solid #9d9d9d;
+    background-color: white;
+    padding: 3px;
+    display: block;
+}
+
+.form-card {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+[id*="date_"], [id*="time_"] {
+    float: left;
+}
+
+#grid-header {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    width: 80%;
+}
+
+#grid-footer {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: 80%;
+}
+
+#grid-right {
+    float: right;
+    height: auto;
+}
+
+.mdl-card {
+    width: 768px;
+}
+
+body > div.mdl-layout__container > div > main > div > div > div.mdl-card__supporting-text > div {
+    width: 100%;
+}
+
+.btn-submit-form {
+    float: right;
+}
+
+table.td-bold > tbody > tr > td {
+    font-weight: bold;
+}
+
+table.td-bold > tbody > tr > td:nth-child(1) {
+    font-weight: normal;
+}
+
+table > tbody > tr.task-important {
+    background-color: #aa4444;
+    color: white;
+}
+
+table > tbody > tr.task-important:hover {
+    color: black;
+}
+
+table > tbody > tr.timerow-edited {
+    background-color: #0e84b5 !important;
+}
+
+table > tbody > tr.timerow-weekend {
+    background-color: #7c7c7c;
+}
+
+#time-tracking {
+    visibility: hidden;
+}
+
+table > tbody > tr.user-disabled, .logout-link {
+    background-color: #dd6666;
+    color: black !important;
+}

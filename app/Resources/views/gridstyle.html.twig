@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="grid-header">
+        {% block header_left %}
+            {% if new != path('homepage') %}
+                <button data-uri="{{ new }}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect btn-new">
+                    <i class="material-icons">add</i>
+                </button>
+            {% else %}
+                <button id="link-to-grid" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-js-ripple-effect">
+                    <i class="material-icons">navigate_before</i> Previous
+                </button>
+            {% endif %}
+        {% endblock %}
+
+        <div id="grid-right">
+            {% block header_right %}
+                <a class="mdl-button mdl-js-button mdl-button--primary">
+                    {{ app.request.get('_route') }}
+                </a>
+            {% endblock %}
+        </div>
+    </div>
+
+    {% block griddata %}
+    {% endblock %}
+
+    <div id="grid-footer">
+        {% block footer_left %}
+        {% endblock %}
+        <div id="grid-right">
+            {% block footer_right %}
+                <a href="#content" class="mdl-button mdl-js-button mdl-button--primary">
+                    <i class="material-icons">keyboard_arrow_up</i> back to top
+                </a>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block reactjs %}{% endblock %}

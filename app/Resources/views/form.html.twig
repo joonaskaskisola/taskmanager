@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="grid-header">
+        <button id="link-to-grid" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-js-ripple-effect">
+            <i class="material-icons">navigate_before</i>
+        </button>
+
+        {% if list is defined %}
+        <button data-uri="{{ list }}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-js-ripple-effect">
+            <i class="material-icons">view_list</i> {{ list_name }}
+        </button>
+        {% endif %}
+
+        <div id="grid-right">
+            <a class="mdl-button mdl-js-button mdl-button--primary">
+                {{ app.request.get('_route') }}
+            </a>
+        </div>
+    </div>
+
+    <div class="form-card mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__supporting-text">
+            {{ form_start(form) }}
+
+            {% block formdata %}
+                {% include form_layout ~ '/form-content.html.twig' %}
+            {% endblock %}
+
+            {{ form_end(form) }}
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect btn-submit-form">
+                Submit <i class="material-icons">navigate_next</i>
+            </button>
+        </div>
+    </div>
+
+{% endblock %}
