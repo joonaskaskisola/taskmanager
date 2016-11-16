@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\TimeRow;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
@@ -20,11 +21,44 @@ class TimeRowRepository extends EntityRepository
      */
     public function getDateInformation($user, $date)
     {
+        /** @var TimeRow */
         return $this->findOneBy(
             array(
                 'user' => $user,
                 'date' => new \DateTime($date)
             )
         );
+    }
+
+    public function getWorkingHours($user, $date)
+    {
+        /** @var TimeRow $row */
+        $row = $this->findOneBy(
+            array(
+                'user' => $user,
+                'date' => new \DateTime($date)
+            )
+        );
+
+        /**
+         * Format: 00:30:00
+         */
+        $lunch = $row->getLunch() == null
+            ? 0
+            : ($row->getLunch()->format("i") * 60) + ($row->getLunch()->format("H") * 60 * 60);
+
+        $vacation = $row->getVacation() == null
+            ? 0
+            : ($row->getVacation()->format("i") * 60) + ($row->getVacation()->format("H") * 60 * 60);
+
+        $difference = $row->getEndTime()->format("U") - $row->getStartTime()->format("U");
+        $difference -= $lunch;
+        $difference -= $vacation;
+
+        if ($difference > 0) {
+            return gmdate("H:i", $difference);
+        } else {
+            return '-' . gmdate("H:i", $difference * -1);
+        }
     }
 }

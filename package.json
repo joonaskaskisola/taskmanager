@@ -32,7 +32,9 @@
     "react-select": "^1.0.0-rc.2",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
-    "vinyl-source-stream": "^1.1.0"
+    "redux": "^3.6.0",
+    "vinyl-source-stream": "^1.1.0",
+    "webpack": "^1.13.3"
   },
   "scripts": {
     "install": "cp node_modules/axios/dist/*.min.js web/js/ && cp node_modules/react/dist/*.min.js web/js/ && cp node_modules/react-dom/dist/*.min.js web/js/"

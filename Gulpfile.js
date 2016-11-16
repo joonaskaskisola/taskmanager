@@ -18,13 +18,21 @@ gulp.task("jsxES6Mail",function(){
   .bundle().pipe(source(BUILD_DIR + '/mailApp.js')).pipe(gulp.dest('.'));
 });
 
+gulp.task("jsxES6Customer",function(){
+    var x = browserify({entries: APP_DIR + '/customerApp.jsx', extensions: ['.jsx','.js'], debug: true})
+    .transform(babelify.configure({presets: ["es2015","react"]}))
+    .bundle().pipe(source(BUILD_DIR + '/customerApp.js')).pipe(gulp.dest('.'));
+});
+
 gulp.task("default", function() {
   gulp.task("defaultItem",["jsxES6Item"],function(){});
   gulp.task("defaultMail",["jsxES6Mail"],function(){});
+  gulp.task("defaultCustomer",["jsxES6Customer"],function(){});
 });
 
 gulp.task("watch", ["default"], function () {
   gulp.watch(["app/Resources/jsx/itemApp.jsx"], ["defaultItem"]);
   gulp.watch(["app/Resources/jsx/mailApp.jsx"], ["defaultMail"]);
+  gulp.watch(["app/Resources/jsx/customerApp.jsx"], ["defaultCustomer"]);
 });
 

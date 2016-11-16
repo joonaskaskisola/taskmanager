@@ -101,7 +101,7 @@ class CategoryController extends Controller
 
     /**
      * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/api/categories", name="getCategories")
+     * @Route("/api/category", name="getCategories")
      * @param Request $request
      * @return JsonResponse
      */

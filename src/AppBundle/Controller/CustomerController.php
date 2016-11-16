@@ -4,9 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\CustomerItem;
 use AppBundle\Helper\FormHelper;
+use Cake\Chronos\Chronos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Entity\Customer;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -29,6 +32,7 @@ class CustomerController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            $customer->setCreatedAt(new Chronos());
             $em->persist($customer);
             $em->flush();
 
@@ -119,5 +123,59 @@ class CustomerController extends Controller
             'customers' => $customers,
             'new' => $this->generateUrl('newCustomer')
         ]);
+    }
+
+    /**
+     * @Route("/api/customer", name="getCustomers")
+     * @Method({"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCustomersAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
+
+        $response = array_map(function($customer) {
+            /** @var Customer $customer */
+            return [
+                'id' => $customer->getId(),
+                'name' => $customer->getName(),
+                'businessId' => $customer->getBusinessId(),
+                'streetAddress' => $customer->getStreetAddress(),
+                'country' => $customer->getCountry(),
+            ];
+        }, $repository->findBy([], ['name' => 'ASC']));
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/api/customer/{id}", name="getCustomer")
+     * @param $id
+     * @Method({"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCustomerAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
+
+        $response = array_map(function($customer) {
+            /** @var Customer $customer */
+            return [
+                'id' => $customer->getId(),
+                'name' => $customer->getName(),
+                'name2' => $customer->getName2(),
+                'email' => $customer->getEmail(),
+                'businessId' => $customer->getBusinessId(),
+                'contactPerson' => $customer->getContactPerson(),
+                'streetAddress' => $customer->getStreetAddress(),
+                'locality' => $customer->getLocality(),
+                'zipCode' => $customer->getZipCode(),
+                'country' => $customer->getCountry(),
+            ];
+        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+
+        return new JsonResponse($response);
     }
 }

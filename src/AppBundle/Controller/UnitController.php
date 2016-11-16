@@ -103,7 +103,7 @@ class UnitController extends Controller
 
     /**
      * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/api/units", name="getUnits")
+     * @Route("/api/unit", name="getUnits")
      * @param Request $request
      * @return JsonResponse
      */

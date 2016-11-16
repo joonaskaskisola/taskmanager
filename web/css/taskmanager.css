@@ -68,7 +68,11 @@ select {
 }
 
 .mdl-card {
-    width: 768px;
+    width: 1000px;
+}
+
+.mdl-card__supporting-text {
+    width: 95% !important;
 }
 
 body > div.mdl-layout__container > div > main > div > div > div.mdl-card__supporting-text > div {
@@ -111,4 +115,29 @@ table > tbody > tr.timerow-weekend {
 table > tbody > tr.user-disabled, .logout-link {
     background-color: #dd6666;
     color: black !important;
+}
+
+div.mdl-card__supporting-text > div.row {
+    display: block;
+}
+
+div.mdl-card__supporting-text > div > div.row-column:nth-child(1) {
+    width: 50%;
+    float: left;
+    margin-right: auto;
+}
+
+div.mdl-card__supporting-text > div > div.row-column:nth-child(2) {
+    width: 50%;
+    margin-left: auto;
+}
+
+div.row-column > div.mdl-textfield {
+    padding: 10px 0;
+}
+
+.loading-bar {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
 }

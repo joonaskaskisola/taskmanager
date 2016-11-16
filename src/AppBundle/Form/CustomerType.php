@@ -18,16 +18,22 @@ class CustomerType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
+            ->add('name2', TextType::class)
+            ->add('email', TextType::class)
+            ->add('streetAddress', TextType::class)
+            ->add('zipCode', TextType::class)
+            ->add('locality', TextType::class)
+            ->add('country', TextType::class)
             ->add('businessId', TextType::class)
-            ->add('createdAt', DateTimeType::class, array(
-                'attr' => array(
-                    'class' => 'mdl-textfield__input datepicker-here',
-                    'data-language' => 'en',
-                    'data-timepicker' => true,
-                    'readonly' => 'readonly'
-                ),
-                'widget' => 'single_text'
-            ))
+//            ->add('createdAt', DateTimeType::class, array(
+//                'attr' => array(
+//                    'class' => 'mdl-textfield__input datepicker-here',
+//                    'data-language' => 'en',
+//                    'data-timepicker' => true,
+//                    'readonly' => 'readonly'
+//                ),
+//                'widget' => 'single_text'
+//            ))
         ;
     }
     

@@ -108,7 +108,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/api/items", name="getItems")
+     * @Route("/api/item", name="getItems")
      * @Method({"GET"})
      * @param Request $request
      * @return JsonResponse
@@ -138,7 +138,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/api/items", name="putItems")
+     * @Route("/api/item", name="putItems")
      * @Method({"PUT"})
      * @param Request $request
      * @return JsonResponse
