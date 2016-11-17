@@ -178,4 +178,36 @@ class CustomerController extends Controller
 
         return new JsonResponse($response);
     }
+
+    /**
+     * @Route("/api/customer", name="putCustomer")
+     * @Method({"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function putCustomerAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
+        /** @var Customer $customer */
+        $customer = $repository->findOneBy(['id' => $request->request->get('id')]);
+
+        $customer
+            ->setName($request->request->get('name'))
+            ->setName2($request->request->get('name2'))
+            ->setLocality($request->request->get('locality'))
+            ->setCountry($request->request->get('country'))
+            ->setZipCode($request->request->get('zipCode'))
+            ->setStreetAddress($request->request->get('streetAddress'))
+            ->setBusinessId($request->request->get('businessId'))
+            ->setContactPerson($request->request->get('contactPerson'))
+            ->setEmail($request->request->get('email'));
+
+        $em->persist($customer);
+        $em->flush();
+
+        return new JsonResponse([
+            'message' => 'Company info updated'
+        ]);
+    }
 }

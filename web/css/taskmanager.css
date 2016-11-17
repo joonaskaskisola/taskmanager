@@ -141,3 +141,7 @@ div.row-column > div.mdl-textfield {
     margin-right: auto;
     margin-top: 10px;
 }
+
+.notification-container {
+    margin-top: 60px;
+}

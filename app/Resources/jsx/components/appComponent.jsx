@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-export default class GridApp extends React.Component {
+export default class AppComponent extends React.Component {
     constructor(props, context, dataUrl) {
         super(props, context);
 
@@ -9,7 +9,7 @@ export default class GridApp extends React.Component {
             "row": false,
             "data": null,
             "isLoading": true,
-            "dataUrl": dataUrl
+            "dataUrl": null
         };
 
         this.loadData = this.loadData.bind(this);
@@ -46,6 +46,8 @@ export default class GridApp extends React.Component {
         this.setState({"isLoading": true, "row": false});
 
         this.getData(this.state.dataUrl + '/' + rowId, function(error, response) {
+            if (error) { self.handleError(error); }
+
             self.setState({"isLoading": false, "row": response[0]});
         });
     }
@@ -56,26 +58,8 @@ export default class GridApp extends React.Component {
         this.loadData();
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-
-        let self = this;
-        this.setState({"isLoading": true});
-
-        axios.put(this.state.dataUrl, this.state.row).then(function (response) {
-            self.setState({"isLoading": false});
-            self.closeRow();
-        }).catch(function (error) {
-            // @todo: implement
-        });
-    }
-
     handleChange(event) {
         this.state.row[event.target.name] = event.target.value;
         this.setState({"row": this.state.row});
-    }
-
-    render() {
-        return <div></div>
     }
 }

@@ -1,5 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
+import CustomerRow from './customerRow.jsx';
+import TextField from './fields/textField.jsx';
 
 export default class CustomerView extends React.Component {
     constructor(props, context) {
@@ -16,114 +18,52 @@ export default class CustomerView extends React.Component {
         if (this.props.row) {
             return <div>
                 <div className="form-card-wide mdl-data-table mdl-card mdl-shadow--2dp">
+                    <button className="mdl-button mdl-js-button mdl-js-ripple-effect btn-submit-form" onClick={this.props.closeRow}>
+                        Close <i className="material-icons">clear</i>
+                    </button>
+
                     <div className="mdl-card__title">
                         <h2 className="mdl-card__title-text">Edit customer details</h2>
                     </div>
 
                     <div className="mdl-card__supporting-text">
                         <div className="row">
-                            <div className="row-column">
-                                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    Name: <input
-                                    value={this.props.row.name}
-                                    className="mdl-textfield__input"
-                                    type="text" id="name" name="name"
-                                    onChange={this.props.handleChange}/>
-                                </div>
-                            </div>
-
-                            <div className="row-column">
-                                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    Name2: <input
-                                    value={this.props.row.name2}
-                                    className="mdl-textfield__input"
-                                    type="text" id="name2" name="name2"
-                                    onChange={this.props.handleChange}/>
-                                </div>
-                            </div>
+                            <TextField name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
+                            <TextField name="name2" label="Name 2" value={this.props.row.name2} handleChange={this.props.handleChange} />
                         </div>
 
                         <div className="row">
-                            <div className="row-column">
-                                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    Business-id: <input
-                                    value={this.props.row.businessId}
-                                    className="mdl-textfield__input"
-                                    type="text" id="businessId" name="businessId"
-                                    onChange={this.props.handleChange}/>
-                                </div>
-                            </div>
-
-                            <div className="row-column">
-                                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    Contact person: <input
-                                    value={this.props.row.contactPerson}
-                                    className="mdl-textfield__input"
-                                    type="text" id="contactPerson" name="contactPerson"
-                                    onChange={this.props.handleChange}/>
-                                </div>
-                            </div>
+                            <TextField name="businessId" label="BusinessId" value={this.props.row.businessId} handleChange={this.props.handleChange} />
+                            <TextField name="contactPerson" label="Contact person" value={this.props.row.contactPerson} handleChange={this.props.handleChange} />
                         </div>
 
                         <h2 className="mdl-card__title-text">Contact details</h2>
 
                         <div className="row">
-                            <div className="row-column">
-                                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    Street address: <input
-                                    value={this.props.row.streetAddress}
-                                    className="mdl-textfield__input"
-                                    type="text" id="streetAddress" name="streetAddress"
-                                    onChange={this.props.handleChange}/>
-                                </div>
-                            </div>
-
-                            <div className="row-column">
-                                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    Country: <input
-                                    value={this.props.row.country}
-                                    className="mdl-textfield__input"
-                                    type="text" id="country" name="country"
-                                    onChange={this.props.handleChange}/>
-                                </div>
-                            </div>
+                            <TextField name="streetAddress" label="Street address" value={this.props.row.streetAddress} handleChange={this.props.handleChange} />
+                            <TextField name="country" label="Country" value={this.props.row.country} handleChange={this.props.handleChange} />
                         </div>
 
                         <div className="row">
-                            <div className="row-column">
-                                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    Zipcode: <input
-                                    value={this.props.row.zipCode}
-                                    className="mdl-textfield__input"
-                                    type="text" id="zipCode" name="zipCode"
-                                    onChange={this.props.handleChange}/>
-                                </div>
-                            </div>
-
-                            <div className="row-column">
-                                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    Locality: <input
-                                    value={this.props.row.locality}
-                                    className="mdl-textfield__input"
-                                    type="text" id="locality" name="locality"
-                                    onChange={this.props.handleChange}/>
-                                </div>
-                            </div>
+                            <TextField name="zipCode" label="Zipcode" value={this.props.row.zipCode} handleChange={this.props.handleChange} />
+                            <TextField name="locality" label="Locality" value={this.props.row.locality} handleChange={this.props.handleChange} />
                         </div>
                     </div>
 
                     <div className="mdl-card__actions mdl-card--border">
-                        <a className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                        <a className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onClick={this.props.handleSubmit}>
                             Save <i className="material-icons">done</i>
                         </a>
-
-                        <button className="mdl-button mdl-js-button mdl-js-ripple-effect btn-submit-form" onClick={this.closeRow}>
-                            Close <i className="material-icons">clear</i>
-                        </button>
                     </div>
                 </div>
             </div>
         } else if (this.props.data.length > 0) {
+            let rows = [];
+
+            this.props.data.forEach(function(customer) {
+                rows.push(<CustomerRow customer={customer} key={customer.id} viewRow={self.props.viewRow} />);
+            });
+
             return <div>
                 <table className="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                     <thead>
@@ -135,16 +75,7 @@ export default class CustomerView extends React.Component {
                     </tr>
                     </thead>
 
-                    <tbody>
-                    {this.props.data.map(function (listValue) {
-                        return <tr key={listValue.id} onClick={() => { self.props.viewRow(listValue.id) }} className="pointertr">
-                            <td className="mdl-data-table__cell--non-numeric">{ listValue.name }</td>
-                            <td className="mdl-data-table__cell--non-numeric">{ listValue.businessId}</td>
-                            <td className="mdl-data-table__cell--non-numeric">{ listValue.streetAddress }</td>
-                            <td className="mdl-data-table__cell--non-numeric">{ listValue.country }</td>
-                        </tr>
-                    })}
-                    </tbody>
+                    <tbody>{rows}</tbody>
                 </table>
             </div>
         }
