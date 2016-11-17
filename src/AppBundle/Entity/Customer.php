@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Cake\Chronos\Chronos;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,16 +32,65 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="businessId", type="string", length=255)
+     * @ORM\Column(name="name2", type="string", length=255, nullable=true)
+     */
+    private $name2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="businessId", type="string", length=255, nullable=true)
      */
     private $businessId;
 
     /**
-     * @var \DateTime
+     * @var Chronos
      *
      * @ORM\Column(name="createdAt", type="datetimetz")
      */
     private $createdAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contactPerson", type="string", length=255, nullable=true)
+     */
+    private $contactPerson;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="streetAddress", type="string", length=255, nullable=true)
+     */
+    private $streetAddress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="zipCode", type="string", length=20, nullable=true)
+     */
+    private $zipCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="locality", type="string", length=255, nullable=true)
+     */
+    private $locality;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=255, nullable=true)
+     */
+    private $country;
 
     /**
      * Get id
@@ -101,7 +151,7 @@ class Customer
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param Chronos $createdAt
      * @return Customer
      */
     public function setCreatedAt($createdAt)
@@ -114,10 +164,143 @@ class Customer
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return Chronos
      */
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @param string $name2
+     * @return Customer
+     */
+    public function setName2($name2)
+    {
+        $this->name2 = $name2;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName2()
+    {
+        return $this->name2;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactPerson()
+    {
+        return $this->contactPerson;
+    }
+
+    /**
+     * @param string $contactPerson
+     * @return $this
+     */
+    public function setContactPerson($contactPerson)
+    {
+        $this->contactPerson = $contactPerson;
+
+        return $this;
+    }
+
+    /**
+     * @param string $email
+     * @return Customer
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getZipCode()
+    {
+        return $this->zipCode;
+    }
+
+    /**
+     * @param string $zipCode
+     * @return $this
+     */
+    public function setZipCode($zipCode)
+    {
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocality()
+    {
+        return $this->locality;
+    }
+
+    /**
+     * @param string $locality
+     * @return $this
+     */
+    public function setLocality($locality)
+    {
+        $this->locality = $locality;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param string $country
+     * @return $this
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStreetAddress()
+    {
+        return $this->streetAddress;
+    }
+
+    /**
+     * @param string $streetAddress
+     * @return $this
+     */
+    public function setStreetAddress($streetAddress)
+    {
+        $this->streetAddress = $streetAddress;
+
+        return $this;
     }
 }

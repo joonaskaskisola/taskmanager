@@ -46,7 +46,7 @@ export default class ItemApp extends React.Component {
     }
 
     getUnits(callback) {
-        axios.get("/api/units").then(function (response) {
+        axios.get("/api/unit").then(function (response) {
             let units = [];
             response.data.forEach(function(unit) {
                 units.push({
@@ -62,7 +62,7 @@ export default class ItemApp extends React.Component {
     }
 
     getCategories(callback) {
-        axios.get("/api/categories").then(function (response) {
+        axios.get("/api/category").then(function (response) {
             let categories = [];
             response.data.forEach(function(item) {
                 categories.push({
@@ -78,7 +78,7 @@ export default class ItemApp extends React.Component {
     }
 
     getItems(callback) {
-        axios.get("/api/items").then(function (response) {
+        axios.get("/api/item").then(function (response) {
             callback(null, response.data);
         }).catch(function (error) {
             callback(error, null);
@@ -109,7 +109,7 @@ export default class ItemApp extends React.Component {
         let self = this;
         this.setState({"isLoading": true});
 
-        axios.put("/api/items", this.state.item).then(function (response) {
+        axios.put("/api/item", this.state.item).then(function (response) {
             self.setState({"isLoading": false});
             self.closeItem();
         }).catch(function (error) {

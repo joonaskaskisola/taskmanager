@@ -34,6 +34,12 @@ class CustomerSeed extends Seed implements SeedInterface
             $customer = new Customer();
 
             $customer->setName($faker->company)
+                ->setContactPerson($faker->firstName . ' ' . $faker->lastName)
+                ->setEmail($faker->email)
+                ->setCountry($faker->country)
+                ->setLocality($faker->locale)
+                ->setZipCode($faker->postcode)
+                ->setStreetAddress($faker->streetName)
                 ->setBusinessId($faker->numberBetween(10000000, 20000000))
                 ->setCreatedAt($faker->dateTimeThisYear);
 
