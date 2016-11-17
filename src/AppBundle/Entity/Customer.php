@@ -51,6 +51,13 @@ class Customer
     private $createdAt;
 
     /**
+     * @var Chronos
+     *
+     * @ORM\Column(name="modifiedAt", type="datetimetz", nullable=true)
+     */
+    private $modifiedAt;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="contactPerson", type="string", length=255, nullable=true)
@@ -300,6 +307,25 @@ class Customer
     public function setStreetAddress($streetAddress)
     {
         $this->streetAddress = $streetAddress;
+
+        return $this;
+    }
+
+    /**
+     * @return Chronos
+     */
+    public function getModifiedAt()
+    {
+        return $this->modifiedAt;
+    }
+
+    /**
+     * @param Chronos $modifiedAt
+     * @return $this
+     */
+    public function setModifiedAt($modifiedAt)
+    {
+        $this->modifiedAt = $modifiedAt;
 
         return $this;
     }

@@ -10,7 +10,16 @@ This software is designed to manage customers information, users (+working hours
 ## Installation
 
 ```
+npm install
 composer install
+webpack
+```
+
+## Dev
+
+```
+app/console server:start
+webpack-dev-server --progress --colors
 ```
 
 ## Load random data

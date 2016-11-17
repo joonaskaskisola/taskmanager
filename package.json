@@ -39,7 +39,7 @@
     "webpack": "^1.13.3"
   },
   "scripts": {
-    "install": "cp node_modules/axios/dist/*.min.js web/js/ && cp node_modules/react/dist/*.min.js web/js/ && cp node_modules/react-dom/dist/*.min.js web/js/ && cp node_modules/react-notifications/dist/notifications.css web/css/ && cp -R node_modules/react-notifications/dist/fonts/ web/css/"
+    "install": "./npm_install.sh"
   },
   "devDependencies": {
     "http-server": "^0.9.0",

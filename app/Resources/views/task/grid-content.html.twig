@@ -21,7 +21,7 @@
 
             <tbody>
             {% for task in tasks %}
-                <tr data-uri="{{ path('editTask', {'id': task.id}) }}" class="pointertr {% if task.important == 1 and task.status.id != 3 %}task-important{% endif %}">
+                <tr data-uri="{{ path('editTask', {'id': task.id}) }}" class="pointertr {% if task.important == 1 and task.status.id != 3 %}important{% endif %}">
                     <td class="mdl-data-table__cell--non-numeric">{{ task.task.name }}</td>
                     <td class="mdl-data-table__cell--non-numeric">{{ task.description }}</td>
                     <td class="mdl-data-table__cell--non-numeric">{{ task.nextAt|date('d.m.Y H:i') }}</td>

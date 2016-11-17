@@ -201,7 +201,8 @@ class CustomerController extends Controller
             ->setStreetAddress($request->request->get('streetAddress'))
             ->setBusinessId($request->request->get('businessId'))
             ->setContactPerson($request->request->get('contactPerson'))
-            ->setEmail($request->request->get('email'));
+            ->setEmail($request->request->get('email'))
+            ->setModifiedAt(new Chronos());
 
         $em->persist($customer);
         $em->flush();

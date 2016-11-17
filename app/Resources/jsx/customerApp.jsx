@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
-import AppComponent from './components/appComponent.jsx';
-import CustomerView from './views/customerView.jsx';
+import BaseApp from './components/base-app.jsx';
+import CustomerView from './views/customer-view.jsx';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
-export default class CustomerApp extends AppComponent {
+export default class CustomerApp extends BaseApp {
     constructor(props, context) {
         super(props, context);
 
@@ -16,17 +16,10 @@ export default class CustomerApp extends AppComponent {
     handleSubmit(event) {
         event.preventDefault();
 
-        let self = this;
-        this.setState({"isLoading": true});
-
         axios.put(this.state.dataUrl, this.state.row).then(function (response) {
-            self.setState({"isLoading": false});
-
-            NotificationManager.success("Success!");
+            NotificationManager.success("Row updated!", "Success");
         }).catch(function (error) {
-            self.setState({"isLoading": false});
-
-            NotificationManager.error(error.toString(), "Virhe havaittu");
+            NotificationManager.error(error.toString(), "Problems detected");
         });
     }
 
@@ -39,6 +32,10 @@ export default class CustomerApp extends AppComponent {
                 className="loading-bar mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 
             <CustomerView
+                showNext={this.state.next}
+                showPrev={this.state.prev}
+                nextRow={this.nextRow}
+                previousRow={this.previousRow}
                 handleSubmit={this.handleSubmit}
                 handleChange={this.handleChange}
                 closeRow={this.closeRow}

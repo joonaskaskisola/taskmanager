@@ -91,12 +91,12 @@ table.td-bold > tbody > tr > td:nth-child(1) {
     font-weight: normal;
 }
 
-table > tbody > tr.task-important {
+.important {
     background-color: #aa4444;
     color: white;
 }
 
-table > tbody > tr.task-important:hover {
+.important:hover {
     color: black;
 }
 
@@ -121,21 +121,6 @@ div.mdl-card__supporting-text > div.row {
     display: block;
 }
 
-div.mdl-card__supporting-text > div > div.row-column:nth-child(1) {
-    width: 50%;
-    float: left;
-    margin-right: auto;
-}
-
-div.mdl-card__supporting-text > div > div.row-column:nth-child(2) {
-    width: 50%;
-    margin-left: auto;
-}
-
-div.row-column > div.mdl-textfield {
-    padding: 10px 0;
-}
-
 .loading-bar {
     margin-left: auto;
     margin-right: auto;
@@ -144,4 +129,33 @@ div.row-column > div.mdl-textfield {
 
 .notification-container {
     margin-top: 60px;
+}
+
+.row {
+    display: block;
+    width: 100%;
+    padding: 3px 3px 3px;
+    overflow: hidden;
+}
+
+label {
+    display: block;
+    position: relative;
+    top: -3em;
+}
+
+.form-separator {
+    border-top: 1px solid rgba(0,0,0,.12);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.mdl-textfield {
+    width: 40%;
+}
+
+.card-navigation {
+    display: block;
 }
