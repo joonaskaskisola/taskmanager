@@ -13,29 +13,10 @@
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
-
-        <style type="text/css">
-            body {
-                background-color: #FFFFFF;
-            }
-            .ui.menu .item img.logo {
-                margin-right: 1.5em;
-            }
-            .main.container {
-                margin-top: 7em;
-            }
-            .wireframe {
-                margin-top: 2em;
-            }
-            .ui.footer.segment {
-                margin: 5em 0em 0em;
-                padding: 5em 0em;
-            }
-        </style>
     </head>
 
     <body>
-        <div class="ui fixed inverted menu">
+        <div class="ui fixed blue inverted menu">
             <div class="ui container">
                 <a href="#" class="header item">
                     Manager
@@ -69,19 +50,8 @@
             </div>
         </div>
 
-        <div class="ui main text container">
+        <div class="ui main container">
             {% block body %}{% endblock %}
-        </div>
-
-        <div class="ui inverted vertical footer segment">
-            <div class="ui center aligned container">
-                <div class="ui horizontal inverted small divided link list">
-                    <a class="item" href="#">Site Map</a>
-                    <a class="item" href="#">Contact Us</a>
-                    <a class="item" href="#">Terms and Conditions</a>
-                    <a class="item" href="#">Privacy Policy</a>
-                </div>
-            </div>
         </div>
 
         {% block javascripts %}

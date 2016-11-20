@@ -6,7 +6,9 @@ use AppBundle\Entity\Country;
 use AppBundle\Helper\FormHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -98,5 +100,50 @@ class CountryController extends Controller
             'countries' => $countries,
             'new' => $this->generateUrl('newCountry')
         ]);
+    }
+
+    /**
+     * @Route("/api/country", name="getCountry")
+     * @Method({"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCountryAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Country');
+
+        $response = array_map(function($country) {
+            /** @var Country $country */
+            return [
+                'id' => $country->getId(),
+                'name' => $country->getName(),
+                'code' => $country->getCode()
+            ];
+        }, $repository->findBy([], ['name' => 'ASC']));
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/api/country", name="putCountry")
+     * @Method({"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function putCountryAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Country');
+        /** @var Country $country */
+        $country = $repository->findOneBy(['id' => $request->request->get('id')]);
+
+        $country
+            ->setName($request->request->get('name'))
+            ->setCode($request->request->get('code'));
+
+        $em->persist($country);
+        $em->flush();
+
+        return new JsonResponse();
     }
 }

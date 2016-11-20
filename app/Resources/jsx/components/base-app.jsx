@@ -15,6 +15,7 @@ export default class BaseApp extends React.Component {
         this.loadData = this.loadData.bind(this);
         this.closeRow = this.closeRow.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSelectChange = this.handleSelectChange.bind(this);
         this.viewRow = this.viewRow.bind(this);
         this.previousRow = this.previousRow.bind(this);
         this.nextRow = this.nextRow.bind(this);
@@ -93,9 +94,11 @@ export default class BaseApp extends React.Component {
     viewRow(rowId) {
         let self = this;
 
+        this.setState({"next": false, "prev": false});
+        this.checkPrevNextButtons(rowId);
+
         if (this.state.loadExtraInfo) {
-            this.setState({"isLoading": true, "next": false, "prev": false});
-            this.checkPrevNextButtons(rowId);
+            this.setState({"isLoading": true});
 
             this.getData(this.state.dataUrl + '/' + rowId, function (error, response) {
                 if (error) {
@@ -119,6 +122,11 @@ export default class BaseApp extends React.Component {
     closeRow() {
         this.setState({"row": false});
         this.loadData();
+    }
+
+    handleSelectChange(name, value) {
+        this.state.row[value.name] = value.value;
+        this.setState({"row": this.state.row});
     }
 
     handleChange(event) {

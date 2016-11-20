@@ -4,7 +4,7 @@ import Row from '../rows/row.jsx';
 import TextField from '../fields/text.jsx';
 import NavigationButton from '../components/navigation-button.jsx';
 
-export default class CategoryView extends React.Component {
+export default class CountryView extends React.Component {
     constructor(props, context) {
         super(props, context);
     }
@@ -23,13 +23,14 @@ export default class CategoryView extends React.Component {
                         <NavigationButton show={this.props.showNext} float="right" onClick={this.props.nextRow} leftLabel="Next" rightLabel="" icon="angle double left icon" />
                         <NavigationButton show={this.props.showPrev} float="left" onClick={this.props.previousRow} leftLabel="" rightLabel="Previous" icon="angle double right icon" />
 
-                        <h1 style={{width: "125px", margin: "0 auto", textAlign: "center"}}>Category</h1>
+                        <h1 style={{width: "125px", margin: "0 auto", textAlign: "center"}}>Country</h1>
                     </div>
 
                     <h4 className="ui dividing header">General Information</h4>
 
-                    <div className="one field">
+                    <div className="two fields">
                         <TextField pos="left" name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
+                        <TextField pos="right" name="code" label="Code" value={this.props.row.code} handleChange={this.props.handleChange} />
                     </div>
 
                     <div className="navigation-footer-buttons">
@@ -42,7 +43,7 @@ export default class CategoryView extends React.Component {
             let rows = [];
 
             this.props.data.forEach(function(row) {
-                rows.push(<Row fields={['name']} row={row} key={row.id} viewRow={self.props.viewRow} />);
+                rows.push(<Row fields={['name', 'code']} row={row} key={row.id} viewRow={self.props.viewRow} />);
             });
 
             return <div className="ui computer equal width grid">

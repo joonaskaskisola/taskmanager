@@ -1,24 +1,15 @@
 import React from 'react';
 import {render} from 'react-dom';
 import BaseApp from './components/base-app.jsx';
-import CustomerView from './views/customer-view.jsx';
+import CountryView from './views/country-view.jsx';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
-export default class CustomerApp extends BaseApp {
+export default class CountryApp extends BaseApp {
     constructor(props, context) {
         super(props, context);
 
-        this.state.dataUrl = "/api/customer";
-        this.state.loadExtraInfo = true;
-        this.state.countries = [];
-
-        let self = this;
-
-        this.getData("/api/country", function (err, data) {
-            data.forEach(function(country) {
-                self.state.countries.push({'value': country.id, 'text': country.name, 'flag': country.code.toLowerCase()});
-            })
-        });
+        this.state.dataUrl = "/api/country";
+        this.state.loadExtraInfo = false;
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -42,14 +33,12 @@ export default class CustomerApp extends BaseApp {
                     <div className="ui loader"></div>
                 </div>
 
-                <CustomerView
-                    countries={this.state.countries}
+                <CountryView
                     showNext={this.state.next}
                     showPrev={this.state.prev}
                     nextRow={this.nextRow}
                     previousRow={this.previousRow}
                     handleSubmit={this.handleSubmit}
-                    handleSelectChange={this.handleSelectChange}
                     handleChange={this.handleChange}
                     closeRow={this.closeRow}
                     viewRow={this.viewRow}
@@ -62,6 +51,6 @@ export default class CustomerApp extends BaseApp {
 }
 
 render(
-    <CustomerApp/>,
-    document.getElementById('customerApp')
+    <CountryApp/>,
+    document.getElementById('countryApp')
 );

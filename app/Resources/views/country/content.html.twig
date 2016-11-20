@@ -1,26 +1,3 @@
 {% block grid %}
-
-    {% if countries is empty %}
-        {% trans %}<h4>no_countries</h4>{% endtrans %}
-    {% else %}
-
-        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-            <thead>
-                <tr>
-                    <th class="mdl-data-table__cell--non-numeric">{% trans %}name{% endtrans %}</th>
-                    <th class="mdl-data-table__cell--non-numeric">{% trans %}code{% endtrans %}</th>
-                </tr>
-            </thead>
-
-            <tbody>
-            {% for country in countries %}
-                <tr data-uri="{{ path('editCountry', {'id': country.id}) }}" class="pointertr">
-                    <td class="mdl-data-table__cell--non-numeric">{{ country.name }}</td>
-                    <td class="mdl-data-table__cell--non-numeric">{{ country.code }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-    {% endif %}
+    <div id="countryApp"></div>
 {% endblock %}

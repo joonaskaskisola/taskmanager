@@ -7,13 +7,17 @@
         <title>Login</title>
         <link rel="stylesheet" href="/css/semantic.min.css" type="text/css">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <style>
+            body {
+                background-color: #1B1C1D;
+            }
+        </style>
     </head>
     <body>
-    {{ error }}
         <form action="{{ path('login') }}" method="post">
             <div class="ui inverted segment">
-                <div class="ui inverted form">
-                    <div class="two fields">
+                <div class="ui main container">
+                    <div class="ui inverted form">
                         <div class="field">
                             <label>Username</label>
                             <input placeholder="Username" value="{{ createdUser.username }}" type="text" id="username" name="_username">
@@ -22,9 +26,9 @@
                             <label>Password</label>
                             <input placeholder="hunter" value="moi" type="password" id="password" name="_password">
                         </div>
-                    </div>
 
-                    <button type="submit" class="ui submit button">Submit</button>
+                        <button type="submit" class="ui submit button">Submit</button>
+                    </div>
                 </div>
             </div>
         </form>

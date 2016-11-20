@@ -141,8 +141,6 @@ class CategoryController extends Controller
         $em->persist($category);
         $em->flush();
 
-        return new JsonResponse([
-            'message' => 'Category info updated'
-        ]);
+        return new JsonResponse();
     }
 }

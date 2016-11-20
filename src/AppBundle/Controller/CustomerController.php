@@ -207,8 +207,6 @@ class CustomerController extends Controller
         $em->persist($customer);
         $em->flush();
 
-        return new JsonResponse([
-            'message' => 'Company info updated'
-        ]);
+        return new JsonResponse();
     }
 }
