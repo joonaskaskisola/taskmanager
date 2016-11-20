@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import {render} from 'react-dom';
 import BaseApp from './components/base-app.jsx';
 import CustomerView from './views/customer-view.jsx';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
@@ -9,6 +9,7 @@ export default class CustomerApp extends BaseApp {
         super(props, context);
 
         this.state.dataUrl = "/api/customer";
+        this.state.loadExtraInfo = true;
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -27,22 +28,24 @@ export default class CustomerApp extends BaseApp {
         return <div>
             <NotificationContainer/>
 
-            <div
-                style={{display: this.state.isLoading ? "block" : "none"}}
-                className="loading-bar mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            <div className="ui segment">
+                <div className={"ui inverted  " + (this.state.isLoading ? "active" : "") + " dimmer"}>
+                    <div className="ui loader"></div>
+                </div>
 
-            <CustomerView
-                showNext={this.state.next}
-                showPrev={this.state.prev}
-                nextRow={this.nextRow}
-                previousRow={this.previousRow}
-                handleSubmit={this.handleSubmit}
-                handleChange={this.handleChange}
-                closeRow={this.closeRow}
-                viewRow={this.viewRow}
-                loading={this.state.isLoading}
-                row={this.state.row}
-                data={this.state.data}/>
+                <CustomerView
+                    showNext={this.state.next}
+                    showPrev={this.state.prev}
+                    nextRow={this.nextRow}
+                    previousRow={this.previousRow}
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                    closeRow={this.closeRow}
+                    viewRow={this.viewRow}
+                    loading={this.state.isLoading}
+                    row={this.state.row}
+                    data={this.state.data}/>
+            </div>
         </div>
     }
 }

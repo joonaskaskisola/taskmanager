@@ -1,9 +1,0 @@
-{% block formdata %}
-
-    {{ form_row(form.createdAt) }}
-    {{ form_row(form.customer) }}
-    {{ form_row(form.creator) }}
-
-    {{ include('fields/text.html.twig', {field: form.note}, with_context = false) }}
-
-{% endblock %}

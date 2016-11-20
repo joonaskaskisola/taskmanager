@@ -1,9 +1,0 @@
-{% block formdata %}
-
-    {{ include('fields/text.html.twig', {field: form.name}, with_context = false) }}
-    {{ include('fields/numeric.html.twig', {field: form.hour}, with_context = false) }}
-    {{ include('fields/numeric.html.twig', {field: form.day}, with_context = false) }}
-    {{ include('fields/numeric.html.twig', {field: form.week}, with_context = false) }}
-    {{ include('fields/numeric.html.twig', {field: form.month}, with_context = false) }}
-
-{% endblock %}

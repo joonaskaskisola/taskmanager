@@ -1,8 +1,0 @@
-{% block formdata %}
-
-    {{ include('fields/checkbox.html.twig', {field: form.important}, with_context = false) }}
-    {{ include('fields/text.html.twig', {field: form.description}, with_context = false) }}
-    {{ include('fields/numeric.html.twig', {field: form.amount}, with_context = false) }}
-
-    {{ form_widget(form) }}
-{% endblock %}

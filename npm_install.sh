@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PACKAGES_JS=('axios' 'react-select' 'react' 'react-dom');
-PACKAGES_CSS=('react-notifications' 'react-select');
+PACKAGES_JS=('axios' 'react' 'react-dom' 'jquery');
+PACKAGES_CSS=('react-notifications');
 PACKAGES_FONT=('react-notifications');
 
 for p in ${PACKAGES_JS[@]}; do

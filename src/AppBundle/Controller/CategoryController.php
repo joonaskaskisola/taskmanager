@@ -6,6 +6,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Helper\FormHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -101,11 +102,12 @@ class CategoryController extends Controller
 
     /**
      * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/api/category", name="getCategories")
+     * @Route("/api/category", name="getCategory")
+     * @Method({"GET"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function getCategoriesAction(Request $request)
+    public function getCategoryAction(Request $request)
     {
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Category');
@@ -119,5 +121,28 @@ class CategoryController extends Controller
         }, $repository->findBy([], ['name' => 'ASC']));
 
         return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/api/category", name="putCategory")
+     * @Method({"PUT"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function putCategoryAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Category');
+        /** @var Category $category */
+        $category = $repository->findOneBy(['id' => $request->request->get('id')]);
+
+        $category->setName($request->request->get('name'));
+
+        $em->persist($category);
+        $em->flush();
+
+        return new JsonResponse([
+            'message' => 'Category info updated'
+        ]);
     }
 }

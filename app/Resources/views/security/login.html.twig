@@ -1,71 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-indigo.min.css" />
-    <link rel="stylesheet" href="/css/taskmanager.css" />
+    <head>
+        <link rel="stylesheet" href="/css/taskmanager.css" />
 
-    <meta charset="UTF-8" />
-    <title>Login</title>
-    <style>
-        form {
-            color: white;
-        }
-
-        .login {
-            position: absolute;
-            top: 100px;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            text-align: center;
-        }
-
-    </style>
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-</head>
-<body>
-    <div class="login">
-        <div class="form-card mdl-card mdl-shadow--2dp">
-            <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">Welcome</h2>
-            </div>
-            <div class="mdl-card__supporting-text">
-
-                <form action="{{ path('login') }}" method="post">
-                    <div class="field">
-                        <label for="username">Username</label>
-                        <input placeholder="Username" value="{{ createdUser.username }}" type="text" id="username" name="_username" />
+        <meta charset="UTF-8" />
+        <title>Login</title>
+        <link rel="stylesheet" href="/css/semantic.min.css" type="text/css">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+    {{ error }}
+        <form action="{{ path('login') }}" method="post">
+            <div class="ui inverted segment">
+                <div class="ui inverted form">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Username</label>
+                            <input placeholder="Username" value="{{ createdUser.username }}" type="text" id="username" name="_username">
+                        </div>
+                        <div class="field">
+                            <label>Password</label>
+                            <input placeholder="hunter" value="moi" type="password" id="password" name="_password">
+                        </div>
                     </div>
 
-                    <div class="field">
-                        <label for="username">Password</label>
-                        <input placeholder="hunter2" value="moi" type="password" id="password" name="_password" />
-                    </div>
-
-                    <div class="field">
-                        <button class="btn btn-info" type="submit">login</button>
-                    </div>
-                </form>
+                    <button type="submit" class="ui submit button">Submit</button>
+                </div>
             </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <button class="mdl-button mdl-js-button mdl-js-ripple-effect btn-submit-form">
-                    Submit <i class="material-icons">navigate_next</i>
-                </button>
-            </div>
-            <div class="mdl-card__menu">
-                <button class="mdl-button mdl-js-button mdl-js-ripple-effect">
-                    <i class="material-icons">mood_bad</i> Lost password?
-                </button>
-            </div>
-        </div>
-    </div>
+        </form>
 
-    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-    <script type="text/javascript" src="/js/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="/js/taskmanager.js"></script>
-
-</body>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/semantic.min.js"></script>
+    </body>
 </html>

@@ -6,6 +6,7 @@ module.exports = {
     customerApp: "./app/Resources/jsx/customerApp.jsx",
     mailApp: "./app/Resources/jsx/mailApp.jsx",
     itemApp: "./app/Resources/jsx/itemApp.jsx",
+    categoryApp: "./app/Resources/jsx/categoryApp.jsx",
   },
   output: {
     path: "./web/js/",
