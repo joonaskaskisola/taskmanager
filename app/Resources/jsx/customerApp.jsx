@@ -26,11 +26,19 @@ export default class CustomerApp extends BaseApp {
     handleSubmit(event) {
         event.preventDefault();
 
-        axios.put(this.state.dataUrl, this.state.row).then(function (response) {
-            NotificationManager.success("Row updated!", "Success");
-        }).catch(function (error) {
-            NotificationManager.error(error.toString(), "Problems detected");
-        });
+        if (this.state.row['id'] !== undefined) {
+            axios.put(this.state.dataUrl, this.state.row).then(function (response) {
+                NotificationManager.success("Row updated!", "Success");
+            }).catch(function (error) {
+                NotificationManager.error(error.toString(), "Problems detected");
+            });
+        } else {
+            axios.post(this.state.dataUrl, this.state.row).then(function (response) {
+                NotificationManager.success("Row updated!", "Success");
+            }).catch(function (error) {
+                NotificationManager.error(error.toString(), "Problems detected");
+            });
+        }
     }
 
     render() {
@@ -43,6 +51,7 @@ export default class CustomerApp extends BaseApp {
                 </div>
 
                 <CustomerView
+                    createNew={this.createNew}
                     countries={this.state.countries}
                     showNext={this.state.next}
                     showPrev={this.state.prev}

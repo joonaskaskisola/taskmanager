@@ -10,18 +10,25 @@ export default class CountryApp extends BaseApp {
 
         this.state.dataUrl = "/api/country";
         this.state.loadExtraInfo = false;
-
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event) {
         event.preventDefault();
 
-        axios.put(this.state.dataUrl, this.state.row).then(function (response) {
-            NotificationManager.success("Row updated!", "Success");
-        }).catch(function (error) {
-            NotificationManager.error(error.toString(), "Problems detected");
-        });
+        if (this.state.row['id'] !== undefined) {
+            axios.put(this.state.dataUrl, this.state.row).then(function (response) {
+                NotificationManager.success("Row updated!", "Success");
+            }).catch(function (error) {
+                NotificationManager.error(error.toString(), "Problems detected");
+            });
+        } else {
+            axios.post(this.state.dataUrl, this.state.row).then(function (response) {
+                NotificationManager.success("Row updated!", "Success");
+            }).catch(function (error) {
+                NotificationManager.error(error.toString(), "Problems detected");
+            });
+        }
     }
 
     render() {
@@ -34,6 +41,7 @@ export default class CountryApp extends BaseApp {
                 </div>
 
                 <CountryView
+                    createNew={this.createNew}
                     showNext={this.state.next}
                     showPrev={this.state.prev}
                     nextRow={this.nextRow}

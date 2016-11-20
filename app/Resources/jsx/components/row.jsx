@@ -6,7 +6,7 @@ export default class Row extends React.Component {
         let fields = [], self = this;
 
         this.props.fields.forEach(function(field) {
-            fields.push(<div className="column">{ self.props.row[field] }</div>);
+            fields.push(<div key={"field-" + field + self.props.row.id} className="column">{ self.props.row[field] }</div>);
         });
 
         return <div className="row" onClick={() => { this.props.viewRow(this.props.row.id) }}>

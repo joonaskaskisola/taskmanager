@@ -1,9 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Row from '../rows/row.jsx';
-import TextField from '../fields/text.jsx';
+import Row from '../components/row.jsx';
+import TextField from '../components/text.jsx';
 import NavigationButton from '../components/navigation-button.jsx';
-import SelectField from '../fields/select.jsx';
+import SelectField from '../components/select.jsx';
+import GridContainer from '../components/grid-container.jsx';
 
 export default class CustomerView extends React.Component {
     constructor(props, context) {
@@ -58,22 +59,14 @@ export default class CustomerView extends React.Component {
                 </div>
             </div>
         } else if (this.props.data.length > 0) {
-            let rows = [];
+            let rows = [],
+                columns = ['Name', 'Business id', 'Street address', 'Country'];
 
-            this.props.data.forEach(function(row) {
-                rows.push(<Row fields={['name', 'businessId', 'streetAddress', 'country']} row={row} key={row.id} viewRow={self.props.viewRow} />);
+            this.props.data.forEach(function (row) {
+                rows.push(<Row fields={['name', 'businessId', 'streetAddress', 'country']} row={row} key={row.id} viewRow={self.props.viewRow}/>);
             });
 
-            return <div className="ui computer equal width grid">
-                <div className="row blue">
-                    <div className="column">Name</div>
-                    <div className="column">Business id</div>
-                    <div className="column">Street address</div>
-                    <div className="column">Country</div>
-                </div>
-
-                {rows}
-            </div>
+            return <GridContainer rows={rows} columns={columns} createNew={this.props.createNew}/>
         }
     }
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Row from '../rows/row.jsx';
-import TextField from '../fields/text.jsx';
+import Row from '../components/row.jsx';
+import TextField from '../components/text.jsx';
 import NavigationButton from '../components/navigation-button.jsx';
+import GridContainer from '../components/grid-container.jsx';
 
 export default class CountryView extends React.Component {
     constructor(props, context) {
@@ -20,8 +21,8 @@ export default class CountryView extends React.Component {
             return <div>
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>
                     <div className="">
-                        <NavigationButton show={this.props.showNext} float="right" onClick={this.props.nextRow} leftLabel="Next" rightLabel="" icon="angle double left icon" />
-                        <NavigationButton show={this.props.showPrev} float="left" onClick={this.props.previousRow} leftLabel="" rightLabel="Previous" icon="angle double right icon" />
+                        <NavigationButton show={this.props.showNext} float="right" onClick={this.props.nextRow} leftLabel="Next" rightLabel="" icon="double right angle icon" />
+                        <NavigationButton show={this.props.showPrev} float="left" onClick={this.props.previousRow} leftLabel="" rightLabel="Previous" icon="double left angle icon" />
 
                         <h1 style={{width: "125px", margin: "0 auto", textAlign: "center"}}>Country</h1>
                     </div>
@@ -40,19 +41,14 @@ export default class CountryView extends React.Component {
                 </div>
             </div>
         } else if (this.props.data.length > 0) {
-            let rows = [];
+            let rows = [],
+                columns = ['Name', 'Code'];
 
-            this.props.data.forEach(function(row) {
-                rows.push(<Row fields={['name', 'code']} row={row} key={row.id} viewRow={self.props.viewRow} />);
+            this.props.data.forEach(function (row) {
+                rows.push(<Row fields={['name', 'code']} row={row} key={row.id} viewRow={self.props.viewRow}/>);
             });
 
-            return <div className="ui computer equal width grid">
-                <div className="row blue">
-                    <div className="column">name</div>
-                </div>
-
-                {rows}
-            </div>
+            return <GridContainer rows={rows} columns={columns} createNew={this.props.createNew}/>
         }
     }
 }

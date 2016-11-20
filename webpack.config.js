@@ -8,6 +8,7 @@ module.exports = {
     itemApp: "./app/Resources/jsx/itemApp.jsx",
     categoryApp: "./app/Resources/jsx/categoryApp.jsx",
     countryApp: "./app/Resources/jsx/countryApp.jsx",
+    logoutApp: "./app/Resources/jsx/logoutApp.jsx",
   },
   output: {
     path: "./web/js/",

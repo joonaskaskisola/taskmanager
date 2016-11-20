@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Route, ReactRouter, Router, browserHistory } from 'react-router';
 
 export default class MailApp extends React.Component {
     constructor(props, context) {
