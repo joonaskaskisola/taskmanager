@@ -12,15 +12,13 @@ export default class CategoryView extends React.Component {
     }
 
     render() {
-        let self = this;
-
         if (this.props.loading) {
             return <div></div>
         }
 
         if (this.props.row) {
             return <div>
-                <Divider horizontal>Category</Divider>
+                <Divider horizontal>Category #{this.props.row.id}</Divider>
 
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>
                     <NavigationButtons
@@ -43,14 +41,13 @@ export default class CategoryView extends React.Component {
                 </div>
             </div>
         } else if (this.props.data.length > 0) {
-            let rows = [],
-                columns = ['Name'];
-
-            this.props.data.forEach(function (row) {
-                rows.push(<Row fields={['name']} row={row} key={row.id} viewRow={self.props.viewRow}/>);
-            });
-
-            return <GridContainer rows={rows} columns={columns} createNew={this.props.createNew}/>
+            return <GridContainer
+                search={true}
+                fields={['name']}
+                columns={['Name']}
+                rows={this.props.data}
+                viewRow={this.props.viewRow}
+                createNew={this.props.createNew}/>
         }
     }
 }

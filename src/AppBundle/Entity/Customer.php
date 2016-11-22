@@ -39,28 +39,28 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="businessId", type="string", length=255, nullable=true)
+     * @ORM\Column(name="business_id", type="string", length=255, nullable=true)
      */
     private $businessId;
 
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="createdAt", type="datetimetz")
+     * @ORM\Column(name="created_at", type="datetimetz")
      */
     private $createdAt;
 
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="modifiedAt", type="datetimetz", nullable=true)
+     * @ORM\Column(name="modified_at", type="datetimetz", nullable=true)
      */
     private $modifiedAt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="contactPerson", type="string", length=255, nullable=true)
+     * @ORM\Column(name="contact_person", type="string", length=255, nullable=true)
      */
     private $contactPerson;
 
@@ -74,14 +74,14 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="streetAddress", type="string", length=255, nullable=true)
+     * @ORM\Column(name="street_address", type="string", length=255, nullable=true)
      */
     private $streetAddress;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="zipCode", type="string", length=20, nullable=true)
+     * @ORM\Column(name="zip_code", type="string", length=20, nullable=true)
      */
     private $zipCode;
 

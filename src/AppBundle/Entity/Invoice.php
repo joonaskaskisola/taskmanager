@@ -26,7 +26,7 @@ class Invoice
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="createdAt", type="datetimetz")
+     * @ORM\Column(name="created_at", type="datetimetz")
      */
     private $createdAt;
 
@@ -46,7 +46,7 @@ class Invoice
     /**
      * @var string
      *
-     * @ORM\Column(name="totalSum", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="total_sum", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $price;
 

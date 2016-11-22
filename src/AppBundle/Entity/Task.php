@@ -34,9 +34,9 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity="CustomerItem")
-     * @ORM\JoinColumn(name="task", referencedColumnName="id")
+     * @ORM\JoinColumn(name="customer_item", referencedColumnName="id")
      */
-    private $task;
+    private $customerItem;
 
     /**
      * @var string
@@ -55,34 +55,34 @@ class Task
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="createdAt", type="datetimetz")
+     * @ORM\Column(name="created_at", type="datetimetz")
      */
     private $createdAt;
 
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="nextAt", type="datetimetz", nullable=true)
+     * @ORM\Column(name="next_at", type="datetimetz", nullable=true)
      */
     private $nextAt = null;
 
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="modifiedAt", type="datetimetz", nullable=true)
+     * @ORM\Column(name="modified_at", type="datetimetz", nullable=true)
      */
     private $modifiedAt = null;
 
     /**
      * @var null|Chronos
      *
-     * @ORM\Column(name="endedAt", type="datetimetz", nullable=true)
+     * @ORM\Column(name="ended_at", type="datetimetz", nullable=true)
      */
     private $endedAt = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="TaskCycle")
-     * @ORM\JoinColumn(name="cycleTime", referencedColumnName="id")
+     * @ORM\JoinColumn(name="cycle_time", referencedColumnName="id")
      */
     private $cycleTime;
 
@@ -94,7 +94,7 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity="Task")
-     * @ORM\JoinColumn(name="nextTask", referencedColumnName="id")
+     * @ORM\JoinColumn(name="next_task", referencedColumnName="id")
      */
     private $nextTask = null;
 
@@ -127,7 +127,7 @@ class Task
     /**
      * @var float
      *
-     * @ORM\Column(name="totalPrice", type="decimal", precision=10, scale=2)
+     * @ORM\Column(name="total_price", type="decimal", precision=10, scale=2)
      */
     private $totalPrice = 0.0;
 
@@ -147,29 +147,6 @@ class Task
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set task
-     *
-     * @param string $task
-     * @return Task
-     */
-    public function setTask($task)
-    {
-        $this->task = $task;
-
-        return $this;
-    }
-
-    /**
-     * Get task
-     *
-     * @return string 
-     */
-    public function getTask()
-    {
-        return $this->task;
     }
 
     /**
@@ -491,5 +468,21 @@ class Task
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return CustomerItem
+     */
+    public function getCustomerItem()
+    {
+        return $this->customerItem;
+    }
+
+    /**
+     * @param CustomerItem $customerItem
+     */
+    public function setCustomerItem($customerItem)
+    {
+        $this->customerItem = $customerItem;
     }
 }

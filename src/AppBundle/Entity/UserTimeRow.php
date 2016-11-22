@@ -31,14 +31,14 @@ class UserTimeRow
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="startDateTime", type="datetimetz")
+     * @ORM\Column(name="start_datetime", type="datetimetz")
      */
     private $startDateTime;
 
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="endDateTime", type="datetimetz", nullable=true)
+     * @ORM\Column(name="end_datetime", type="datetimetz", nullable=true)
      */
     private $endDateTime;
 

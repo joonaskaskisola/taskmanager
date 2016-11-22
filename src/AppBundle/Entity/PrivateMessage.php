@@ -65,7 +65,7 @@ class PrivateMessage
     /**
      * @var int
      *
-     * @ORM\Column(name="replyId", type="integer", nullable=true)
+     * @ORM\Column(name="reply_id", type="integer", nullable=true)
      */
     private $replyId;
 

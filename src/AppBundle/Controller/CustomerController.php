@@ -113,16 +113,7 @@ class CustomerController extends Controller
      */
     public function listAction(Request $request)
     {
-        $customers = $this->getDoctrine()
-            ->getRepository('AppBundle:Customer')
-            ->findAll();
-
-        return $this->render('grid.html.twig', [
-            'form_layout' => 'customer',
-            'view' => 'customer',
-            'customers' => $customers,
-            'new' => $this->generateUrl('newCustomer')
-        ]);
+        return $this->render('grid.html.twig', ['view' => 'customer']);
     }
 
     /**
@@ -139,10 +130,10 @@ class CustomerController extends Controller
             /** @var Customer $customer */
             return [
                 'id' => $customer->getId(),
-                'name' => $customer->getName(),
-                'businessId' => $customer->getBusinessId(),
-                'streetAddress' => $customer->getStreetAddress(),
-                'country' => $customer->getCountry(),
+                'name' => $customer->getName() ?? "",
+                'businessId' => $customer->getBusinessId() ?? "",
+                'streetAddress' => $customer->getStreetAddress() ?? "",
+                'country' => $customer->getCountry() ?? "",
             ];
         }, $repository->findBy([], ['name' => 'ASC']));
 
@@ -164,15 +155,15 @@ class CustomerController extends Controller
             /** @var Customer $customer */
             return [
                 'id' => $customer->getId(),
-                'name' => $customer->getName(),
-                'name2' => $customer->getName2(),
-                'email' => $customer->getEmail(),
-                'businessId' => $customer->getBusinessId(),
-                'contactPerson' => $customer->getContactPerson(),
-                'streetAddress' => $customer->getStreetAddress(),
-                'locality' => $customer->getLocality(),
-                'zipCode' => $customer->getZipCode(),
-                'country' => $customer->getCountry(),
+                'name' => $customer->getName() ?? "",
+                'name2' => $customer->getName2() ?? "",
+                'email' => $customer->getEmail() ?? "",
+                'businessId' => $customer->getBusinessId() ?? "",
+                'contactPerson' => $customer->getContactPerson() ?? "",
+                'streetAddress' => $customer->getStreetAddress() ?? "",
+                'locality' => $customer->getLocality() ?? "",
+                'zipCode' => $customer->getZipCode() ?? "",
+                'country' => $customer->getCountry() ?? "",
             ];
         }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
 
@@ -192,11 +183,19 @@ class CustomerController extends Controller
         /** @var Customer $customer */
         $customer = $repository->findOneBy(['id' => $request->request->get('id')]);
 
+        if ($request->request->get('country')) {
+            $countryRepository = $this->getDoctrine()->getRepository('AppBundle:Country');
+            $customer->setCountry(
+                $countryRepository->findOneBy([
+                    'id' => (int)$request->request->get('country')
+                ])->getName()
+            );
+        }
+
         $customer
             ->setName($request->request->get('name'))
             ->setName2($request->request->get('name2'))
             ->setLocality($request->request->get('locality'))
-            ->setCountry($request->request->get('country'))
             ->setZipCode($request->request->get('zipCode'))
             ->setStreetAddress($request->request->get('streetAddress'))
             ->setBusinessId($request->request->get('businessId'))

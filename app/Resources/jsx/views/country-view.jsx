@@ -12,15 +12,13 @@ export default class CountryView extends React.Component {
     }
 
     render() {
-        let self = this;
-
         if (this.props.loading) {
             return <div></div>
         }
 
         if (this.props.row) {
             return <div>
-                <Divider horizontal>Country</Divider>
+                <Divider horizontal>Country #{this.props.row.id}</Divider>
 
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>
                     <NavigationButtons
@@ -46,14 +44,13 @@ export default class CountryView extends React.Component {
                 </div>
             </div>
         } else if (this.props.data.length > 0) {
-            let rows = [],
-                columns = ['Name', 'Code'];
-
-            this.props.data.forEach(function (row) {
-                rows.push(<Row fields={['name', 'code']} row={row} key={row.id} viewRow={self.props.viewRow}/>);
-            });
-
-            return <GridContainer rows={rows} columns={columns} createNew={this.props.createNew}/>
+            return <GridContainer
+                search={true}
+                fields={['name', 'code']}
+                columns={['Name', 'Code']}
+                rows={this.props.data}
+                viewRow={this.props.viewRow}
+                createNew={this.props.createNew}/>
         }
     }
 }

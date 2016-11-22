@@ -38,7 +38,7 @@ class Country
     /**
      * @var string
      *
-     * @ORM\Column(name="langCode", type="string", length=5)
+     * @ORM\Column(name="lang_code", type="string", length=5)
      */
     private $langCode;
 

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Helper\FormHelper;
+use AppBundle\Repository\TaskRepository;
 use Cake\Chronos\Chronos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -203,13 +204,41 @@ class TaskController extends Controller
     }
 
     /**
+     * @Route("/api/task", name="getTasks")
+     * @Method({"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getTasksAction(Request $request)
+    {
+        if ($request->get('customerId')) {
+            $search = ['customer' => $request->get('customerId')];
+        }
+
+        /** @var TaskRepository $repository */
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Task');
+
+        $response = array_map(function($task) {
+            /** @var Task $task */
+            return [
+                'id' => $task->getId(),
+                'price' => $task->getPrice(),
+                'created_at' => $task->getCreatedAt()->format("d.m.Y H:i:s"),
+                'name' => $task->getCustomerItem()->getName(),
+            ];
+        }, $repository->findBy($search ?? [], ['createdAt' => 'ASC']));
+
+        return new JsonResponse($response);
+    }
+
+    /**
      * @Route("/api/task/{id}", name="getTask")
      * @param $id
      * @Method({"GET"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function getCustomerAction(Request $request, $id)
+    public function getTaskAction(Request $request, $id)
     {
         $repository = $this->getDoctrine()->getRepository('AppBundle:Task');
 

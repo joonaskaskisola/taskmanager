@@ -38,14 +38,14 @@ class TimeRow
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="startTime", type="time", nullable=true)
+     * @ORM\Column(name="start_time", type="time", nullable=true)
      */
     private $startTime;
 
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="endTime", type="time", nullable=true)
+     * @ORM\Column(name="end_time", type="time", nullable=true)
      */
     private $endTime;
 

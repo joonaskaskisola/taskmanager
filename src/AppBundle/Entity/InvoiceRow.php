@@ -37,7 +37,7 @@ class InvoiceRow
     /**
      * @var string
      *
-     * @ORM\Column(name="totalSum", type="decimal", precision=10, scale=2)
+     * @ORM\Column(name="total_sum", type="decimal", precision=10, scale=2)
      */
     private $totalSum;
 

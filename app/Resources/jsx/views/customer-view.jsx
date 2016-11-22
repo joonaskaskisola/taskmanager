@@ -1,10 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Row from '../components/row.jsx';
 import TextField from '../components/text.jsx';
 import SelectField from '../components/select.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
-import { Button, Divider } from 'semantic-ui-react';
+import { Divider } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
 import ModalViewTasks from '../helpers/view-tasks.jsx';
 
@@ -14,8 +13,6 @@ export default class CustomerView extends React.Component {
     }
 
     render() {
-        let self = this;
-
         if (this.props.loading && !this.props.row) {
             return <div></div>
         }
@@ -26,7 +23,7 @@ export default class CustomerView extends React.Component {
                     <ModalViewTasks customerId={this.props.row.id}/>
                 </div>
 
-                <Divider horizontal>Customer</Divider>
+                <Divider horizontal>Customer #{this.props.row.id}</Divider>
 
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>
                     <NavigationButtons
@@ -67,14 +64,13 @@ export default class CustomerView extends React.Component {
                 </div>
             </div>
         } else if (this.props.data.length > 0) {
-            let rows = [],
-                columns = ['Name', 'Business id', 'Street address', 'Country'];
-
-            this.props.data.forEach(function (row) {
-                rows.push(<Row fields={['name', 'businessId', 'streetAddress', 'country']} row={row} key={row.id} viewRow={self.props.viewRow}/>);
-            });
-
-            return <GridContainer rows={rows} columns={columns} createNew={this.props.createNew}/>
+            return <GridContainer
+                search={true}
+                fields={['name', 'businessId', 'streetAddress', 'country']}
+                columns={['Name', 'Business id', 'Street address', 'Country']}
+                rows={this.props.data}
+                viewRow={this.props.viewRow}
+                createNew={this.props.createNew}/>
         }
     }
 }

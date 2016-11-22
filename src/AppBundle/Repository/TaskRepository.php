@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Task;
 use Doctrine\ORM\EntityRepository;
 
 /**

@@ -37,7 +37,7 @@ class UserIpLog
     /**
      * @var Chronos
      *
-     * @ORM\Column(name="createdAt", type="datetimetz")
+     * @ORM\Column(name="created_at", type="datetimetz")
      */
     private $createdAt;
 
