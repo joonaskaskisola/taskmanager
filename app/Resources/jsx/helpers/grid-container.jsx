@@ -10,11 +10,11 @@ export default class GridContainer extends React.Component {
         });
 
         return <div>
-            <div className="ui computer equal width grid">
+            {this.props.createNew && <div className="ui computer equal width grid">
                 <div className="row secondary">
                     <div className="column"><Button primary onClick={this.props.createNew}>Add new</Button></div>
                 </div>
-            </div>
+            </div>}
 
             <div className="ui computer equal width grid">
                 <div className="row blue">

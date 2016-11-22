@@ -1,6 +1,5 @@
 import React from 'react';
-import {render} from 'react-dom';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { render } from 'react-dom';
 
 export default class BaseApp extends React.Component {
     constructor(props, context) {
@@ -22,6 +21,10 @@ export default class BaseApp extends React.Component {
         this.nextRow = this.nextRow.bind(this);
         this.checkPrevNextButtons = this.checkPrevNextButtons.bind(this);
         this.createNew = this.createNew.bind(this);
+    }
+
+    handleError(error) {
+        console.log(error);
     }
 
     createNew() {

@@ -2,8 +2,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import Row from '../components/row.jsx';
 import TextField from '../components/text.jsx';
-import NavigationButton from '../components/navigation-button.jsx';
-import GridContainer from '../components/grid-container.jsx';
+import GridContainer from '../helpers/grid-container.jsx';
+import { Divider } from 'semantic-ui-react';
+import NavigationButtons from '../helpers/navigation-buttons.jsx';
 
 export default class CountryView extends React.Component {
     constructor(props, context) {
@@ -19,25 +20,29 @@ export default class CountryView extends React.Component {
 
         if (this.props.row) {
             return <div>
-                <div className={"ui form " + (this.props.loading ? "loading" : "")}>
-                    <div className="">
-                        <NavigationButton show={this.props.showNext} float="right" onClick={this.props.nextRow} leftLabel="Next" rightLabel="" icon="double right angle icon" />
-                        <NavigationButton show={this.props.showPrev} float="left" onClick={this.props.previousRow} leftLabel="" rightLabel="Previous" icon="double left angle icon" />
+                <Divider horizontal>Country</Divider>
 
-                        <h1 style={{width: "125px", margin: "0 auto", textAlign: "center"}}>Country</h1>
-                    </div>
+                <div className={"ui form " + (this.props.loading ? "loading" : "")}>
+                    <NavigationButtons
+                        header={true}
+                        nextRow={this.props.nextRow}
+                        previousRow={this.props.previousRow}
+                        showPrev={this.props.showPrev}
+                        showNext={this.props.showNext}/>
 
                     <h4 className="ui dividing header">General Information</h4>
 
-                    <div className="two fields">
+                    <div className="field">
                         <TextField pos="left" name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
+                    </div>
+                    <div className="field">
                         <TextField pos="right" name="code" label="Code" value={this.props.row.code} handleChange={this.props.handleChange} />
                     </div>
 
-                    <div className="navigation-footer-buttons">
-                        <NavigationButton show={true} float="right" onClick={this.props.closeRow} leftLabel="Close" rightLabel="" icon="clear" />
-                        <NavigationButton show={true} float="left" onClick={this.props.handleSubmit} leftLabel="Save" rightLabel="" icon="done" />
-                    </div>
+                    <NavigationButtons
+                        footer={true}
+                        closeRow={this.props.closeRow}
+                        handleSubmit={this.props.handleSubmit}/>
                 </div>
             </div>
         } else if (this.props.data.length > 0) {

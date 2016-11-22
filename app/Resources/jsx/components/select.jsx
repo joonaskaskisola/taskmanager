@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Dropdown} from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react'
 
 export default class SelectField extends React.Component {
     render() {

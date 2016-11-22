@@ -6,7 +6,9 @@ use AppBundle\Helper\FormHelper;
 use Cake\Chronos\Chronos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Entity\Task;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -198,5 +200,26 @@ class TaskController extends Controller
             'tasks' => $tasks,
             'new' => $this->generateUrl('newTask')
         ]);
+    }
+
+    /**
+     * @Route("/api/task/{id}", name="getTask")
+     * @param $id
+     * @Method({"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getCustomerAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Task');
+
+        $response = array_map(function($task) {
+            /** @var Task $task */
+            return [
+                'id' => $task->getId(),
+            ];
+        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+
+        return new JsonResponse($response);
     }
 }

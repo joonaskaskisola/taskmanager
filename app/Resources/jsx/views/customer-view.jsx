@@ -2,9 +2,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import Row from '../components/row.jsx';
 import TextField from '../components/text.jsx';
-import NavigationButton from '../components/navigation-button.jsx';
 import SelectField from '../components/select.jsx';
-import GridContainer from '../components/grid-container.jsx';
+import GridContainer from '../helpers/grid-container.jsx';
+import { Button, Divider } from 'semantic-ui-react';
+import NavigationButtons from '../helpers/navigation-buttons.jsx';
+import ModalViewTasks from '../helpers/view-tasks.jsx';
 
 export default class CustomerView extends React.Component {
     constructor(props, context) {
@@ -20,13 +22,19 @@ export default class CustomerView extends React.Component {
 
         if (this.props.row) {
             return <div>
-                <div className={"ui form " + (this.props.loading ? "loading" : "")}>
-                    <div className="">
-                        <NavigationButton show={this.props.showNext} float="right" onClick={this.props.nextRow} leftLabel="Next" rightLabel="" icon="double right angle icon" />
-                        <NavigationButton show={this.props.showPrev} float="left" onClick={this.props.previousRow} leftLabel="" rightLabel="Previous" icon="double left angle icon" />
+                <div>
+                    <ModalViewTasks customerId={this.props.row.id}/>
+                </div>
 
-                        <h1 style={{width: "125px", margin: "0 auto", textAlign: "center"}}>Customer</h1>
-                    </div>
+                <Divider horizontal>Customer</Divider>
+
+                <div className={"ui form " + (this.props.loading ? "loading" : "")}>
+                    <NavigationButtons
+                        header={true}
+                        nextRow={this.props.nextRow}
+                        previousRow={this.props.previousRow}
+                        showPrev={this.props.showPrev}
+                        showNext={this.props.showNext}/>
 
                     <h4 className="ui dividing header">Shipping Information</h4>
 
@@ -52,10 +60,10 @@ export default class CustomerView extends React.Component {
                         <TextField width="six" name="locality" label="Locality" value={this.props.row.locality} handleChange={this.props.handleChange} />
                     </div>
 
-                    <div className="navigation-footer-buttons">
-                        <NavigationButton show={true} float="right" onClick={this.props.closeRow} leftLabel="Close" />
-                        <NavigationButton show={true} float="left" onClick={this.props.handleSubmit} leftLabel="Save" />
-                    </div>
+                    <NavigationButtons
+                        footer={true}
+                        closeRow={this.props.closeRow}
+                        handleSubmit={this.props.handleSubmit}/>
                 </div>
             </div>
         } else if (this.props.data.length > 0) {
