@@ -20,17 +20,23 @@ export default class GridContainer extends React.Component {
     }
 
     search(e) {
-        let queryResult = [];
+        let queryResult = [], added, self = this;
 
         this.props.rows.forEach(function (row) {
+            added = false;
             e.target.value.toLowerCase().split(' ').forEach(function(word) {
-                Object.keys(row).map(function(key) {
-                    if (isNaN(row[key]) && row[key].toLowerCase().indexOf(word) != -1) {
-                        queryResult.push(row);
-                    }
-
-                    console.log("column: " + row[key] + " - " + isNaN(row[key]));
-                });
+                if (!added) {
+                    Object.keys(row).map(function(key) {
+                        if (self.props.fields.indexOf(key) != -1
+                            && !added
+                            && isNaN(row[key])
+                            && row[key].toLowerCase().indexOf(word) != -1
+                        ) {
+                            added = true;
+                            queryResult.push(row);
+                        }
+                    });
+                }
             });
         });
 
@@ -66,7 +72,6 @@ export default class GridContainer extends React.Component {
         );
 
         this.setState({"results": this.state.results, "sortBy": sortBy});
-
     }
 
     render() {
@@ -98,6 +103,7 @@ export default class GridContainer extends React.Component {
                         onChange={this.search}
                         style={{marginRight: "20px"}}
                         focus
+                        icon="search"
                         placeholder='Search...' />}
                 </div>
             </div>

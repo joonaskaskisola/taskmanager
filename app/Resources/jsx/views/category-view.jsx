@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Row from '../components/row.jsx';
 import TextField from '../components/text.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
 import { Divider } from 'semantic-ui-react';

@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
-use AppBundle\Helper\FormHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -16,107 +15,30 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class CategoryController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/category/new", name="newCategory")
-     * @param Request $request
-     * @return Response
-     */
-    public function newAction(Request $request)
-    {
-        $category = new Category();
-
-        $form = $this->createForm('AppBundle\Form\CategoryType', $category);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($category);
-            $em->flush();
-
-            return $this->redirectToRoute('listCategory');
-        }
-
-        return $this->render('form.html.twig', FormHelper::getArray($form));
-    }
-
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/category/edit/{id}", name="editCategory")
-     * @param Request $request
-     * @param $id
-     * @return Response
-     */
-    public function editAction(Request $request, $id)
-    {
-        /** @var Category $task */
-        $category = $this->getDoctrine()
-            ->getRepository('AppBundle:Category')
-            ->find($id);
-
-        if (!$category) {
-            throw $this->createNotFoundException(
-                'No category found for id '.$id
-            );
-        }
-
-        $form = $this->createForm('AppBundle\Form\CategoryType', $category);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($category);
-            $em->flush();
-
-            return $this->redirectToRoute('listCategory');
-        }
-
-        return $this->render('form.html.twig', FormHelper::getArray($form, [
-            'list' => $this->generateUrl('listCategory'),
-            'list_name' => 'Category list'
-        ]));
-    }
-
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/category", name="listCategory")
      * @param Request $request
      * @return Response
      */
-    public function listAction(Request $request)
+    public function listCategoryAction(Request $request)
     {
-        $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:Category');
-
-        $categories = $repository->findBy([], ['name' => 'ASC']);
-
-        return $this->render('grid.html.twig', [
-            'view' => 'category',
-            'categories' => $categories,
-            'new' => $this->generateUrl('newCategory')
-        ]);
+        return $this->render('grid.html.twig', ['view' => 'category']);
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/api/category", name="getCategory")
+     * @Route("/api/category", name="getCategoriesAction")
      * @Method({"GET"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function getCategoryAction(Request $request)
+    public function getCategoriesAction(Request $request)
     {
-        $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:Category');
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Category');
 
         $response = array_map(function($category) {
             /** @var Category $category */
             return [
                 'id' => $category->getId(),
-                'name' => $category->getName(),
+                'name' => $category->getName() ?? ""
             ];
         }, $repository->findBy([], ['name' => 'ASC']));
 
@@ -124,19 +46,45 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/api/category", name="putCategory")
-     * @Method({"PUT"})
+     * @Route("/api/category/{id}", name="getCategory")
+     * @param $id
+     * @Method({"GET"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function putCategoryAction(Request $request)
+    public function getCategoryAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Category');
+
+        $response = array_map(function($category) {
+            /** @var Category $category */
+            return [
+                'id' => $category->getId(),
+                'name' => $category->getName() ?? ""
+            ];
+        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse*
+     * @Route("/api/category", name="editCategoryAction")
+     * @Method({"PUT", "POST"})
+     */
+    public function editCategoryAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('AppBundle:Category');
-        /** @var Category $category */
-        $category = $repository->findOneBy(['id' => $request->request->get('id')]);
 
-        $category->setName($request->request->get('name'));
+        /** @var Category $category */
+        $category = $request->request->get('id')
+            ? $repository->findOneBy(['id' => $request->request->get('id')])
+            : new Category();
+
+        $category
+            ->setName($request->request->get('name'));
 
         $em->persist($category);
         $em->flush();

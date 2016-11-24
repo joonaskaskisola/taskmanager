@@ -1,11 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import TextField from '../components/text.jsx';
+import SelectField from '../components/select.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
 import { Divider } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
 
-export default class CountryView extends React.Component {
+export default class ItemView extends React.Component {
     constructor(props, context) {
         super(props, context);
     }
@@ -17,7 +18,7 @@ export default class CountryView extends React.Component {
 
         if (this.props.row) {
             return <div>
-                <Divider horizontal>Country #{this.props.row.id}</Divider>
+                <Divider horizontal>Item #{this.props.row.id}</Divider>
 
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>
                     <NavigationButtons
@@ -29,18 +30,14 @@ export default class CountryView extends React.Component {
 
                     <h4 className="ui dividing header">General Information</h4>
 
-                    <div className="field">
+                    <div className="two fields">
                         <TextField pos="left" name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
+                        <TextField pos="right" name="price" label="Price" value={this.props.row.price} handleChange={this.props.handleChange} />
                     </div>
 
                     <div className="two fields">
-                        <div className="field">
-                            <TextField pos="right" name="code" label="Code" value={this.props.row.code} handleChange={this.props.handleChange} />
-                        </div>
-
-                        <div className="field">
-                            <TextField pos="right" name="lang_code" label="Lang code" value={this.props.row.lang_code} handleChange={this.props.handleChange} />
-                        </div>
+                        <SelectField width="six" name="category" label="Category" options={this.props.categories} value={this.props.row.category.id} handleChange={this.props.handleSelectChange} />
+                        <SelectField width="six" name="unit" label="Unit" options={this.props.units} value={this.props.row.unit.id} handleChange={this.props.handleSelectChange} />
                     </div>
 
                     <NavigationButtons
@@ -52,8 +49,8 @@ export default class CountryView extends React.Component {
         } else if (this.props.data.length > 0) {
             return <GridContainer
                 search={true}
-                fields={['name', 'code', 'lang_code']}
-                columns={['Name', 'Code', 'Lang code']}
+                fields={['name', 'price']}
+                columns={['Name', 'Price']}
                 rows={this.props.data}
                 viewRow={this.props.viewRow}
                 createNew={this.props.createNew}/>

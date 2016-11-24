@@ -2,8 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\CustomerItem;
-use AppBundle\Helper\FormHelper;
 use Cake\Chronos\Chronos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,100 +10,9 @@ use AppBundle\Entity\Customer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CustomerController extends Controller
 {
-    /**
-     * @Route("/customer/new", name="newCustomer")
-     * @param Request $request
-     * @return Response
-     */
-    public function newAction(Request $request)
-    {
-        $customer = new Customer();
-
-        $form = $this->createForm('AppBundle\Form\CustomerType', $customer);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $customer->setCreatedAt(new Chronos());
-            $em->persist($customer);
-            $em->flush();
-
-            $catalogues = $this->getDoctrine()
-                ->getRepository('AppBundle:Item')
-                ->findAll();
-
-            foreach ($catalogues as $catalogue) {
-                $cC = new CustomerItem();
-                $cC->setItem($catalogue)
-                    ->setPrice(null)
-                    ->setCustomer($customer);
-                $em->persist($cC);
-            }
-
-            $em->flush();
-
-            return $this->redirectToRoute('listCustomer');
-        }
-
-        return $this->render('form.html.twig', FormHelper::getArray($form));
-    }
-
-    /**
-     * @Route("/customer/edit/{id}", name="editCustomer")
-     * @param Request $request
-     * @param $id
-     * @return Response
-     */
-    public function editAction(Request $request, $id)
-    {
-        /** @var Customer $customer */
-        $customer = $this->getDoctrine()
-            ->getRepository('AppBundle:Customer')
-            ->find($id);
-
-        if (!$customer) {
-            throw $this->createNotFoundException(
-                'No customer found for id '.$id
-            );
-        }
-
-        $form = $this->createForm('AppBundle\Form\CustomerType', $customer);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($customer);
-            $em->flush();
-
-            return $this->redirectToRoute('listCustomer');
-        }
-
-        $customerNoteRepository = $this->getDoctrine()->getRepository('AppBundle:CustomerNote');
-        $customerNotes = $customerNoteRepository->findBy(['customer' => $customer]);
-
-        $userRepository = $this->getDoctrine()->getRepository('AppBundle:User');
-        $customerUsers = $userRepository->findBy(['customer' => $customer]);
-
-        $taskRepository = $this->getDoctrine()->getRepository('AppBundle:Task');
-        $customerTasks = $taskRepository->findBy(['customer' => $customer]);
-
-        return $this->render('customer/form.html.twig', [
-            'form_layout' => 'customer',
-            'form' => $form->createView(),
-            'notes' => $customerNotes,
-            'users' => $customerUsers,
-            'tasks' => $customerTasks
-        ]);
-    }
-
     /**
      * @Route("/customers", name="listCustomer")
      * @param Request $request
@@ -171,26 +78,20 @@ class CustomerController extends Controller
     }
 
     /**
-     * @Route("/api/customer", name="putCustomer")
-     * @Method({"PUT"})
      * @param Request $request
-     * @return JsonResponse
+     * @return JsonResponse*
+     * @Route("/api/customer", name="editCustomerAction")
+     * @Method({"PUT", "POST"})
      */
-    public function putCustomerAction(Request $request)
+    public function editCustomerAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
-        /** @var Customer $customer */
-        $customer = $repository->findOneBy(['id' => $request->request->get('id')]);
 
-        if ($request->request->get('country')) {
-            $countryRepository = $this->getDoctrine()->getRepository('AppBundle:Country');
-            $customer->setCountry(
-                $countryRepository->findOneBy([
-                    'id' => (int)$request->request->get('country')
-                ])->getName()
-            );
-        }
+        /** @var Customer $customer */
+        $customer = $request->request->get('id')
+            ? $repository->findOneBy(['id' => $request->request->get('id')])
+            : (new Customer())->setCreatedAt(new Chronos());
 
         $customer
             ->setName($request->request->get('name'))
@@ -201,6 +102,7 @@ class CustomerController extends Controller
             ->setBusinessId($request->request->get('businessId'))
             ->setContactPerson($request->request->get('contactPerson'))
             ->setEmail($request->request->get('email'))
+            ->setCountry($request->request->get('country'))
             ->setModifiedAt(new Chronos());
 
         $em->persist($customer);

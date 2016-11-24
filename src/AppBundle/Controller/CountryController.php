@@ -16,99 +16,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class CountryController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/country/new", name="newCountry")
+     * @Route("/country", name="listCountry")
      * @param Request $request
      * @return Response
      */
-    public function newAction(Request $request)
+    public function listCountryAction(Request $request)
     {
-        $country = new Country();
-
-        $form = $this->createForm('AppBundle\Form\CountryType', $country);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($country);
-            $em->flush();
-
-            return $this->redirectToRoute('listCountry');
-        }
-
-        return $this->render('form.html.twig', FormHelper::getArray($form));
+        return $this->render('grid.html.twig', ['view' => 'country']);
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/country/edit/{id}", name="editCountry")
-     * @param Request $request
-     * @param $id
-     * @return Response
-     */
-    public function editAction(Request $request, $id)
-    {
-        /** @var Country $country */
-        $country = $this->getDoctrine()
-            ->getRepository('AppBundle:Country')
-            ->find($id);
-
-        if (!$country) {
-            throw $this->createNotFoundException(
-                'No country found for id '.$id
-            );
-        }
-
-        $form = $this->createForm('AppBundle\Form\CountryType', $country);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($country);
-            $em->flush();
-
-            return $this->redirectToRoute('listCountry');
-        }
-
-        return $this->render('form.html.twig', [
-            'form_layout' => 'country',
-            'form' => $form->createView(),
-            'list' => $this->generateUrl('listCountry'),
-            'list_name' => 'Country list'
-        ]);
-    }
-
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/countries", name="listCountry")
-     * @param Request $request
-     * @return Response
-     */
-    public function listAction(Request $request)
-    {
-        $countryRepository = $this->getDoctrine()
-            ->getRepository('AppBundle:Country');
-
-        $countries = $countryRepository->findAll();
-
-        return $this->render('grid.html.twig', [
-            'view' => 'country',
-            'countries' => $countries,
-            'new' => $this->generateUrl('newCountry')
-        ]);
-    }
-
-    /**
-     * @Route("/api/country", name="getCountry")
+     * @Route("/api/country", name="getCountriesAction")
      * @Method({"GET"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function getCountryAction(Request $request)
+    public function getCountriesAction(Request $request)
     {
         $repository = $this->getDoctrine()->getRepository('AppBundle:Country');
 
@@ -116,8 +39,9 @@ class CountryController extends Controller
             /** @var Country $country */
             return [
                 'id' => $country->getId(),
-                'name' => $country->getName(),
-                'code' => $country->getCode()
+                'name' => $country->getName() ?? "",
+                'code' => $country->getCode() ?? "",
+                'lang_code' => $country->getLangCode() ?? ""
             ];
         }, $repository->findBy([], ['name' => 'ASC']));
 
@@ -125,21 +49,49 @@ class CountryController extends Controller
     }
 
     /**
-     * @Route("/api/country", name="putCountry")
-     * @Method({"PUT"})
+     * @Route("/api/country/{id}", name="getCountry")
+     * @param $id
+     * @Method({"GET"})
      * @param Request $request
      * @return JsonResponse
      */
-    public function putCountryAction(Request $request)
+    public function getCountryAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Country');
+
+        $response = array_map(function($country) {
+            /** @var Country $country */
+            return [
+                'id' => $country->getId(),
+                'name' => $country->getName() ?? "",
+                'code' => $country->getCode() ?? "",
+                'lang_code' => $country->getLangCode() ?? ""
+            ];
+        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse*
+     * @Route("/api/country", name="editCountryAction")
+     * @Method({"PUT", "POST"})
+     */
+    public function editCountryAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('AppBundle:Country');
+
         /** @var Country $country */
-        $country = $repository->findOneBy(['id' => $request->request->get('id')]);
+        $country = $request->request->get('id')
+            ? $repository->findOneBy(['id' => $request->request->get('id')])
+            : new Country();
 
         $country
             ->setName($request->request->get('name'))
-            ->setCode($request->request->get('code'));
+            ->setCode($request->request->get('code'))
+            ->setLangCode($request->request->get('lang_code'));
 
         $em->persist($country);
         $em->flush();

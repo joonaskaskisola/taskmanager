@@ -3,10 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Unit;
-use AppBundle\Helper\FormHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,95 +14,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class UnitController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/unit/new", name="newUnit")
+     * @Route("/unit", name="listUnit")
      * @param Request $request
      * @return Response
      */
-    public function newAction(Request $request)
+    public function listUnitAction(Request $request)
     {
-        $unit = new Unit();
-
-        $form = $this->createForm('AppBundle\Form\UnitType', $unit);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($unit);
-            $em->flush();
-
-            return $this->redirectToRoute('listUnit');
-        }
-
-        return $this->render('form.html.twig', FormHelper::getArray($form));
+        return $this->render('grid.html.twig', ['view' => 'unit']);
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/unit/edit/{id}", name="editUnit")
-     * @param Request $request
-     * @param $id
-     * @return Response
-     */
-    public function editAction(Request $request, $id)
-    {
-        /** @var Unit $unit */
-        $unit = $this->getDoctrine()
-            ->getRepository('AppBundle:Unit')
-            ->find($id);
-
-        if (!$unit) {
-            throw $this->createNotFoundException(
-                'No unit found for id '.$id
-            );
-        }
-
-        $form = $this->createForm('AppBundle\Form\UnitType', $unit);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($unit);
-            $em->flush();
-
-            return $this->redirectToRoute('listUnit');
-        }
-
-        return $this->render('form.html.twig', [
-            'form_layout' => 'unit',
-            'form' => $form->createView(),
-            'list' => $this->generateUrl('listUnit'),
-            'list_name' => 'Unit list'
-        ]);
-    }
-
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/units", name="listUnit")
-     * @param Request $request
-     * @return Response
-     */
-    public function listAction(Request $request)
-    {
-        $unitRepository = $this->getDoctrine()
-            ->getRepository('AppBundle:Unit');
-
-        $units = $unitRepository->findAll();
-
-        return $this->render('grid.html.twig', [
-            'view' => 'unit',
-            'units' => $units,
-            'new' => $this->generateUrl('newUnit')
-        ]);
-    }
-
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/api/unit", name="getUnits")
+     * @Route("/api/unit", name="getUnitsAction")
+     * @Method({"GET"})
      * @param Request $request
      * @return JsonResponse
      */
@@ -115,10 +37,57 @@ class UnitController extends Controller
             /** @var Unit $unit */
             return [
                 'id' => $unit->getId(),
-                'name' => $unit->getName()
+                'name' => $unit->getName() ?? ""
             ];
         }, $repository->findBy([], ['name' => 'ASC']));
 
         return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/api/unit/{id}", name="getUnit")
+     * @param $id
+     * @Method({"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getUnitAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Unit');
+
+        $response = array_map(function($unit) {
+            /** @var Unit $unit */
+            return [
+                'id' => $unit->getId(),
+                'name' => $unit->getName() ?? ""
+            ];
+        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse*
+     * @Route("/api/unit", name="editUnitAction")
+     * @Method({"PUT", "POST"})
+     */
+    public function editUnitAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Unit');
+
+        /** @var Unit $unit */
+        $unit = $request->request->get('id')
+            ? $repository->findOneBy(['id' => $request->request->get('id')])
+            : new Unit();
+
+        $unit
+            ->setName($request->request->get('name'));
+
+        $em->persist($unit);
+        $em->flush();
+
+        return new JsonResponse();
     }
 }
