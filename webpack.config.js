@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   entry: {
     customerApp: "./app/Resources/jsx/customerApp.jsx",
-    mailApp: "./app/Resources/jsx/mailApp.jsx",
+    inboxApp: "./app/Resources/jsx/inboxApp.jsx",
     itemApp: "./app/Resources/jsx/itemApp.jsx",
     categoryApp: "./app/Resources/jsx/categoryApp.jsx",
     unitApp: "./app/Resources/jsx/unitApp.jsx",

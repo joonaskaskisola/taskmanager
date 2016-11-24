@@ -6,7 +6,6 @@ use AppBundle\Entity\PrivateMessage;
 use AppBundle\Repository\PrivateMessageRepository;
 use Cake\Chronos\Chronos;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use AppBundle\Helper\FormHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,39 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class PrivateMessageController extends Controller
+class InboxController extends Controller
 {
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/inbox/new", name="newPrivateMessage")
-     * @param Request $request
-     * @return Response
-     */
-    public function newAction(Request $request)
-    {
-        $message = new PrivateMessage();
-        $message->setIsRead(0);
-        $message->setTimestamp(new Chronos());
-        $message->setFromUser(
-            $this->container->get('security.context')->getToken()->getUser()
-        );
-
-        $form = $this->createForm('AppBundle\Form\PrivateMessageType', $message);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($message);
-            $em->flush();
-
-            return $this->redirectToRoute('listPrivateMessage');
-        }
-
-        return $this->render('form.html.twig', FormHelper::getArray($form, ['form_layout' => 'inbox']));
-    }
-
     /**
      * @Security("has_role('ROLE_ADMIN')")
      * @Route("/inbox", name="listPrivateMessage")
@@ -55,10 +23,7 @@ class PrivateMessageController extends Controller
      */
     public function listAction(Request $request)
     {
-        return $this->render('grid.html.twig', [
-            'view' => 'inbox',
-            'new' => $this->generateUrl('newPrivateMessage')
-        ]);
+        return $this->render('grid.html.twig', ['view' => 'inbox']);
     }
 
     /**
@@ -79,7 +44,7 @@ class PrivateMessageController extends Controller
                 'timestamp' => $message->getTimeStamp()->format("Y-m-d H:i:s"),
                 'subject' => $message->getSubject(),
                 'is_read' => $message->getIsRead(),
-                'from' => $message->getFromUser()->getUsername()
+                'from' => sprintf("%s %s", $message->getFromUser()->getFirstName(), $message->getFromUser()->getLastName())
             ];
         }, $messageRepository->findBy([
             'toUser' => $this->container->get('security.context')->getToken()->getUser()
@@ -110,11 +75,7 @@ class PrivateMessageController extends Controller
             }
 
             return [
-                'from' => [
-                    'id' => $message->getFromUser()->getId(),
-                    'firstName' => $message->getFromUser()->getFirstName(),
-                    'lastName' => $message->getFromUser()->getLastName()
-                ],
+                'from_user' => $message->getFromUser()->getId(),
                 'id' => $message->getId(),
                 'timestamp' => $message->getTimeStamp()->format("Y-m-d H:i:s"),
                 'subject' => $message->getSubject(),
@@ -130,14 +91,15 @@ class PrivateMessageController extends Controller
 
     /**
      * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/api/inbox/reply/{replyToId}", name="postReplyMessage")
-     * @Method({"POST"})
+     * @Route("/api/inbox", name="replyMessageAction")
+     * @Method({"PUT"})
      * @param Request $request
-     * @param integer $replyToId
      * @return JsonResponse
      */
-    public function postReplyMessageAction(Request $request, $replyToId)
+    public function replyMessageAction(Request $request)
     {
+        $replyToId = $request->request->get('id');
+
         $repository = $this->getDoctrine()->getRepository('AppBundle:PrivateMessage');
         $em = $this->getDoctrine()->getManager();
         /** @var PrivateMessage $originalMessage */
@@ -162,6 +124,34 @@ class PrivateMessageController extends Controller
                     }, explode(PHP_EOL, $originalMessage->getMessage()))
                 )
             )));
+
+        $em->persist($message);
+        $em->flush();
+
+        return new JsonResponse();
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse*
+     * @Route("/api/inbox", name="postMessageAction")
+     * @Method({"POST"})
+     */
+    public function postMessageAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userRepository = $this->getDoctrine()->getRepository('AppBundle:User');
+
+        /** @var PrivateMessage $message */
+        $message = new PrivateMessage();
+
+        $message
+            ->setIsRead(0)
+            ->setTimestamp(new Chronos())
+            ->setToUser($userRepository->findOneBy(['id' => $request->request->get('to_user')]))
+            ->setFromUser($this->container->get('security.context')->getToken()->getUser())
+            ->setSubject($request->request->get('subject'))
+            ->setMessage(strip_tags($request->request->get('message')));
 
         $em->persist($message);
         $em->flush();

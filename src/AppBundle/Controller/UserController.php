@@ -2,14 +2,11 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\PrivateMessage;
 use AppBundle\Entity\User;
-use AppBundle\Helper\FormHelper;
-use AppBundle\Repository\UserRepository;
-use Cake\Chronos\Chronos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,101 +14,81 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class UserController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/user/new", name="newUser")
+     * @Route("/user", name="listUser")
      * @param Request $request
      * @return Response
      */
-    public function newAction(Request $request)
+    public function listUserAction(Request $request)
     {
-        $user = new User();
-
-        $form = $this->createForm('AppBundle\Form\UserType', $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $user->setPassword(
-                $this->get('security.password_encoder')
-                    ->encodePassword($user, $user->getPassword())
-            );
-
-            $em->persist($user);
-            $em->flush();
-
-            return $this->redirectToRoute('listUser');
-        }
-
-        return $this->render('form.html.twig', FormHelper::getArray($form));
+        return $this->render('grid.html.twig', ['view' => 'user']);
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/user/edit/{id}", name="editUser")
+     * @Route("/api/user", name="getUsersAction")
+     * @Method({"GET"})
      * @param Request $request
+     * @return JsonResponse
+     */
+    public function getUsersAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:User');
+
+        $response = array_map(function($user) {
+            /** @var User $user */
+            return [
+                'id' => $user->getId(),
+                'name' => sprintf("%s %s", $user->getFirstName(), $user->getLastName())
+            ];
+        }, $repository->findBy([], ['firstName' => 'ASC', 'lastName' => 'ASC']));
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/api/user/{id}", name="getUser")
      * @param $id
-     * @return Response
+     * @Method({"GET"})
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function editAction(Request $request, $id)
+    public function getUserAction(Request $request, $id)
     {
-        /** @var User $user */
-        $user = $this->getDoctrine()
-            ->getRepository('AppBundle:User')
-            ->find($id);
+        $repository = $this->getDoctrine()->getRepository('AppBundle:User');
 
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '.$id
-            );
-        }
+        $response = array_map(function($user) {
+            /** @var User $user */
+            return [
+                'id' => $user->getId(),
+                'name' => sprintf("%s %s", $user->getFirstName(), $user->getLastName())
+            ];
+        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
 
-        $form = $this->createForm('AppBundle\Form\UserType', $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            if (!empty($user->getPassword())) {
-                $user->setPassword(
-                    $this->get('security.password_encoder')
-                        ->encodePassword($user, $user->getPassword())
-                );
-            }
-
-            $em->persist($user);
-            $em->flush();
-
-            return $this->redirectToRoute('listUser');
-        }
-
-        return $this->render('form.html.twig', [
-            'form_layout' => 'user',
-            'form' => $form->createView(),
-            'list' => $this->generateUrl('listUser'),
-            'list_name' => 'User list'
-        ]);
+        return new JsonResponse($response);
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/users", name="listUser")
      * @param Request $request
-     * @return Response
+     * @return JsonResponse*
+     * @Route("/api/user", name="editUserAction")
+     * @Method({"PUT", "POST"})
      */
-    public function listAction(Request $request)
+    public function editUserAction(Request $request)
     {
-        $userRepository = $this->getDoctrine()
-            ->getRepository('AppBundle:User');
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository('AppBundle:User');
 
-        $users = $userRepository->findAll();
+        /** @var User $user */
+        $user = $request->request->get('id')
+            ? $repository->findOneBy(['id' => $request->request->get('id')])
+            : new User();
 
-        return $this->render('grid.html.twig', [
-            'view' => 'user',
-            'users' => $users,
-            'new' => $this->generateUrl('newUser')
-        ]);
+        $user
+            ->setFirstName($request->request->get('firstName'))
+            ->setLastName($request->request->get('lastName'));
+
+        $em->persist($user);
+        $em->flush();
+
+        return new JsonResponse();
     }
 }

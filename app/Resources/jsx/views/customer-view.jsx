@@ -63,14 +63,14 @@ export default class CustomerView extends React.Component {
                         handleSubmit={this.props.handleSubmit}/>
                 </div>
             </div>
-        } else if (this.props.data.length > 0) {
-            return <GridContainer
-                search={true}
-                fields={['name', 'businessId', 'streetAddress', 'country']}
-                columns={['Name', 'Business id', 'Street address', 'Country']}
-                rows={this.props.data}
-                viewRow={this.props.viewRow}
-                createNew={this.props.createNew}/>
         }
+
+        return <GridContainer
+            search={true}
+            fields={['name', 'businessId', 'streetAddress', 'country']}
+            columns={['Name', 'Business id', 'Street address', 'Country']}
+            rows={this.props.data}
+            viewRow={this.props.viewRow}
+            createNew={this.props.createNew}/>
     }
 }

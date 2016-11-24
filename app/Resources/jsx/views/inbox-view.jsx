@@ -1,23 +1,25 @@
 import React from 'react';
 import { render } from 'react-dom';
 import TextField from '../components/text.jsx';
+import TextAreaField from '../components/textArea.jsx';
+import SelectField from '../components/select.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
 import { Divider } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
 
-export default class CountryView extends React.Component {
+export default class InboxView extends React.Component {
     constructor(props, context) {
         super(props, context);
     }
 
     render() {
-        if (this.props.loading) {
+        if (this.props.loading && !this.props.row) {
             return <div></div>
         }
 
         if (this.props.row) {
             return <div>
-                <Divider horizontal>Country #{this.props.row.id}</Divider>
+                <Divider horizontal>PM #{this.props.row.id}</Divider>
 
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>
                     <NavigationButtons
@@ -27,15 +29,20 @@ export default class CountryView extends React.Component {
                         showPrev={this.props.showPrev}
                         showNext={this.props.showNext}/>
 
-                    <h4 className="ui dividing header">General Information</h4>
+                    <h4 className="ui dividing header">Shipping Information</h4>
 
                     <div className="field">
-                        <TextField pos="left" name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
+                        <TextField width="twelve" name="subject" label="Subject" value={this.props.row.subject} handleChange={this.props.handleChange} />
                     </div>
 
                     <div className="two fields">
-                        <TextField pos="left" name="code" label="Code" value={this.props.row.code} handleChange={this.props.handleChange} />
-                        <TextField pos="right" name="lang_code" label="Lang code" value={this.props.row.lang_code} handleChange={this.props.handleChange} />
+                        {this.props.row.id && <TextField width="six" name="timestamp" label="Timestamp" value={this.props.row.timestamp} />}
+                        {this.props.row.id && <SelectField width="six" name="from_user" label="From" options={this.props.users} value={this.props.row.from_user} handleChange={this.props.handleSelectChange} />}
+                        {!this.props.row.id && <SelectField width="twelve" name="to_user" label="To" options={this.props.users} value={this.props.row.to_user} handleChange={this.props.handleSelectChange} />}
+                    </div>
+
+                    <div className="field">
+                        <TextAreaField width="twelve" name="message" label="Message" value={this.props.row.message} handleChange={this.props.handleChange} />
                     </div>
 
                     <NavigationButtons
@@ -48,8 +55,8 @@ export default class CountryView extends React.Component {
 
         return <GridContainer
             search={true}
-            fields={['name', 'code', 'lang_code']}
-            columns={['Name', 'Code', 'Lang code']}
+            fields={['subject', 'timestamp', 'from']}
+            columns={['Subject', 'Timestamp', 'Sender']}
             rows={this.props.data}
             viewRow={this.props.viewRow}
             createNew={this.props.createNew}/>
