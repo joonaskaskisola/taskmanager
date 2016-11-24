@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Button, Input } from 'semantic-ui-react'
 import Row from '../components/row.jsx';
+import Sort from '../components/sort.jsx';
 
 export default class GridContainer extends React.Component {
     constructor(props, context) {
@@ -9,22 +10,28 @@ export default class GridContainer extends React.Component {
 
         this.state = {
             search: "",
-            results: []
+            results: [],
+            sortBy: "",
+            sortOrder: true
         };
 
         this.search = this.search.bind(this);
+        this.sortByColumn = this.sortByColumn.bind(this);
     }
 
     search(e) {
         let queryResult = [];
-        this.props.rows.forEach(function (row) {
-            // Object.keys(row).map(function(key) {
-            //     console.log("column: " + row[key]);
-            // });
 
-            if (row.name.toLowerCase().indexOf(e.target.value.toLowerCase()) != -1) {
-                queryResult.push(row);
-            }
+        this.props.rows.forEach(function (row) {
+            e.target.value.toLowerCase().split(' ').forEach(function(word) {
+                Object.keys(row).map(function(key) {
+                    if (isNaN(row[key]) && row[key].toLowerCase().indexOf(word) != -1) {
+                        queryResult.push(row);
+                    }
+
+                    console.log("column: " + row[key] + " - " + isNaN(row[key]));
+                });
+            });
         });
 
         this.setState({
@@ -39,13 +46,36 @@ export default class GridContainer extends React.Component {
         });
     }
 
+    sortByColumn(e) {
+        let sortBy = e.target.getAttribute('name');
+
+        if (this.state.sortBy !== sortBy) {
+            this.setState({"sortOrder": true});
+        } else {
+            this.setState({"sortOrder": !this.state.sortOrder});
+        }
+
+        this.state.results.sort(
+            Sort.sortBy(
+                e.target.getAttribute('name'),
+                this.state.sortOrder,
+                function (a) {
+                    return a.toUpperCase()
+                }
+            )
+        );
+
+        this.setState({"results": this.state.results, "sortBy": sortBy});
+
+    }
+
     render() {
         let columns = [],
             rows = [],
             self = this;
 
-        this.props.columns.forEach(function(column) {
-            columns.push(<div key={"column-" + column} className="column">{ column }</div>);
+        this.props.columns.forEach(function(column, i) {
+            columns.push(<div name={self.props.fields[i]} onClick={self.sortByColumn} key={"column-" + column} className="column clickable">{ column }</div>);
         });
 
         this.state.results.forEach(function(row) {

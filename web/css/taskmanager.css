@@ -14,3 +14,7 @@ body {
 .navigation-footer-buttons {
     overflow: hidden;
 }
+
+.clickable {
+    cursor: pointer;
+}
