@@ -8,7 +8,7 @@ export default class UnitApp extends BaseApp {
     constructor(props, context) {
         super(props, context);
 
-        this.state.dataUrl = "/api/unit";
+        this.state.app = "unit";
         this.state.loadExtraInfo = false;
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -17,13 +17,13 @@ export default class UnitApp extends BaseApp {
         event.preventDefault();
 
         if (this.state.row['id'] !== undefined) {
-            axios.put(this.state.dataUrl, this.state.row).then(function (response) {
+            axios.put(BaseApp.getApplicationDataUrl(this.state.app), this.state.row).then(function (response) {
                 NotificationManager.success("Row updated!", "Success");
             }).catch(function (error) {
                 NotificationManager.error(error.toString(), "Problems detected");
             });
         } else {
-            axios.post(this.state.dataUrl, this.state.row).then(function (response) {
+            axios.post(BaseApp.getApplicationDataUrl(this.state.app), this.state.row).then(function (response) {
                 NotificationManager.success("Row updated!", "Success");
             }).catch(function (error) {
                 NotificationManager.error(error.toString(), "Problems detected");

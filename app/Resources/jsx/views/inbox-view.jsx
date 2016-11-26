@@ -6,6 +6,7 @@ import SelectField from '../components/select.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
 import { Divider } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
+import ModalReplyPrivateMessage from '../modals/reply-privatemessage.jsx';
 
 export default class InboxView extends React.Component {
     constructor(props, context) {
@@ -19,6 +20,10 @@ export default class InboxView extends React.Component {
 
         if (this.props.row) {
             return <div>
+                <div>
+                    {this.props.row.id && <ModalReplyPrivateMessage replyToId={this.props.row.id}/>}
+                </div>
+
                 <Divider horizontal>PM #{this.props.row.id}</Divider>
 
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>
@@ -38,17 +43,16 @@ export default class InboxView extends React.Component {
                     <div className="two fields">
                         {this.props.row.id && <TextField width="six" name="timestamp" label="Timestamp" value={this.props.row.timestamp} />}
                         {this.props.row.id && <SelectField width="six" name="from_user" label="From" options={this.props.users} value={this.props.row.from_user} handleChange={this.props.handleSelectChange} />}
-                        {!this.props.row.id && <SelectField width="twelve" name="to_user" label="To" options={this.props.users} value={this.props.row.to_user} handleChange={this.props.handleSelectChange} />}
+                        {!this.props.row.id && <SelectField search={true} width="twelve" name="to_user" label="To" options={this.props.users} value={this.props.row.to_user} handleChange={this.props.handleSelectChange} />}
                     </div>
 
                     <div className="field">
-                        <TextAreaField width="twelve" name="message" label="Message" value={this.props.row.message} handleChange={this.props.handleChange} />
+                        {!this.props.row.id && <TextAreaField width="twelve" name="message" label="Message" value={this.props.row.message} handleChange={this.props.handleChange} />}
+                        {this.props.row.id && <div><pre>{this.props.row.message}</pre></div>}
                     </div>
 
-                    <NavigationButtons
-                        footer={true}
-                        closeRow={this.props.closeRow}
-                        handleSubmit={this.props.handleSubmit}/>
+                    {this.props.row.id && <NavigationButtons footer={true} closeRow={this.props.closeRow}/>}
+                    {!this.props.row.id && <NavigationButtons footer={true} closeRow={this.props.closeRow} handleSubmit={this.props.handleSubmit}/>}
                 </div>
             </div>
         }

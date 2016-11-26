@@ -8,7 +8,7 @@ export default class InboxApp extends BaseApp {
     constructor(props, context) {
         super(props, context);
 
-        this.state.dataUrl = "/api/inbox";
+        this.state.app = "inbox";
         this.state.loadExtraInfo = true;
         this.state.users = [];
 
@@ -27,13 +27,13 @@ export default class InboxApp extends BaseApp {
         event.preventDefault();
 
         if (this.state.row['id'] !== undefined) {
-            axios.put(this.state.dataUrl, this.state.row).then(function (response) {
+            axios.put(BaseApp.getApplicationDataUrl(this.state.app), this.state.row).then(function (response) {
                 NotificationManager.success("Row updated!", "Success");
             }).catch(function (error) {
                 NotificationManager.error(error.toString(), "Problems detected");
             });
         } else {
-            axios.post(this.state.dataUrl, this.state.row).then(function (response) {
+            axios.post(BaseApp.getApplicationDataUrl(this.state.app), this.state.row).then(function (response) {
                 NotificationManager.success("Row updated!", "Success");
             }).catch(function (error) {
                 NotificationManager.error(error.toString(), "Problems detected");

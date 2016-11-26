@@ -91,19 +91,22 @@ class InboxController extends Controller
 
     /**
      * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/api/inbox", name="replyMessageAction")
-     * @Method({"PUT"})
+     * @Route("/api/inbox/reply", name="replyMessageAction")
+     * @Method({"POST"})
      * @param Request $request
-     * @return JsonResponse
+     * @return Response|JsonResponse
      */
     public function replyMessageAction(Request $request)
     {
-        $replyToId = $request->request->get('id');
+        $replyToId = $request->request->get('replyToId');
 
         $repository = $this->getDoctrine()->getRepository('AppBundle:PrivateMessage');
         $em = $this->getDoctrine()->getManager();
         /** @var PrivateMessage $originalMessage */
         $originalMessage = $repository->find($replyToId);
+        if ($originalMessage->getToUser() !== $this->container->get('security.context')->getToken()->getUser()) {
+            return (new JsonResponse())->setStatusCode(403);
+        }
 
         $message = new PrivateMessage();
         $message
@@ -128,7 +131,7 @@ class InboxController extends Controller
         $em->persist($message);
         $em->flush();
 
-        return new JsonResponse();
+        return (new JsonResponse())->setStatusCode(200);
     }
 
     /**

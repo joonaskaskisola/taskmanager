@@ -11,8 +11,8 @@ export default class NavigationButtons extends React.Component {
             </div>
         } else if (this.props.footer) {
             return <div className="navigation-footer-buttons">
-                <NavigationButton show={true} float="right" onClick={this.props.closeRow} leftLabel="Close" rightLabel="" icon="clear" />
-                <NavigationButton primary={true} show={true} float="left" onClick={this.props.handleSubmit} leftLabel="Save" />
+                {this.props.closeRow && <NavigationButton show={true} float="right" onClick={this.props.closeRow} leftLabel="Close" rightLabel="" icon="clear" />}
+                {this.props.handleSubmit && <NavigationButton primary={true} show={true} float="left" onClick={this.props.handleSubmit} leftLabel="Save" />}
             </div>
         }
     }

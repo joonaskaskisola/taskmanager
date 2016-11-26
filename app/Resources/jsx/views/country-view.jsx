@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import SelectField from '../components/select.jsx';
 import TextField from '../components/text.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
 import { Divider } from 'semantic-ui-react';
@@ -34,7 +35,7 @@ export default class CountryView extends React.Component {
                     </div>
 
                     <div className="two fields">
-                        <TextField pos="left" name="code" label="Code" value={this.props.row.code} handleChange={this.props.handleChange} />
+                        <SelectField search={true} options={this.props.flags} pos="left" name="code" label="Code" value={this.props.row.code} handleChange={this.props.handleSelectChange} />
                         <TextField pos="right" name="lang_code" label="Lang code" value={this.props.row.lang_code} handleChange={this.props.handleChange} />
                     </div>
 

@@ -1,0 +1,22 @@
+{
+   "customer" : {
+      "title" : "Customer",
+      "url" : "/api/customer"
+   },
+   "inbox" : {
+      "url" : "/api/inbox",
+      "title" : "Inbox"
+   },
+   "country" : {
+      "title" : "Country",
+      "url" : "/api/country"
+   },
+   "item" : {
+      "title" : "Item",
+      "url" : "/api/item"
+   },
+   "category" : {
+      "title" : "Category",
+      "url" : "/api/category"
+   }
+}

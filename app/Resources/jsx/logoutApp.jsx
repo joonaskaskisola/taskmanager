@@ -8,7 +8,7 @@ export default class LogoutApp extends React.Component {
 
         this.state = {
             "open": false,
-            "result": "show the modal to capture a result",
+            "result": null
         };
 
         this.show = this.show.bind(this);

@@ -8,7 +8,7 @@ export default class CountryApp extends BaseApp {
     constructor(props, context) {
         super(props, context);
 
-        this.state.dataUrl = "/api/country";
+        this.state.app = "country";
         this.state.loadExtraInfo = false;
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -17,13 +17,13 @@ export default class CountryApp extends BaseApp {
         event.preventDefault();
 
         if (this.state.row['id'] !== undefined) {
-            axios.put(this.state.dataUrl, this.state.row).then(function (response) {
+            axios.put(BaseApp.getApplicationDataUrl(this.state.app), this.state.row).then(function (response) {
                 NotificationManager.success("Row updated!", "Success");
             }).catch(function (error) {
                 NotificationManager.error(error.toString(), "Problems detected");
             });
         } else {
-            axios.post(this.state.dataUrl, this.state.row).then(function (response) {
+            axios.post(BaseApp.getApplicationDataUrl(this.state.app), this.state.row).then(function (response) {
                 NotificationManager.success("Row updated!", "Success");
             }).catch(function (error) {
                 NotificationManager.error(error.toString(), "Problems detected");
@@ -41,12 +41,14 @@ export default class CountryApp extends BaseApp {
                 </div>
 
                 <CountryView
+                    flags={BaseApp.getValidFlags()}
                     createNew={this.createNew}
                     showNext={this.state.next}
                     showPrev={this.state.prev}
                     nextRow={this.nextRow}
                     previousRow={this.previousRow}
                     handleSubmit={this.handleSubmit}
+                    handleSelectChange={this.handleSelectChange}
                     handleChange={this.handleChange}
                     closeRow={this.closeRow}
                     viewRow={this.viewRow}

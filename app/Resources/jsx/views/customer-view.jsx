@@ -5,7 +5,7 @@ import SelectField from '../components/select.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
 import { Divider } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
-import ModalViewTasks from '../helpers/view-tasks.jsx';
+import ModalViewTasks from '../modals/view-tasks.jsx';
 
 export default class CustomerView extends React.Component {
     constructor(props, context) {
