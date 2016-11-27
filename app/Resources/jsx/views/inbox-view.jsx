@@ -37,17 +37,17 @@ export default class InboxView extends React.Component {
                     <h4 className="ui dividing header">Shipping Information</h4>
 
                     <div className="field">
-                        <TextField width="twelve" name="subject" label="Subject" value={this.props.row.subject} handleChange={this.props.handleChange} />
+                        <TextField name="subject" label="Subject" value={this.props.row.subject} handleChange={this.props.handleChange} />
                     </div>
 
                     <div className="two fields">
-                        {this.props.row.id && <TextField width="six" name="timestamp" label="Timestamp" value={this.props.row.timestamp} />}
-                        {this.props.row.id && <SelectField width="six" name="from_user" label="From" options={this.props.users} value={this.props.row.from_user} handleChange={this.props.handleSelectChange} />}
-                        {!this.props.row.id && <SelectField search={true} width="twelve" name="to_user" label="To" options={this.props.users} value={this.props.row.to_user} handleChange={this.props.handleSelectChange} />}
+                        {this.props.row.id && <TextField name="timestamp" label="Timestamp" value={this.props.row.timestamp} />}
+                        {this.props.row.id && <SelectField name="from_user" label="From" options={this.props.users} value={this.props.row.from_user} handleChange={this.props.handleSelectChange} />}
+                        {!this.props.row.id && <SelectField search={true} name="to_user" label="To" options={this.props.users} value={this.props.row.to_user} handleChange={this.props.handleSelectChange} />}
                     </div>
 
                     <div className="field">
-                        {!this.props.row.id && <TextAreaField width="twelve" name="message" label="Message" value={this.props.row.message} handleChange={this.props.handleChange} />}
+                        {!this.props.row.id && <TextAreaField name="message" label="Message" value={this.props.row.message} handleChange={this.props.handleChange} />}
                         {this.props.row.id && <div><pre>{this.props.row.message}</pre></div>}
                     </div>
 

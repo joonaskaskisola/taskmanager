@@ -36,25 +36,25 @@ export default class CustomerView extends React.Component {
                     <h4 className="ui dividing header">Shipping Information</h4>
 
                     <div className="two fields">
-                        <TextField width="six" name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
-                        <TextField width="six" name="name2" label="Name 2" value={this.props.row.name2} handleChange={this.props.handleChange} />
+                        <TextField e={this.props.e} name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
+                        <TextField e={this.props.e} name="name2" label="Name 2" value={this.props.row.name2} handleChange={this.props.handleChange} />
                     </div>
 
                     <div className="two fields">
-                        <TextField width="six" name="businessId" label="BusinessId" value={this.props.row.businessId} handleChange={this.props.handleChange} />
-                        <TextField width="six" name="contactPerson" label="Contact person" value={this.props.row.contactPerson} handleChange={this.props.handleChange} />
+                        <TextField e={this.props.e} name="businessId" label="BusinessId" value={this.props.row.businessId} handleChange={this.props.handleChange} />
+                        <TextField e={this.props.e} name="contactPerson" label="Contact person" value={this.props.row.contactPerson} handleChange={this.props.handleChange} />
                     </div>
 
                     <h4 className="ui dividing header">Customer information</h4>
 
                     <div className="two fields">
-                        <TextField width="six" name="streetAddress" label="Street address" value={this.props.row.streetAddress} handleChange={this.props.handleChange} />
-                        <SelectField width="six" name="country" label="Country" options={this.props.countries} value={this.props.row.country} handleChange={this.props.handleSelectChange} />
+                        <TextField e={this.props.e} name="streetAddress" label="Street address" value={this.props.row.streetAddress} handleChange={this.props.handleChange} />
+                        <SelectField e={this.props.e} name="country" label="Country" options={this.props.countries} value={this.props.row.country} handleChange={this.props.handleSelectChange} />
                     </div>
 
                     <div className="two fields">
-                        <TextField width="six" name="zipCode" label="Zipcode" value={this.props.row.zipCode} handleChange={this.props.handleChange} />
-                        <TextField width="six" name="locality" label="Locality" value={this.props.row.locality} handleChange={this.props.handleChange} />
+                        <TextField e={this.props.e} name="zipCode" label="Zipcode" value={this.props.row.zipCode} handleChange={this.props.handleChange} />
+                        <TextField e={this.props.e} name="locality" label="Locality" value={this.props.row.locality} handleChange={this.props.handleChange} />
                     </div>
 
                     <NavigationButtons

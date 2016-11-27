@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import BaseApp from './components/base-app.jsx';
 import CustomerView from './views/customer-view.jsx';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import request from 'superagent';
 
 export default class CustomerApp extends BaseApp {
     constructor(props, context) {
@@ -11,6 +12,7 @@ export default class CustomerApp extends BaseApp {
         this.state.app = "customer";
         this.state.loadExtraInfo = true;
         this.state.countries = [];
+        this.state.errors = [];
 
         let self = this;
 
@@ -26,19 +28,20 @@ export default class CustomerApp extends BaseApp {
     handleSubmit(event) {
         event.preventDefault();
 
-        if (this.state.row['id'] !== undefined) {
-            axios.put(BaseApp.getApplicationDataUrl(this.state.app), this.state.row).then(function (response) {
-                NotificationManager.success("Row updated!", "Success");
-            }).catch(function (error) {
-                NotificationManager.error(error.toString(), "Problems detected");
+        let self = this;
+
+        request
+            .put(BaseApp.getApplicationDataUrl(this.state.app))
+            .send(this.state.row)
+            .end(function (err, res) {
+                if (!err) {
+                    NotificationManager.success("Row updated!", "Success");
+                    return true;
+                }
+
+                self.setState({"errors": res.body.error_fields});
+                NotificationManager.error("An error occured", "Problems detected");
             });
-        } else {
-            axios.post(BaseApp.getApplicationDataUrl(this.state.app), this.state.row).then(function (response) {
-                NotificationManager.success("Row updated!", "Success");
-            }).catch(function (error) {
-                NotificationManager.error(error.toString(), "Problems detected");
-            });
-        }
     }
 
     render() {
@@ -51,6 +54,7 @@ export default class CustomerApp extends BaseApp {
                 </div>
 
                 <CustomerView
+                    e={this.state.errors}
                     createNew={this.createNew}
                     countries={this.state.countries}
                     showNext={this.state.next}

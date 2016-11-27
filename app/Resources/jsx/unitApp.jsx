@@ -16,19 +16,18 @@ export default class UnitApp extends BaseApp {
     handleSubmit(event) {
         event.preventDefault();
 
-        if (this.state.row['id'] !== undefined) {
-            axios.put(BaseApp.getApplicationDataUrl(this.state.app), this.state.row).then(function (response) {
-                NotificationManager.success("Row updated!", "Success");
-            }).catch(function (error) {
-                NotificationManager.error(error.toString(), "Problems detected");
+        request
+            .put(BaseApp.getApplicationDataUrl(this.state.app))
+            .send(this.state.row)
+            .end(function (err, res) {
+                if (!err) {
+                    NotificationManager.success("Row updated!", "Success");
+                    return true;
+                }
+
+                self.setState({"errors": res.body.error_fields});
+                NotificationManager.error("An error occured", "Problems detected");
             });
-        } else {
-            axios.post(BaseApp.getApplicationDataUrl(this.state.app), this.state.row).then(function (response) {
-                NotificationManager.success("Row updated!", "Success");
-            }).catch(function (error) {
-                NotificationManager.error(error.toString(), "Problems detected");
-            });
-        }
     }
 
     render() {

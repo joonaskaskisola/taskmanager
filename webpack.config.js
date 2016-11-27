@@ -10,6 +10,7 @@ module.exports = {
     unitApp: "./app/Resources/jsx/unitApp.jsx",
     countryApp: "./app/Resources/jsx/countryApp.jsx",
     logoutApp: "./app/Resources/jsx/logoutApp.jsx",
+    loginApp: "./app/Resources/jsx/loginApp.jsx",
   },
   output: {
     path: "./web/js/",

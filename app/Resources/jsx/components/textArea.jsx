@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 
 export default class TextAreaField extends React.Component {
     render() {
-        return <div className={this.props.width + "wide field"}>
+        return <div className={"field"}>
             <label htmlFor={this.props.name}>{this.props.label}:</label>
 
             <textarea

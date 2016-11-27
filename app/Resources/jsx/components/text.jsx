@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 
 export default class TextField extends React.Component {
     render() {
-        return <div className={this.props.width + "wide field"}>
+        return <div className={"wide field " + (this.props.e[this.props.name] ? "error": "")}>
             <label htmlFor={this.props.name}>{this.props.label}:</label>
 
             <input

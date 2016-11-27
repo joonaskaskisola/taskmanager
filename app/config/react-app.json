@@ -15,6 +15,10 @@
       "title" : "Item",
       "url" : "/api/item"
    },
+   "unit" : {
+      "title" : "Unit",
+      "url" : "/api/unit"
+   },
    "category" : {
       "title" : "Category",
       "url" : "/api/category"

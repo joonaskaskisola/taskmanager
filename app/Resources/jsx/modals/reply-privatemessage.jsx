@@ -4,6 +4,7 @@ import { Divider, Button, Modal } from 'semantic-ui-react'
 import TextAreaField from '../components/textArea.jsx';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
 import BaseApp from "../components/base-app.jsx";
+import request from 'superagent';
 
 export default class ModalReplyPrivateMessage extends React.Component {
     constructor(props, context) {
@@ -37,14 +38,17 @@ export default class ModalReplyPrivateMessage extends React.Component {
     handleReplySubmit(event) {
         let self = this;
 
-        axios.post(BaseApp.getApplicationDataUrl(this.state.app) + '/reply', {
-            'message': this.state.message,
-            'replyToId': this.props.replyToId
-        }).then(function (response) {
-            self.closeModal();
-        }).catch(function (error) {
-            // @todo
-        });
+        request
+            .post(BaseApp.getApplicationDataUrl(this.state.app) + '/reply')
+            .send({
+                'message': this.state.message,
+                'replyToId': this.props.replyToId
+            })
+            .end(function (err, res) {
+                if (!err) {
+                    self.closeModal();
+                }
+            });
     }
 
     render() {

@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import appData from 'json!../../../config/react-app.json';
 import { Flag } from 'semantic-ui-react'
+import request from 'superagent';
 
 export default class BaseApp extends React.Component {
     constructor(props, context) {
@@ -94,11 +95,11 @@ export default class BaseApp extends React.Component {
     }
 
     getData(dataUrl, callback) {
-        axios.get(dataUrl).then(function (response) {
-            callback(null, response.data);
-        }).catch(function (error) {
-            callback(error, null);
-        });
+        request
+            .get(dataUrl)
+            .end(function (err, res) {
+                callback(err, res.body);
+            });
     }
 
     viewRow(rowId) {

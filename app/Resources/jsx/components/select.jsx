@@ -4,7 +4,7 @@ import { Dropdown } from 'semantic-ui-react'
 
 export default class SelectField extends React.Component {
     render() {
-        return <div className={this.props.width + "wide field"}>
+        return <div className={"field"}>
             <label htmlFor={this.props.name}>{this.props.label}:</label>
 
             <Dropdown

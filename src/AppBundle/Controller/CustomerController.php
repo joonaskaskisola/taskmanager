@@ -85,6 +85,17 @@ class CustomerController extends Controller
      */
     public function editCustomerAction(Request $request)
     {
+        $response = new JsonResponse();
+        $response->setStatusCode(422);
+        $response->setData([
+            'status' => 'error',
+            'error_fields' => [
+                'name' => 'Invalid name'
+            ]
+        ]);
+
+        return $response;
+
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Divider, Button, Modal } from 'semantic-ui-react'
 import GridContainer from '../helpers/grid-container.jsx';
+import request from 'superagent';
 
 export default class ModalViewTasks extends React.Component {
     constructor(props, context) {
@@ -33,11 +34,13 @@ export default class ModalViewTasks extends React.Component {
 
         this.setState({"modalRows": []});
 
-        axios.get("/api/task?customerId=" + customerId).then(function (response) {
-            self.setState({"modalRows": response.data});
-        }).catch(function(error) {
-            console.log(error);
-        });
+        request
+            .get("/api/task?customerId=" + customerId)
+            .end(function (err, res) {
+                if (!err) {
+                    self.setState({"modalRows": res.body});
+                }
+            });
     }
 
     openModal() {

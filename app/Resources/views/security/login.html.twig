@@ -14,26 +14,11 @@
         </style>
     </head>
     <body>
-        <form action="{{ path('login') }}" method="post">
-            <div class="ui inverted segment">
-                <div class="ui main container">
-                    <div class="ui inverted form">
-                        <div class="field">
-                            <label>Username</label>
-                            <input placeholder="Username" value="{{ createdUser.username }}" type="text" id="username" name="_username">
-                        </div>
-                        <div class="field">
-                            <label>Password</label>
-                            <input placeholder="hunter" value="moi" type="password" id="password" name="_password">
-                        </div>
-
-                        <button type="submit" class="ui submit button">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+        <div id="loginApp"></div>
+        <input type="hidden" name="_username" id="username" value="{{ createdUser.username }}"/>
 
         <script src="/js/jquery.min.js"></script>
         <script src="/js/semantic.min.js"></script>
+        <script src="http://localhost:8080/loginApp.js"></script>
     </body>
 </html>

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -90,5 +91,42 @@ class UserController extends Controller
         $em->flush();
 
         return new JsonResponse();
+    }
+
+    /**
+     * @Route("/api/user/new", name="newUserAction")
+     * @Method({"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function newUserAction(Request $request)
+    {
+        $faker = Factory::create('fi_FI');
+
+        $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        $password = $this->get('security.password_encoder')
+            ->encodePassword($user, 'moi');
+
+        $user
+            ->setRoles(['ROLE_ADMIN'])
+            ->setEnabled(true)
+            ->setCustomer(
+                $em->getRepository('AppBundle:Customer')->findOneBy(['id' => 1])
+            )
+            ->setEmail($faker->email)
+            ->setFirstName($faker->firstName)
+            ->setLastName($faker->lastName)
+            ->setPassword($password)
+            ->setUsername($faker->userName)
+            ->setCountry(
+                $em->getRepository('AppBundle:Country')->findOneBy(['id' => 1])
+            )
+            ->setPhone($faker->phoneNumber);
+
+        $em->persist($user);
+        $em->flush();
+
+        return (new JsonResponse(['username' => $user->getUsername()]))->setStatusCode(201);
     }
 }

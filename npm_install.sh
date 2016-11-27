@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGES_JS=('axios' 'react' 'react-dom' 'jquery');
+PACKAGES_JS=('react' 'react-dom' 'jquery');
 PACKAGES_CSS=('react-notifications');
 PACKAGES_FONT=('react-notifications');
 
