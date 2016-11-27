@@ -40,6 +40,7 @@ export default class UnitApp extends BaseApp {
                 </div>
 
                 <UnitView
+                    e={this.state.errors}
                     createNew={this.createNew}
                     showNext={this.state.next}
                     showPrev={this.state.prev}

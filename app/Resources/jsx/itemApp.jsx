@@ -58,6 +58,7 @@ export default class ItemApp extends BaseApp {
                 </div>
 
                 <ItemView
+                    e={this.state.errors}
                     createNew={this.createNew}
                     units={this.state.units}
                     categories={this.state.categories}

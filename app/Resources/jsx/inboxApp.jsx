@@ -51,6 +51,7 @@ export default class InboxApp extends BaseApp {
                 </div>
 
                 <InboxView
+                    e={this.state.errors}
                     users={this.state.users}
                     createNew={this.createNew}
                     showNext={this.state.next}

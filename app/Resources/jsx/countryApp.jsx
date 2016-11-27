@@ -41,6 +41,7 @@ export default class CountryApp extends BaseApp {
                 </div>
 
                 <CountryView
+                    e={this.state.errors}
                     flags={BaseApp.getValidFlags()}
                     createNew={this.createNew}
                     showNext={this.state.next}

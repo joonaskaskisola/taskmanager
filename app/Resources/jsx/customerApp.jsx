@@ -12,7 +12,6 @@ export default class CustomerApp extends BaseApp {
         this.state.app = "customer";
         this.state.loadExtraInfo = true;
         this.state.countries = [];
-        this.state.errors = [];
 
         let self = this;
 

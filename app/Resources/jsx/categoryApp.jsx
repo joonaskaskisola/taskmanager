@@ -41,6 +41,7 @@ export default class CategoryApp extends BaseApp {
                 </div>
 
                 <CategoryView
+                    e={this.state.errors}
                     createNew={this.createNew}
                     showNext={this.state.next}
                     showPrev={this.state.prev}

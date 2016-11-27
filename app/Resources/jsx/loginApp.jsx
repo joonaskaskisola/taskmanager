@@ -7,7 +7,8 @@ export default class LoginApp extends React.Component {
         super(props, context);
 
         this.state = {
-            username: this.props.children
+            username: this.props.children,
+            errors: []
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);

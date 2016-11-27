@@ -11,7 +11,8 @@ export default class BaseApp extends React.Component {
         this.state = {
             "row": false,
             "data": null,
-            "isLoading": true
+            "isLoading": true,
+            "errors": []
         };
 
         this.loadData = this.loadData.bind(this);
