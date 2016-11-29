@@ -39,6 +39,8 @@ fos_user:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        js_path: "/js"
 
 # Doctrine Configuration
 doctrine:

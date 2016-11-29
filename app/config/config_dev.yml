@@ -11,6 +11,10 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 
+twig:
+    globals:
+        js_path: "http://localhost:8080"
+
 monolog:
     handlers:
         main:
