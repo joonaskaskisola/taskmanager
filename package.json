@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.14.0",
     "babel-cli": "^6.8.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-react-transform": "^2.0.2",
