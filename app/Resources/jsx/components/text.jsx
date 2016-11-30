@@ -15,6 +15,7 @@ export default class TextField extends React.Component {
             <label htmlFor={this.props.name}>{this.props.label}:</label>
 
             <input
+                readOnly={!!this.props.readOnly}
                 value={this.props.value ? this.props.value : ''}
                 type="text"
                 id={this.props.name}
