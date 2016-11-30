@@ -36,7 +36,7 @@ export default class CountryView extends React.Component {
 
                     <div className="two fields">
                         <SelectField search={true} options={this.props.flags} pos="left" name="code" label="Code" value={this.props.row.code} handleChange={this.props.handleSelectChange} />
-                        <TextField pos="right" name="lang_code" label="Lang code" value={this.props.row.lang_code} handleChange={this.props.handleChange} />
+                        <TextField pos="right" name="langCode" label="Lang code" value={this.props.row.langCode} handleChange={this.props.handleChange} />
                     </div>
 
                     <NavigationButtons
@@ -49,7 +49,7 @@ export default class CountryView extends React.Component {
 
         return <GridContainer
             search={true}
-            fields={['name', 'code', 'lang_code']}
+            fields={['name', 'code', 'langCode']}
             columns={['Name', 'Code', 'Lang code']}
             rows={this.props.data}
             viewRow={this.props.viewRow}

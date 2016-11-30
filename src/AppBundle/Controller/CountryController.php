@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Country;
 use AppBundle\Helper\FormHelper;
+use AppBundle\Repository\CountryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -33,16 +34,14 @@ class CountryController extends Controller
      */
     public function getCountriesAction(Request $request)
     {
+        $serializer = $this->get('serializer');
+
+        /** @var CountryRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Country');
 
-        $response = array_map(function($country) {
+        $response = array_map(function($country) use ($serializer) {
             /** @var Country $country */
-            return [
-                'id' => $country->getId(),
-                'name' => $country->getName() ?? "",
-                'code' => $country->getCode() ?? "",
-                'lang_code' => $country->getLangCode() ?? ""
-            ];
+            return json_decode($serializer->serialize($country, 'json'), true);
         }, $repository->findBy([], ['name' => 'ASC']));
 
         return new JsonResponse($response);
@@ -57,17 +56,15 @@ class CountryController extends Controller
      */
     public function getCountryAction(Request $request, $id)
     {
+        $serializer = $this->get('serializer');
+
+        /** @var CountryRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Country');
 
-        $response = array_map(function($country) {
+        $response = array_map(function($country) use ($serializer) {
             /** @var Country $country */
-            return [
-                'id' => $country->getId(),
-                'name' => $country->getName() ?? "",
-                'code' => $country->getCode() ?? "",
-                'lang_code' => $country->getLangCode() ?? ""
-            ];
-        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+            return json_decode($serializer->serialize($country, 'json'), true);
+        }, $repository->findBy(['id' => $id]));
 
         return new JsonResponse($response);
     }
@@ -91,7 +88,7 @@ class CountryController extends Controller
         $country
             ->setName($request->request->get('name'))
             ->setCode($request->request->get('code'))
-            ->setLangCode($request->request->get('lang_code'));
+            ->setLangCode($request->request->get('langCode'));
 
         $em->persist($country);
         $em->flush();

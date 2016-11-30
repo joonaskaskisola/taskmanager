@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Helper\FormHelper;
 use AppBundle\Repository\TaskRepository;
 use Cake\Chronos\Chronos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,7 +11,6 @@ use AppBundle\Entity\Task;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class TaskController extends Controller
 {
@@ -40,17 +38,14 @@ class TaskController extends Controller
             $search = ['customer' => $request->get('customerId')];
         }
 
+        $serializer = $this->get('serializer');
+
         /** @var TaskRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Task');
 
-        $response = array_map(function($task) {
+        $response = array_map(function($task) use ($serializer) {
             /** @var Task $task */
-            return [
-                'id' => $task->getId(),
-                'price' => $task->getPrice(),
-                'created_at' => $task->getCreatedAt()->format("d.m.Y H:i:s"),
-                'name' => $task->getCustomerItem()->getName(),
-            ];
+            return json_decode($serializer->serialize($task, 'json'));
         }, $repository->findBy($search ?? [], ['createdAt' => 'ASC']));
 
         return new JsonResponse($response);
@@ -65,14 +60,15 @@ class TaskController extends Controller
      */
     public function getTaskAction(Request $request, $id)
     {
+        $serializer = $this->get('serializer');
+
+        /** @var TaskRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Task');
 
-        $response = array_map(function($task) {
+        $response = array_map(function($task) use ($serializer) {
             /** @var Task $task */
-            return [
-                'id' => $task->getId(),
-            ];
-        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+            return json_decode($serializer->serialize($task, 'json'));
+        }, $repository->findBy(['id' => $id]));
 
         return new JsonResponse($response);
     }

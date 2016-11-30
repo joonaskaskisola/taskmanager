@@ -10,18 +10,17 @@ export default class ItemApp extends BaseApp {
         super(props, context);
 
         this.state.app = "item";
-        this.state.loadExtraInfo = true;
-        this.state.categories = [];
-        this.state.units = [];
 
         let self = this;
 
+        this.state.categories = [];
         this.getData("/api/category", function (err, data) {
             data.forEach(function(category) {
                 self.state.categories.push({'value': category.id, 'text': category.name});
-            })
+            });
         });
 
+        this.state.units = [];
         this.getData("/api/unit", function (err, data) {
             data.forEach(function(unit) {
                 self.state.units.push({'value': unit.id, 'text': unit.name});
@@ -58,10 +57,11 @@ export default class ItemApp extends BaseApp {
                 </div>
 
                 <ItemView
-                    e={this.state.errors}
-                    createNew={this.createNew}
                     units={this.state.units}
                     categories={this.state.categories}
+
+                    e={this.state.errors}
+                    createNew={this.createNew}
                     showNext={this.state.next}
                     showPrev={this.state.prev}
                     nextRow={this.nextRow}

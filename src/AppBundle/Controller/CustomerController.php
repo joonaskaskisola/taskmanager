@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\CustomerRepository;
 use Cake\Chronos\Chronos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -56,23 +57,15 @@ class CustomerController extends Controller
      */
     public function getCustomerAction(Request $request, $id)
     {
+        $serializer = $this->get('serializer');
+
+        /** @var CustomerRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
 
-        $response = array_map(function($customer) {
+        $response = array_map(function($customer) use ($serializer) {
             /** @var Customer $customer */
-            return [
-                'id' => $customer->getId(),
-                'name' => $customer->getName() ?? "",
-                'name2' => $customer->getName2() ?? "",
-                'email' => $customer->getEmail() ?? "",
-                'businessId' => $customer->getBusinessId() ?? "",
-                'contactPerson' => $customer->getContactPerson() ?? "",
-                'streetAddress' => $customer->getStreetAddress() ?? "",
-                'locality' => $customer->getLocality() ?? "",
-                'zipCode' => $customer->getZipCode() ?? "",
-                'country' => $customer->getCountry() ?? "",
-            ];
-        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+            return json_decode($serializer->serialize($customer, 'json'), true);
+        }, $repository->findBy(['id' => $id]));
 
         return new JsonResponse($response);
     }

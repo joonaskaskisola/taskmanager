@@ -10,15 +10,14 @@ export default class InboxApp extends BaseApp {
         super(props, context);
 
         this.state.app = "inbox";
-        this.state.loadExtraInfo = true;
-        this.state.users = [];
 
         let self = this;
 
+        this.state.users = [];
         this.getData("/api/user", function (err, data) {
             data.forEach(function(user) {
                 self.state.users.push({'value': user.id, 'text': user.name});
-            })
+            });
         });
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -51,8 +50,9 @@ export default class InboxApp extends BaseApp {
                 </div>
 
                 <InboxView
-                    e={this.state.errors}
                     users={this.state.users}
+
+                    e={this.state.errors}
                     createNew={this.createNew}
                     showNext={this.state.next}
                     showPrev={this.state.prev}

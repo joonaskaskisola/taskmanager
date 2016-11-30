@@ -9,7 +9,7 @@ export default class UnitApp extends BaseApp {
         super(props, context);
 
         this.state.app = "unit";
-        this.state.loadExtraInfo = false;
+
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 

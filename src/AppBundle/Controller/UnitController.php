@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Unit;
+use AppBundle\Repository\UnitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -31,14 +32,14 @@ class UnitController extends Controller
      */
     public function getUnitsAction(Request $request)
     {
+        $serializer = $this->get('serializer');
+
+        /** @var UnitRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Unit');
 
-        $response = array_map(function($unit) {
+        $response = array_map(function($unit) use ($serializer) {
             /** @var Unit $unit */
-            return [
-                'id' => $unit->getId(),
-                'name' => $unit->getName() ?? ""
-            ];
+            return json_decode($serializer->serialize($unit, 'json'));
         }, $repository->findBy([], ['name' => 'ASC']));
 
         return new JsonResponse($response);
@@ -53,15 +54,15 @@ class UnitController extends Controller
      */
     public function getUnitAction(Request $request, $id)
     {
+        $serializer = $this->get('serializer');
+
+        /** @var UnitRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Unit');
 
-        $response = array_map(function($unit) {
+        $response = array_map(function($unit) use ($serializer) {
             /** @var Unit $unit */
-            return [
-                'id' => $unit->getId(),
-                'name' => $unit->getName() ?? ""
-            ];
-        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+            return json_decode($serializer->serialize($unit, 'json'));
+        }, $repository->findBy(['id' => $id]));
 
         return new JsonResponse($response);
     }

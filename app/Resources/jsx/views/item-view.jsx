@@ -31,8 +31,8 @@ export default class ItemView extends React.Component {
                     <h4 className="ui dividing header">General Information</h4>
 
                     <div className="two fields">
-                        <TextField pos="left" name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
-                        <TextField pos="right" name="price" label="Price" value={this.props.row.price} handleChange={this.props.handleChange} />
+                        <TextField name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
+                        <TextField name="price" label="Price" value={this.props.row.price} handleChange={this.props.handleChange} />
                     </div>
 
                     <div className="two fields">

@@ -1,26 +1,37 @@
 {
-   "customer" : {
-      "title" : "Customer",
-      "url" : "/api/customer"
-   },
-   "inbox" : {
-      "url" : "/api/inbox",
-      "title" : "Inbox"
-   },
-   "country" : {
-      "title" : "Country",
-      "url" : "/api/country"
-   },
-   "item" : {
-      "title" : "Item",
-      "url" : "/api/item"
-   },
-   "unit" : {
-      "title" : "Unit",
-      "url" : "/api/unit"
-   },
-   "category" : {
-      "title" : "Category",
-      "url" : "/api/category"
-   }
+  "customer": {
+    "title": "Customer",
+    "url": "/api/customer",
+    "fetchDetailedRowDetails": true
+  },
+  "inbox": {
+    "url": "/api/inbox",
+    "title": "Inbox",
+    "fetchDetailedRowDetails": true
+  },
+  "country": {
+    "title": "Country",
+    "url": "/api/country",
+    "fetchDetailedRowDetails": false
+  },
+  "item": {
+    "title": "Item",
+    "url": "/api/item",
+    "fetchDetailedRowDetails": true
+  },
+  "unit": {
+    "title": "Unit",
+    "url": "/api/unit",
+    "fetchDetailedRowDetails": false
+  },
+  "category": {
+    "title": "Category",
+    "url": "/api/category",
+    "fetchDetailedRowDetails": false
+  },
+  "task": {
+    "title": "Task",
+    "url": "/api/task",
+    "fetchDetailedRowDetails": true
+  }
 }

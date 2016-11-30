@@ -10,7 +10,7 @@ export default class CategoryApp extends BaseApp {
         super(props, context);
 
         this.state.app = "category";
-        this.state.loadExtraInfo = false;
+
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 

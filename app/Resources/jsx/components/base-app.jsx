@@ -109,7 +109,7 @@ export default class BaseApp extends React.Component {
         this.setState({"next": false, "prev": false});
         this.checkPrevNextButtons(rowId);
 
-        if (this.state.loadExtraInfo) {
+        if (BaseApp.isDetailedApiCallNeeded(this.state.app)) {
             this.setState({"isLoading": true});
 
             this.getData(BaseApp.getApplicationDataUrl(this.state.app) + '/' + rowId, function (error, response) {
@@ -148,6 +148,10 @@ export default class BaseApp extends React.Component {
 
     static getApplicationDataUrl(appName) {
         return appData[appName]['url'];
+    }
+
+    static isDetailedApiCallNeeded(appName) {
+        return appData[appName]['fetchDetailedRowDetails'];
     }
 
     static getApplicationHeader(appName) {

@@ -20,12 +20,18 @@ export default class GridContainer extends React.Component {
     }
 
     search(e) {
+        /**
+         * Don't.
+         */
+
         let queryResult = [], added, self = this;
 
         this.props.rows.forEach(function (row) {
             added = false;
             e.target.value.toLowerCase().split(' ').forEach(function(word) {
                 if (!added) {
+                    console.log("object keys:", Object.keys(row), self.props);
+
                     Object.keys(row).map(function(key) {
                         if (self.props.fields.indexOf(key) != -1
                             && !added
@@ -34,6 +40,27 @@ export default class GridContainer extends React.Component {
                         ) {
                             added = true;
                             queryResult.push(row);
+                        } else if (!added && typeof row[key] == "object") {
+                            self.props.fields.forEach(function(i_field) {
+                                if (i_field.indexOf('.') !== -1) {
+                                    console.log(row);
+                                    console.log(i_field, key);
+
+                                    let e = row;
+                                    i_field.split('.').forEach(function(s) {
+                                        e = e[s];
+
+                                        if (typeof e == "string") {
+                                            console.log("string!", e, "haetaan:", word);
+
+                                            if (e.toLowerCase().indexOf(word) != -1) {
+                                                added = true;
+                                                queryResult.push(row);
+                                            }
+                                        }
+                                    });
+                                }
+                            });
                         }
                     });
                 }
@@ -75,14 +102,18 @@ export default class GridContainer extends React.Component {
     }
 
     render() {
-        let columns = [],
-            rows = [],
-            self = this;
+        let columns = [], rows = [], self = this;
 
+        /**
+         * Header
+         */
         this.props.columns.forEach(function(column, i) {
             columns.push(<div name={self.props.fields[i]} onClick={self.sortByColumn} key={"column-" + column} className="column clickable">{ column }</div>);
         });
 
+        /**
+         * Body
+         */
         this.state.results.forEach(function(row) {
             if (self.props.viewRow) {
                 rows.push(<Row fields={self.props.fields} row={row} key={row.id} viewRow={self.props.viewRow}/>);

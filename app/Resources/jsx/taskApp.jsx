@@ -1,15 +1,31 @@
 import React from 'react';
 import { render } from 'react-dom';
 import BaseApp from './components/base-app.jsx';
-import CountryView from './views/country-view.jsx';
+import TaskView from './views/task-view.jsx';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import request from 'superagent';
 
-export default class CountryApp extends BaseApp {
+export default class TaskApp extends BaseApp {
     constructor(props, context) {
         super(props, context);
 
-        this.state.app = "country";
+        this.state.app = "task";
+
+        let self = this;
+
+        this.state.users = [];
+        this.getData("/api/user", function (err, data) {
+            data.forEach(function(user) {
+                self.state.users.push({'value': user.id, 'text': user.name});
+            });
+        });
+
+        this.state.customers = [];
+        this.getData("/api/customer", function (err, data) {
+            data.forEach(function(customer) {
+                self.state.customers.push({'value': customer.id, 'text': customer.name});
+            });
+        });
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -40,8 +56,9 @@ export default class CountryApp extends BaseApp {
                     <div className="ui loader"></div>
                 </div>
 
-                <CountryView
-                    flags={BaseApp.getValidFlags()}
+                <TaskView
+                    users={this.state.users}
+                    customers={this.state.customers}
 
                     e={this.state.errors}
                     createNew={this.createNew}
@@ -63,6 +80,6 @@ export default class CountryApp extends BaseApp {
 }
 
 render(
-    <CountryApp/>,
-    document.getElementById('countryApp')
+    <TaskApp/>,
+    document.getElementById('taskApp')
 );

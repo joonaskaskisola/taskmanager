@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\CustomerItem;
 use AppBundle\Helper\FormHelper;
+use AppBundle\Repository\ItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -33,23 +34,14 @@ class ItemController extends Controller
      */
     public function getItemsAction(Request $request)
     {
+        $serializer = $this->get('serializer');
+
+        /** @var ItemRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Item');
 
-        $response = array_map(function($item) {
+        $response = array_map(function($item) use ($serializer) {
             /** @var Item $item */
-            return [
-                'id' => $item->getId(),
-                'category' => [
-                    'id' => $item->getCategory()->getId(),
-                    'name' => $item->getCategory()->getName()
-                ],
-                'unit' => [
-                    'id' => $item->getUnit()->getId(),
-                    'name' => $item->getUnit()->getName()
-                ],
-                'name' => $item->getName(),
-                'price' => $item->getPrice()
-            ];
+            return json_decode($serializer->serialize($item, 'json'), true);
         }, $repository->findBy([], ['name' => 'ASC']));
 
         return new JsonResponse($response);
@@ -64,24 +56,15 @@ class ItemController extends Controller
      */
     public function getItemAction(Request $request, $id)
     {
+        $serializer = $this->get('serializer');
+
+        /** @var ItemRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Item');
 
-        $response = array_map(function($item) {
+        $response = array_map(function($item) use ($serializer) {
             /** @var Item $item */
-            return [
-                'id' => $item->getId(),
-                'category' => [
-                    'id' => $item->getCategory()->getId(),
-                    'name' => $item->getCategory()->getName()
-                ],
-                'unit' => [
-                    'id' => $item->getUnit()->getId(),
-                    'name' => $item->getUnit()->getName()
-                ],
-                'name' => $item->getName(),
-                'price' => $item->getPrice()
-            ];
-        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+            return json_decode($serializer->serialize($item, 'json'), true);
+        }, $repository->findBy(['id' => $id]));
 
         return new JsonResponse($response);
     }

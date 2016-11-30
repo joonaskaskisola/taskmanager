@@ -10,15 +10,14 @@ export default class CustomerApp extends BaseApp {
         super(props, context);
 
         this.state.app = "customer";
-        this.state.loadExtraInfo = true;
-        this.state.countries = [];
 
         let self = this;
 
+        this.state.countries = [];
         this.getData("/api/country", function (err, data) {
             data.forEach(function(country) {
                 self.state.countries.push({'value': country.name, 'text': country.name, 'flag': country.code.toLowerCase()});
-            })
+            });
         });
 
         this.handleSubmit = this.handleSubmit.bind(this);

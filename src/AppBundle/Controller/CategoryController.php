@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
+use AppBundle\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -32,14 +33,14 @@ class CategoryController extends Controller
      */
     public function getCategoriesAction(Request $request)
     {
+        $serializer = $this->get('serializer');
+
+        /** @var CategoryRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Category');
 
-        $response = array_map(function($category) {
+        $response = array_map(function($category) use ($serializer) {
             /** @var Category $category */
-            return [
-                'id' => $category->getId(),
-                'name' => $category->getName() ?? ""
-            ];
+            return json_decode($serializer->serialize($category, 'json'), true);
         }, $repository->findBy([], ['name' => 'ASC']));
 
         return new JsonResponse($response);
@@ -54,15 +55,15 @@ class CategoryController extends Controller
      */
     public function getCategoryAction(Request $request, $id)
     {
+        $serializer = $this->get('serializer');
+
+        /** @var CategoryRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Category');
 
-        $response = array_map(function($category) {
+        $response = array_map(function($category) use ($serializer) {
             /** @var Category $category */
-            return [
-                'id' => $category->getId(),
-                'name' => $category->getName() ?? ""
-            ];
-        }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
+            return json_decode($serializer->serialize($category, 'json'), true);
+        }, $repository->findBy(['id' => $id]));
 
         return new JsonResponse($response);
     }

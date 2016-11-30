@@ -9,6 +9,7 @@ module.exports = {
     categoryApp: "./app/Resources/jsx/categoryApp.jsx",
     unitApp: "./app/Resources/jsx/unitApp.jsx",
     countryApp: "./app/Resources/jsx/countryApp.jsx",
+    taskApp: "./app/Resources/jsx/taskApp.jsx",
     logoutApp: "./app/Resources/jsx/logoutApp.jsx",
     loginApp: "./app/Resources/jsx/loginApp.jsx",
   },
