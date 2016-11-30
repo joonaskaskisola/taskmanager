@@ -3,7 +3,15 @@ import { render } from 'react-dom';
 
 export default class TextField extends React.Component {
     render() {
-        return <div className={"field " + (this.props.e[this.props.name] ? "error": "")}>
+        let errorClass = "", fieldName = this.props.name;
+
+        if (typeof this.props.e !== "undefined") {
+            if (fieldName in this.props.e) {
+                errorClass = "error";
+            }
+        }
+
+        return <div className={"field " + errorClass}>
             <label htmlFor={this.props.name}>{this.props.label}:</label>
 
             <input
