@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Core\SecurityContext;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine; // for Symfony 2.1.0+
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 /**
  * Custom login listener.
@@ -75,14 +75,5 @@ class LoginListener
         $userIpLog->setCreatedAt(new Chronos());
 
         $this->em->persist($userIpLog);
-        $this->em->persist($userIpLog);
-
-        if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // user has just logged in
-        }
-
-        if ($this->securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            // user has logged in using remember_me cookie
-        }
     }
 }

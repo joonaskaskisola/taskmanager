@@ -12,6 +12,7 @@ module.exports = {
     taskApp: "./app/Resources/jsx/taskApp.jsx",
     logoutApp: "./app/Resources/jsx/logoutApp.jsx",
     loginApp: "./app/Resources/jsx/loginApp.jsx",
+    profileApp: "./app/Resources/jsx/profileApp.jsx",
   },
   output: {
     path: "./web/js/",

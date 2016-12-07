@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Repository\UserRepository;
 use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,6 +23,39 @@ class UserController extends Controller
     public function listUserAction(Request $request)
     {
         return $this->render('grid.html.twig', ['view' => 'user']);
+    }
+
+    /**
+     * @Route("/profile", name="profile")
+     * @param Request $request
+     * @return Response
+     */
+    public function profileAction(Request $request)
+    {
+        return $this->render('grid.html.twig', ['view' => 'profile']);
+    }
+
+    /**
+     * @Route("/api/profile", name="getProfileAction")
+     * @Method({"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getProfileAction(Request $request)
+    {
+        $serializer = $this->get('serializer');
+
+        /** @var UserRepository $repository */
+        $repository = $this->getDoctrine()->getRepository('AppBundle:User');
+
+        $response = array_map(function($user) use ($serializer) {
+            /** @var User $user */
+            return json_decode($serializer->serialize($user, 'json'));
+        }, $repository->findBy([
+            'id' => $this->container->get('security.context')->getToken()->getUser()->getId()
+        ]));
+
+        return new JsonResponse($response);
     }
 
     /**

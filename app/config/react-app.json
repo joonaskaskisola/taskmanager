@@ -33,5 +33,10 @@
     "title": "Task",
     "url": "/api/task",
     "fetchDetailedRowDetails": true
+  },
+  "profile": {
+    "title": "profile",
+    "url": "/api/profile",
+    "fetchDetailedRowDetails": false
   }
 }

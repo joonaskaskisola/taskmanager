@@ -26,7 +26,8 @@
         "soyuka/seed-bundle": "^1.0",
         "cakephp/chronos": "^1.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "qandidate/symfony-json-request-transformer": "^1.2"
+        "qandidate/symfony-json-request-transformer": "^1.2",
+        "scheb/two-factor-bundle": "^2.8"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

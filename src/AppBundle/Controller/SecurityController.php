@@ -25,7 +25,10 @@ class SecurityController extends Controller
         $password = $this->get('security.password_encoder')
             ->encodePassword($user, 'moi');
 
+        $tfaSecret = $this->container->get("scheb_two_factor.security.google_authenticator")->generateSecret();
+
         $user
+            ->setGoogleAuthenticatorSecret($tfaSecret)
             ->setRoles(['ROLE_ADMIN'])
             ->setEnabled(true)
             ->setCustomer(
@@ -52,7 +55,9 @@ class SecurityController extends Controller
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
-            'createdUser' => $user
+            'createdUser' => $user,
+            'tfaSecret' => $tfaSecret,
+            'tfaQr' => $this->container->get("scheb_two_factor.security.google_authenticator")->getUrl($user)
         ]);
     }
 

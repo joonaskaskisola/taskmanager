@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new AppBundle(),
             new Soyuka\SeedBundle\SoyukaSeedBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Scheb\TwoFactorBundle\SchebTwoFactorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

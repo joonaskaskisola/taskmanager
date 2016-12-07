@@ -6,12 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use FOS\UserBundle\Model\User as BaseUser;
+use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
 
 /**
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User extends BaseUser implements \Serializable
+class User extends BaseUser implements \Serializable, TwoFactorInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -46,6 +47,11 @@ class User extends BaseUser implements \Serializable
      * @ORM\Column(type="string", length=30, unique=false, nullable=true)
      */
     protected $phone;
+
+    /**
+     * @ORM\Column(name="google_tfa_secret", type="string", nullable=true)
+     */
+    private $googleAuthenticatorSecret;
 
     public function __construct()
     {
@@ -157,5 +163,24 @@ class User extends BaseUser implements \Serializable
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGoogleAuthenticatorSecret()
+    {
+        return $this->googleAuthenticatorSecret;
+    }
+
+    /**
+     * @param mixed $googleAuthenticatorSecret
+     * @return $this
+     */
+    public function setGoogleAuthenticatorSecret($googleAuthenticatorSecret)
+    {
+        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
+
+        return $this;
     }
 }
