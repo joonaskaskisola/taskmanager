@@ -8,7 +8,6 @@ export default class LoginApp extends React.Component {
 
         this.state = {
             _username: this.props.children,
-            _tfa: '',
             errors: []
         };
 
@@ -23,12 +22,13 @@ export default class LoginApp extends React.Component {
             .post("/login")
             .send({
                 _username: this.state._username,
-                _tfa: this.state._tfa,
-                _password: 'moi',
+                _password: 'moi'
             })
             .end(function (err, res) {
                 if (!err) {
                     window.location = '/customers';
+                } else {
+                    location.reload();
                 }
             });
     }
@@ -51,11 +51,6 @@ export default class LoginApp extends React.Component {
                         <div className="field">
                             <label>Password</label>
                             <input readOnly placeholder="hunter" value="moi" type="password" id="password" name="_password" />
-                        </div>
-
-                        <div className="field">
-                            <label>2FA (if enabled)</label>
-                            <input placeholder="111 222" value={this.state._tfa} type="text" id="tfa" name="_tfa" onChange={this.handleChange} />
                         </div>
 
                         <button type="submit" className="ui submit button" onClick={this.handleSubmit}>Submit</button>

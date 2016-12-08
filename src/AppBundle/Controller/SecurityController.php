@@ -28,6 +28,7 @@ class SecurityController extends Controller
         $tfaSecret = $this->container->get("scheb_two_factor.security.google_authenticator")->generateSecret();
 
         $user
+            ->setTfaEnabled(false)
             ->setGoogleAuthenticatorSecret($tfaSecret)
             ->setRoles(['ROLE_ADMIN'])
             ->setEnabled(true)
@@ -55,9 +56,7 @@ class SecurityController extends Controller
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
-            'createdUser' => $user,
-            'tfaSecret' => $tfaSecret,
-            'tfaQr' => $this->container->get("scheb_two_factor.security.google_authenticator")->getUrl($user)
+            'createdUser' => $user
         ]);
     }
 

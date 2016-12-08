@@ -53,6 +53,11 @@ class User extends BaseUser implements \Serializable, TwoFactorInterface
      */
     private $googleAuthenticatorSecret;
 
+    /**
+     * @ORM\Column(name="tfa_enabled", type="boolean")
+     */
+    private $isTfaEnabled;
+
     public function __construct()
     {
         parent::__construct();
@@ -170,7 +175,11 @@ class User extends BaseUser implements \Serializable, TwoFactorInterface
      */
     public function getGoogleAuthenticatorSecret()
     {
-        return $this->googleAuthenticatorSecret;
+        if ($this->isTfaEnabled()) {
+            return $this->googleAuthenticatorSecret;
+        }
+
+        return null;
     }
 
     /**
@@ -182,5 +191,32 @@ class User extends BaseUser implements \Serializable, TwoFactorInterface
         $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isTfaEnabled()
+    {
+        return $this->isTfaEnabled;
+    }
+
+    /**
+     * @param mixed $isTfaEnabled
+     * @return $this
+     */
+    public function setTfaEnabled($isTfaEnabled)
+    {
+        $this->isTfaEnabled = $isTfaEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTfaKey()
+    {
+        return $this->googleAuthenticatorSecret;
     }
 }

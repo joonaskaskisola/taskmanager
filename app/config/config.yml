@@ -111,7 +111,7 @@ scheb_two_factor:
 
     # POST/GET parameter names
     parameter_names:
-        auth_code: _tfa          # Name of the parameter containing the authentication code
+        auth_code: _auth_code          # Name of the parameter containing the authentication code
         trusted: _trusted              # Name of the parameter containing the trusted flag
 
     # Google Authenticator config
@@ -119,7 +119,7 @@ scheb_two_factor:
         enabled: true                  # If Google Authenticator should be enabled, default false
         server_name: Server Name       # Server name used in QR code
         issuer: Issuer Name            # Issuer name used in QR code
-        template: AcmeDemoBundle:Authentication:form.html.twig   # Template used to render the authentication form
+        template: security/tfa.html.twig   # Template used to render the authentication form
 
     # The service which is used to persist data in the user object. By default Doctrine is used. If your entity is
     # managed by something else (e.g. an API), you have to implement a custom persister

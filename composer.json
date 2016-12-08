@@ -27,7 +27,8 @@
         "cakephp/chronos": "^1.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "qandidate/symfony-json-request-transformer": "^1.2",
-        "scheb/two-factor-bundle": "^2.8"
+        "scheb/two-factor-bundle": "^2.8",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
