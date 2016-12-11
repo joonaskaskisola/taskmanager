@@ -1,8 +1,8 @@
- import React from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import TextField from '../components/text.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
-import { Divider } from 'semantic-ui-react';
+import { Divider, Menu, Input, Segment } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
 
 export default class CategoryView extends React.Component {
@@ -17,27 +17,32 @@ export default class CategoryView extends React.Component {
 
         if (this.props.row) {
             return <div className="ui segment">
-                <Divider horizontal>Category #{this.props.row.id}</Divider>
-
-                <div className={"ui form " + (this.props.loading ? "loading" : "")}>
+                <Menu attached='top' tabular>
+                    <Menu.Item name='Details' active={true}/>
                     <NavigationButtons
                         header={true}
                         nextRow={this.props.nextRow}
                         previousRow={this.props.previousRow}
                         showPrev={this.props.showPrev}
                         showNext={this.props.showNext}/>
+                </Menu>
 
-                    <h4 className="ui dividing header">General Information</h4>
+                <Segment attached='bottom'>
+                    <div className={"ui form " + (this.props.loading ? "loading" : "")}>
 
-                    <div className="one field">
-                        <TextField pos="left" name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
+                        <div className="one field">
+                            <TextField pos="left" name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
+                        </div>
+
                     </div>
+                </Segment>
 
+                <Menu attached='bottom' tabular>
                     <NavigationButtons
                         footer={true}
                         closeRow={this.props.closeRow}
                         handleSubmit={this.props.handleSubmit}/>
-                </div>
+                </Menu>
             </div>
         }
 

@@ -41,7 +41,7 @@
     "webpack": "^1.13.3"
   },
   "scripts": {
-    "install": "./npm_install.sh"
+    "install": "./scripts/npm_install.sh"
   },
   "devDependencies": {
     "http-server": "^0.9.0",

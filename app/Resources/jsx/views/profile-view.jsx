@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import TextField from '../components/text.jsx';
-import { Divider, Button, Header, Modal, Icon, Message, Image, Input } from 'semantic-ui-react';
+import { Divider, Button, Header, Modal, Icon, Message, Image, Input, Segment, Menu } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
 import request from 'superagent';
 
@@ -105,10 +105,12 @@ export default class ProfileView extends React.Component {
 
         if (this.props.row) {
             return <div className="ui segment">
-                <Divider horizontal>Profile</Divider>
+                <Menu attached='top' tabular>
+                    <Menu.Item name='Details' active={true}/>
+                </Menu>
 
-                <div className={"ui form " + (this.props.loading ? "loading" : "")}>
-                    <h4 className="ui dividing header">General Information</h4>
+                <Segment attached='bottom'>
+                    <div className={"ui form " + (this.props.loading ? "loading" : "")}>
 
                     <div className="two fields">
                         <TextField readonly={true} name="username" label="Username" value={this.props.row.username} />
@@ -179,10 +181,14 @@ export default class ProfileView extends React.Component {
                         </Modal>
                     </div>}
 
+                    </div>
+                </Segment>
+
+                <Menu attached='bottom' tabular>
                     <NavigationButtons
                         footer={true}
                         handleSubmit={this.props.handleSubmit}/>
-                </div>
+                </Menu>
             </div>
         }
 

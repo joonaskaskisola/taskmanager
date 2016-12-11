@@ -1,12 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Button, Icon } from 'semantic-ui-react'
 
 export default class NavigationButton extends React.Component {
     render() {
-        return <div className={this.props.float}>
-            {this.props.show && <div onClick={this.props.onClick} style={{float: this.props.float}} className={"ui " + (this.props.primary ? "primary " : "") + this.props.float + " labeled icon button"} tabIndex="0">
-                {this.props.leftLabel} <i className={this.props.icon + " icon"}></i> {this.props.rightLabel}
-            </div>}
-        </div>
+        if (!this.props.show) {
+            return <div/>
+        }
+
+        return <Button onClick={this.props.onClick}>
+            {this.props.leftLabel}
+            <Icon name={this.props.icon}/>
+            {this.props.rightLabel}
+        </Button>
     }
 }
