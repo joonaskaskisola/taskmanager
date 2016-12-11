@@ -12,6 +12,7 @@ export default class ProfileView extends React.Component {
         this.state = {
             displayQrCode: false,
             tfaModalOpen: false,
+            disableTfaModalOpen: false,
             tfaConfirmed: false,
             tfaConfirmation: '',
             checkingQrCode: false
@@ -20,7 +21,10 @@ export default class ProfileView extends React.Component {
         this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
         this.openTfaModal = this.openTfaModal.bind(this);
         this.closeTfaModal = this.closeTfaModal.bind(this);
+        this.openDisableTfaModal = this.openDisableTfaModal.bind(this);
+        this.closeDisableTfaModal = this.closeDisableTfaModal.bind(this);
         this.enableTfa = this.enableTfa.bind(this);
+        this.disableTfa = this.disableTfa.bind(this);
         this.checkTfa = this.checkTfa.bind(this);
     }
 
@@ -43,12 +47,33 @@ export default class ProfileView extends React.Component {
             });
     }
 
+    disableTfa() {
+        let self = this;
+
+        request
+            .post("/api/tfa/disable")
+            .end(function (err, res) {
+                self.state.disableTfaModalOpen = false;
+                self.props.row.tfaEnabled = false;
+
+                self.setState(self.state);
+            });
+    }
+
     closeTfaModal() {
         this.setState({"tfaModalOpen": false});
     }
 
     openTfaModal() {
         this.setState({"tfaModalOpen": true});
+    }
+
+    closeDisableTfaModal() {
+        this.setState({"disableTfaModalOpen": false});
+    }
+
+    openDisableTfaModal() {
+        this.setState({"disableTfaModalOpen": true});
     }
 
     checkTfa(e) {
@@ -79,7 +104,7 @@ export default class ProfileView extends React.Component {
         }
 
         if (this.props.row) {
-            return <div>
+            return <div className="ui segment">
                 <Divider horizontal>Profile</Divider>
 
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>
@@ -138,16 +163,16 @@ export default class ProfileView extends React.Component {
                     </div>}
 
                     {this.props.row.tfaEnabled && <div className="field">
-                        <Modal trigger={<Button color='red'>Disable two factor authentication</Button>} basic size='small'>
-                            <Header icon='warning sign' content='Disable 2fa?' />
+                        <Modal open={this.state.disableTfaModalOpen} trigger={<Button color='red' onClick={this.openDisableTfaModal}>Disable two factor authentication</Button>} basic size='small'>
+                            <Header icon='warning sign' content='Disable two factor authentication?' />
                             <Modal.Content>
                                 <p>Are you sure you would like to disable two factor authentication?</p>
                             </Modal.Content>
                             <Modal.Actions>
-                                <Button basic color='red' inverted>
+                                <Button basic color='red' inverted onClick={this.closeDisableTfaModal}>
                                     <Icon name='remove' /> No
                                 </Button>
-                                <Button color='green' inverted>
+                                <Button color='green' inverted onClick={this.disableTfa}>
                                     <Icon name='checkmark' /> Yes
                                 </Button>
                             </Modal.Actions>

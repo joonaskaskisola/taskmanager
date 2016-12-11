@@ -17,7 +17,7 @@ export default class TaskView extends React.Component {
         }
 
         if (this.props.row) {
-            return <div>
+            return <div className="ui segment">
                 <Divider horizontal>Task #{this.props.row.id}</Divider>
 
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>

@@ -51,30 +51,24 @@ export default class ItemApp extends BaseApp {
         return <div>
             <NotificationContainer/>
 
-            <div className="ui segment">
-                <div className={"ui inverted  " + (this.state.isLoading ? "active" : "") + " dimmer"}>
-                    <div className="ui loader"></div>
-                </div>
+            <ItemView
+                units={this.state.units}
+                categories={this.state.categories}
 
-                <ItemView
-                    units={this.state.units}
-                    categories={this.state.categories}
-
-                    e={this.state.errors}
-                    createNew={this.createNew}
-                    showNext={this.state.next}
-                    showPrev={this.state.prev}
-                    nextRow={this.nextRow}
-                    previousRow={this.previousRow}
-                    handleSubmit={this.handleSubmit}
-                    handleSelectChange={this.handleSelectChange}
-                    handleChange={this.handleChange}
-                    closeRow={this.closeRow}
-                    viewRow={this.viewRow}
-                    loading={this.state.isLoading}
-                    row={this.state.row}
-                    data={this.state.data}/>
-            </div>
+                e={this.state.errors}
+                createNew={this.createNew}
+                showNext={this.state.next}
+                showPrev={this.state.prev}
+                nextRow={this.nextRow}
+                previousRow={this.previousRow}
+                handleSubmit={this.handleSubmit}
+                handleSelectChange={this.handleSelectChange}
+                handleChange={this.handleChange}
+                closeRow={this.closeRow}
+                viewRow={this.viewRow}
+                loading={this.state.isLoading}
+                row={this.state.row}
+                data={this.state.data}/>
         </div>
     }
 }

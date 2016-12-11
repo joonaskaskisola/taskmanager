@@ -17,7 +17,7 @@ export default class CountryView extends React.Component {
         }
 
         if (this.props.row) {
-            return <div>
+            return <div className="ui segment">
                 <Divider horizontal>Country #{this.props.row.id}</Divider>
 
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>

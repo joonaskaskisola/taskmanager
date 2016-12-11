@@ -19,7 +19,7 @@ export default class InboxView extends React.Component {
         }
 
         if (this.props.row) {
-            return <div>
+            return <div className="ui segment">
                 <div>
                     {this.props.row.id && <ModalReplyPrivateMessage replyToId={this.props.row.id}/>}
                 </div>

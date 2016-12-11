@@ -18,7 +18,7 @@ export default class CustomerView extends React.Component {
         }
 
         if (this.props.row) {
-            return <div>
+            return <div className="ui segment">
                 <div>
                     <ModalViewTasks customerId={this.props.row.id}/>
                 </div>

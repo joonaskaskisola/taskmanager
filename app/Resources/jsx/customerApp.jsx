@@ -46,28 +46,22 @@ export default class CustomerApp extends BaseApp {
         return <div>
             <NotificationContainer/>
 
-            <div className="ui segment">
-                <div className={"ui inverted  " + (this.state.isLoading ? "active" : "") + " dimmer"}>
-                    <div className="ui loader"></div>
-                </div>
-
-                <CustomerView
-                    e={this.state.errors}
-                    createNew={this.createNew}
-                    countries={this.state.countries}
-                    showNext={this.state.next}
-                    showPrev={this.state.prev}
-                    nextRow={this.nextRow}
-                    previousRow={this.previousRow}
-                    handleSubmit={this.handleSubmit}
-                    handleSelectChange={this.handleSelectChange}
-                    handleChange={this.handleChange}
-                    closeRow={this.closeRow}
-                    viewRow={this.viewRow}
-                    loading={this.state.isLoading}
-                    row={this.state.row}
-                    data={this.state.data}/>
-            </div>
+            <CustomerView
+                e={this.state.errors}
+                createNew={this.createNew}
+                countries={this.state.countries}
+                showNext={this.state.next}
+                showPrev={this.state.prev}
+                nextRow={this.nextRow}
+                previousRow={this.previousRow}
+                handleSubmit={this.handleSubmit}
+                handleSelectChange={this.handleSelectChange}
+                handleChange={this.handleChange}
+                closeRow={this.closeRow}
+                viewRow={this.viewRow}
+                loading={this.state.isLoading}
+                row={this.state.row}
+                data={this.state.data}/>
         </div>
     }
 }

@@ -16,39 +16,45 @@
     </head>
 
     <body>
-        <div class="ui black inverted menu">
+        <div class="ui menu">
             <div class="ui container">
-                <a href="#" class="header item">
-                    Manager
-                </a>
+                <div class="ui pointing menu">
+                    <a class="active item">
+                        Taskio
+                    </a>
 
-                <a class="item" href="{{ path('listTimeRow') }}">Time tracking</a>
+                    <a class="item" href="{{ path('listTimeRow') }}">Time tracking</a>
 
-                <div class="ui simple dropdown item">
-                    Entities <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a class="item" href="{{ path('listCustomer') }}">Customers</a>
-                        <a class="item" href="{{ path('listTask') }}">Tasks</a>
-                        {#<a class="item" href="{{ path('listInvoice') }}">Invoices</a>#}
+                    <div class="ui simple dropdown item">
+                        Entities <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a class="item" href="{{ path('listCustomer') }}">Customers</a>
+                            <a class="item" href="{{ path('listTask') }}">Tasks</a>
+                            {#<a class="item" href="{{ path('listInvoice') }}">Invoices</a>#}
 
-                        {#<a class="item" href="{{ path('editUser', {'id': app.user.id}) }}">Profile</a>#}
-                        {#<a class="item" href="{{ path('listUser') }}">Users</a>#}
-                        {#<a class="item" href="{{ path('listGroup') }}">Groups</a>#}
-                        <a class="item" href="{{ path('listCategory') }}">Categories</a>
-                        {#<a class="item" href="{{ path('listTaskCycle') }}">Task cycles</a>#}
-                        <a class="item" href="{{ path('listItem') }}">Items</a>
-                        <a class="item" href="{{ path('listUnit') }}">Units</a>
-                        <a class="item" href="{{ path('listCountry') }}">Countries</a>
+                            {#<a class="item" href="{{ path('editUser', {'id': app.user.id}) }}">Profile</a>#}
+                            {#<a class="item" href="{{ path('listUser') }}">Users</a>#}
+                            {#<a class="item" href="{{ path('listGroup') }}">Groups</a>#}
+                            <a class="item" href="{{ path('listCategory') }}">Categories</a>
+                            {#<a class="item" href="{{ path('listTaskCycle') }}">Task cycles</a>#}
+                            <a class="item" href="{{ path('listItem') }}">Items</a>
+                            <a class="item" href="{{ path('listUnit') }}">Units</a>
+                            <a class="item" href="{{ path('listCountry') }}">Countries</a>
+                        </div>
+                    </div>
+
+                    <div class="right menu">
+                        <div class="item right">
+                            <a class="item" href="{{ path('listPrivateMessage') }}">
+                                <i class="mail outline icon"></i>
+                            </a>
+                        </div>
+                        <div class="item right">
+                            <a class="item" href="{{ path('profile') }}">Profile</a>
+                        </div>
+                        <div class="item right" id="logoutApp"></div>
                     </div>
                 </div>
-
-                <a class="item" href="{{ path('listPrivateMessage') }}">
-                    <i class="mail outline icon"></i>
-                </a>
-
-                <a class="item" href="{{ path('profile') }}">Profile</a>
-
-                <div class="item right" id="logoutApp"></div>
             </div>
         </div>
 

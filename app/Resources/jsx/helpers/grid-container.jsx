@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Button, Input } from 'semantic-ui-react'
+import { Button, Input, Menu, Item } from 'semantic-ui-react'
 import Row from '../components/row.jsx';
 import Sort from '../components/sort.jsx';
 
@@ -123,28 +123,39 @@ export default class GridContainer extends React.Component {
         });
 
         return <div>
-            <div className="ui computer equal width grid">
-                <div className="row secondary">
-                    {this.props.createNew && <div className="column">
-                        <Button primary onClick={this.props.createNew}>Add new</Button>
-                    </div>}
+            <Menu pointing>
+                <Menu.Item name='home' active={false} />
+                <Menu.Menu position='right'>
+                    <Menu.Item>
+                        {this.props.createNew && <div className="column">
+                            <Button primary onClick={this.props.createNew}>Add new</Button>
+                        </div>}
+                    </Menu.Item>
 
-                    {this.props.search && <Input
-                        value={this.state.search}
-                        onChange={this.search}
-                        style={{marginRight: "20px"}}
-                        focus
-                        icon="search"
-                        placeholder='Search...' />}
+                    <Menu.Item>
+                        {this.props.search && <Input
+                            value={this.state.search}
+                            onChange={this.search}
+                            style={{marginRight: "20px"}}
+                            focus
+                            icon="search"
+                            placeholder='Search...' />}
+                    </Menu.Item>
+                </Menu.Menu>
+            </Menu>
+
+            <div className="ui segment">
+                <div className={"ui inverted  " + (this.props.isLoading ? "active" : "") + " dimmer"}>
+                    <div className="ui loader"></div>
                 </div>
-            </div>
 
-            <div className="ui computer equal width grid">
-                <div className="row blue">
-                    {columns}
+                <div className="ui computer equal width grid">
+                    <div className="row blue">
+                        {columns}
+                    </div>
+
+                    {rows}
                 </div>
-
-                {rows}
             </div>
         </div>
     }

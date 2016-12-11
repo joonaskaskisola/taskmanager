@@ -51,30 +51,24 @@ export default class TaskApp extends BaseApp {
         return <div>
             <NotificationContainer/>
 
-            <div className="ui segment">
-                <div className={"ui inverted  " + (this.state.isLoading ? "active" : "") + " dimmer"}>
-                    <div className="ui loader"></div>
-                </div>
+            <TaskView
+                users={this.state.users}
+                customers={this.state.customers}
 
-                <TaskView
-                    users={this.state.users}
-                    customers={this.state.customers}
-
-                    e={this.state.errors}
-                    createNew={this.createNew}
-                    showNext={this.state.next}
-                    showPrev={this.state.prev}
-                    nextRow={this.nextRow}
-                    previousRow={this.previousRow}
-                    handleSubmit={this.handleSubmit}
-                    handleSelectChange={this.handleSelectChange}
-                    handleChange={this.handleChange}
-                    closeRow={this.closeRow}
-                    viewRow={this.viewRow}
-                    loading={this.state.isLoading}
-                    row={this.state.row}
-                    data={this.state.data}/>
-            </div>
+                e={this.state.errors}
+                createNew={this.createNew}
+                showNext={this.state.next}
+                showPrev={this.state.prev}
+                nextRow={this.nextRow}
+                previousRow={this.previousRow}
+                handleSubmit={this.handleSubmit}
+                handleSelectChange={this.handleSelectChange}
+                handleChange={this.handleChange}
+                closeRow={this.closeRow}
+                viewRow={this.viewRow}
+                loading={this.state.isLoading}
+                row={this.state.row}
+                data={this.state.data}/>
         </div>
     }
 }
