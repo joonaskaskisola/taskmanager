@@ -1,10 +1,34 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Link, ReactRouter } from 'react-router';
+import { Confirm } from 'semantic-ui-react'
 
 export default class MenuApp extends React.Component{
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
+
+        this.state = {
+            "open": false,
+            "result": null
+        };
+
+        this.showLogout = this.showLogout.bind(this);
+        this.handleLogoutConfirm = this.handleLogoutConfirm.bind(this);
+        this.handleLogoutCancel = this.handleLogoutCancel.bind(this);
+    }
+
+    showLogout() {
+        this.setState({open: true});
+    }
+
+    handleLogoutConfirm() {
+        this.setState({result: 'confirmed', open: false});
+
+        window.location = '/logout';
+    }
+
+    handleLogoutCancel() {
+        this.setState({result: 'cancelled', open: false});
     }
 
     render() {
@@ -41,7 +65,15 @@ export default class MenuApp extends React.Component{
                                 <Link to={"/profile"} className="item">Profile</Link>
                             </div>
 
-                            <div className="item right" id="logoutApp"></div>
+                            <div className="item right" onClick={this.showLogout}>
+                                <i className="sign out icon"></i>
+
+                                <Confirm
+                                    open={this.state.open}
+                                    onCancel={this.handleLogoutCancel}
+                                    onConfirm={this.handleLogoutConfirm}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
