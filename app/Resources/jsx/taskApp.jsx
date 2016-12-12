@@ -72,8 +72,3 @@ export default class TaskApp extends BaseApp {
         </div>
     }
 }
-
-render(
-    <TaskApp/>,
-    document.getElementById('taskApp')
-);

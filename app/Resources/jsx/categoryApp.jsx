@@ -52,8 +52,3 @@ export default class CategoryApp extends BaseApp {
         </div>
     }
 }
-
-render(
-    <CategoryApp/>,
-    document.getElementById('categoryApp')
-);

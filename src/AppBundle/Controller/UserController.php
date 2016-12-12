@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function listUserAction(Request $request)
     {
-        return $this->render('grid.html.twig', ['view' => 'user']);
+        return $this->render('base.html.twig');
     }
 
     /**
@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function profileAction(Request $request)
     {
-        return $this->render('grid.html.twig', ['view' => 'profile']);
+        return $this->render('base.html.twig');
     }
 
     /**

@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import BaseApp from './components/base-app.jsx';
 import UnitView from './views/unit-view.jsx';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import request from 'superagent';
 
 export default class UnitApp extends BaseApp {
     constructor(props, context) {
@@ -51,8 +52,3 @@ export default class UnitApp extends BaseApp {
         </div>
     }
 }
-
-render(
-    <UnitApp/>,
-    document.getElementById('unitApp')
-);

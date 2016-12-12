@@ -55,8 +55,3 @@ export default class CountryApp extends BaseApp {
         </div>
     }
 }
-
-render(
-    <CountryApp/>,
-    document.getElementById('countryApp')
-);

@@ -66,7 +66,7 @@ export default class CustomerApp extends BaseApp {
     }
 }
 
-render(
-    <CustomerApp/>,
-    document.getElementById('customerApp')
-);
+// render(
+//     <CustomerApp/>,
+//     document.getElementById('customerApp')
+// );

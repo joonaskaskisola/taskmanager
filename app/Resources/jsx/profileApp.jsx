@@ -59,8 +59,3 @@ export default class ProfileApp extends BaseApp {
         </div>
     }
 }
-
-render(
-    <ProfileApp/>,
-    document.getElementById('profileApp')
-);

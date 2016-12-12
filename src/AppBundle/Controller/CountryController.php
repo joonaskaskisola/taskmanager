@@ -23,7 +23,7 @@ class CountryController extends Controller
      */
     public function listCountryAction(Request $request)
     {
-        return $this->render('grid.html.twig', ['view' => 'country']);
+        return $this->render('base.html.twig');
     }
 
     /**

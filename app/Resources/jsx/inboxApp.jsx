@@ -64,8 +64,3 @@ export default class InboxApp extends BaseApp {
         </div>
     }
 }
-
-render(
-    <InboxApp/>,
-    document.getElementById('inboxApp')
-);

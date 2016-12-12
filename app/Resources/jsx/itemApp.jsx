@@ -72,8 +72,3 @@ export default class ItemApp extends BaseApp {
         </div>
     }
 }
-
-render(
-    <ItemApp/>,
-    document.getElementById('itemApp')
-);

@@ -16,59 +16,12 @@
     </head>
 
     <body>
-        <div class="ui menu">
-            <div class="ui container">
-                <div class="ui pointing menu">
-                    <a class="active item">
-                        Taskio
-                    </a>
+        <div id="app"></div>
 
-                    <a class="item" href="{{ path('listTimeRow') }}">Time tracking</a>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/semantic.min.js"></script>
+        <script src="/js/taskmanager.js"></script>
 
-                    <div class="ui simple dropdown item">
-                        Entities <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <a class="item" href="{{ path('listCustomer') }}">Customers</a>
-                            <a class="item" href="{{ path('listTask') }}">Tasks</a>
-                            {#<a class="item" href="{{ path('listInvoice') }}">Invoices</a>#}
-
-                            {#<a class="item" href="{{ path('editUser', {'id': app.user.id}) }}">Profile</a>#}
-                            {#<a class="item" href="{{ path('listUser') }}">Users</a>#}
-                            {#<a class="item" href="{{ path('listGroup') }}">Groups</a>#}
-                            <a class="item" href="{{ path('listCategory') }}">Categories</a>
-                            {#<a class="item" href="{{ path('listTaskCycle') }}">Task cycles</a>#}
-                            <a class="item" href="{{ path('listItem') }}">Items</a>
-                            <a class="item" href="{{ path('listUnit') }}">Units</a>
-                            <a class="item" href="{{ path('listCountry') }}">Countries</a>
-                        </div>
-                    </div>
-
-                    <div class="right menu">
-                        <div class="item right">
-                            <a class="item" href="{{ path('listPrivateMessage') }}">
-                                <i class="mail outline icon"></i>
-                            </a>
-                        </div>
-                        <div class="item right">
-                            <a class="item" href="{{ path('profile') }}">Profile</a>
-                        </div>
-                        <div class="item right" id="logoutApp"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="ui main container">
-            {% block body %}{% endblock %}
-        </div>
-
-        {% block javascripts %}
-            <script src="/js/jquery.min.js"></script>
-            <script src="/js/semantic.min.js"></script>
-            <script src="/js/taskmanager.js"></script>
-
-            <script src="{{ js_path }}/logoutApp.js"></script>
-            {% block reactjs %}{% endblock %}
-        {% endblock %}
+        <script src="{{ js_path }}/app.js"></script>
     </body>
 </html>

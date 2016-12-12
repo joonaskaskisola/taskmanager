@@ -23,7 +23,7 @@ class ItemController extends Controller
      */
     public function listAction(Request $request)
     {
-        return $this->render('grid.html.twig', ['view' => 'item']);
+        return $this->render('base.html.twig');
     }
 
     /**

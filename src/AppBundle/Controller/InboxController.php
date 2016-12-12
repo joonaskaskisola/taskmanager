@@ -23,7 +23,7 @@ class InboxController extends Controller
      */
     public function listAction(Request $request)
     {
-        return $this->render('grid.html.twig', ['view' => 'inbox']);
+        return $this->render('base.html.twig');
     }
 
     /**

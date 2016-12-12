@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 div.row:hover:not(:first-child) {
     background-color: #545454;
     cursor: pointer;

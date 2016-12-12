@@ -21,7 +21,7 @@ class UnitController extends Controller
      */
     public function listUnitAction(Request $request)
     {
-        return $this->render('grid.html.twig', ['view' => 'unit']);
+        return $this->render('base.html.twig');
     }
 
     /**

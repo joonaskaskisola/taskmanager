@@ -23,7 +23,7 @@ class TaskController extends Controller
      */
     public function listAction(Request $request, $searchBy = null, $searchValue = null)
     {
-        return $this->render('grid.html.twig', ['view' => 'task']);
+        return $this->render('base.html.twig');
     }
 
     /**

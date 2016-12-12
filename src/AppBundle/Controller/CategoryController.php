@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function listCategoryAction(Request $request)
     {
-        return $this->render('grid.html.twig', ['view' => 'category']);
+        return $this->render('base.html.twig');
     }
 
     /**

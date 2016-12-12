@@ -21,7 +21,7 @@ class CustomerController extends Controller
      */
     public function listAction(Request $request)
     {
-        return $this->render('grid.html.twig', ['view' => 'customer']);
+        return $this->render('base.html.twig');
     }
 
     /**
