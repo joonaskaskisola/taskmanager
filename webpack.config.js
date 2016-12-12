@@ -1,5 +1,3 @@
-let webpack = require('webpack'), path = require('path');
-
 module.exports = {
   entry: {
     app: ["./app/Resources/jsx/app.jsx"],
