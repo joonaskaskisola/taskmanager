@@ -1,5 +1,4 @@
 import React from 'react';
-import {render} from 'react-dom';
 import BaseApp from './components/base-app.jsx';
 import CustomerView from './views/customer-view.jsx';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
@@ -65,8 +64,3 @@ export default class CustomerApp extends BaseApp {
         </div>
     }
 }
-
-// render(
-//     <CustomerApp/>,
-//     document.getElementById('customerApp')
-// );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { Button, Input, Menu, Item } from 'semantic-ui-react'
 import Row from '../components/row.jsx';
 import Sort from '../components/sort.jsx';
@@ -33,14 +32,14 @@ export default class GridContainer extends React.Component {
                     console.log("object keys:", Object.keys(row), self.props);
 
                     Object.keys(row).map(function(key) {
-                        if (self.props.fields.indexOf(key) != -1
+                        if (self.props.fields.indexOf(key) !== -1
                             && !added
                             && isNaN(row[key])
-                            && row[key].toLowerCase().indexOf(word) != -1
+                            && row[key].toLowerCase().indexOf(word) !== -1
                         ) {
                             added = true;
                             queryResult.push(row);
-                        } else if (!added && typeof row[key] == "object") {
+                        } else if (!added && typeof row[key] === "object") {
                             self.props.fields.forEach(function(i_field) {
                                 if (i_field.indexOf('.') !== -1) {
                                     console.log(row);
@@ -50,10 +49,10 @@ export default class GridContainer extends React.Component {
                                     i_field.split('.').forEach(function(s) {
                                         e = e[s];
 
-                                        if (typeof e == "string") {
+                                        if (typeof e === "string") {
                                             console.log("string!", e, "haetaan:", word);
 
-                                            if (e.toLowerCase().indexOf(word) != -1) {
+                                            if (e.toLowerCase().indexOf(word) !== -1) {
                                                 added = true;
                                                 queryResult.push(row);
                                             }

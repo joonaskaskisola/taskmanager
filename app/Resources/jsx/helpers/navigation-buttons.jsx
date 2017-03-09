@@ -1,7 +1,6 @@
 import React from 'react';
-import { render } from 'react-dom';
 import NavigationButton from '../components/navigation-button.jsx';
-import { Menu, Item } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 
 export default class NavigationButtons extends React.Component {
     render() {

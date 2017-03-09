@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { Checkbox } from 'semantic-ui-react'
 
 export default class CheckboxField extends React.Component {

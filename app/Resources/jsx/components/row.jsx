@@ -16,7 +16,7 @@ export default class Row extends React.Component {
                 let key = self.props.row, splitted = field.split('.').forEach(function(split) {
                     key = key[split];
 
-                    if (typeof key == "string") {
+                    if (typeof key === "string") {
                         fields.push(<div key={"field-" + field + self.props.row.id} className="column">{ key }</div>);
                     }
                 });

@@ -1,5 +1,4 @@
 import React from 'react';
-import {render} from 'react-dom';
 import BaseApp from './components/base-app.jsx';
 import CategoryView from './views/category-view.jsx';
 import { NotificationContainer, NotificationManager } from 'react-notifications';

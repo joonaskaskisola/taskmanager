@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import BaseApp from './components/base-app.jsx';
 import ProfileView from './views/profile-view.jsx';
 import { NotificationContainer, NotificationManager } from 'react-notifications';

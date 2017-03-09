@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import TextField from '../components/text.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
 import { Divider, Menu, Input, Segment } from 'semantic-ui-react';

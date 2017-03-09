@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { Button, Icon } from 'semantic-ui-react'
 
 export default class NavigationButton extends React.Component {

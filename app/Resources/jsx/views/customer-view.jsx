@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import TextField from '../components/text.jsx';
 import SelectField from '../components/select.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
@@ -42,7 +41,7 @@ export default class CustomerView extends React.Component {
                 <Segment attached='bottom'>
                     <div className={"ui form " + (this.props.loading ? "loading" : "")}>
 
-                        {this.state.activeItem == "Details" && <div>
+                        {this.state.activeItem === "Details" && <div>
 
                             <div className="two fields">
                                 <TextField e={this.props.e} name="name" label="Name" value={this.props.row.name} handleChange={this.props.handleChange} />
@@ -67,7 +66,7 @@ export default class CustomerView extends React.Component {
                             </div>
                         </div>}
 
-                        {this.state.activeItem == 'Tasks' && <div>Todo</div>}
+                        {this.state.activeItem === 'Tasks' && <div>Todo</div>}
                     </div>
                 </Segment>
 

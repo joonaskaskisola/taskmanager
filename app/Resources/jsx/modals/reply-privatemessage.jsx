@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { Divider, Button, Modal } from 'semantic-ui-react'
 import TextAreaField from '../components/textArea.jsx';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';

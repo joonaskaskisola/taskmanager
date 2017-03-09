@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import SelectField from '../components/select.jsx';
 import TextField from '../components/text.jsx';
 import GridContainer from '../helpers/grid-container.jsx';

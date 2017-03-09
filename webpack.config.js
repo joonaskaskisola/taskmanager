@@ -4,10 +4,9 @@ module.exports = {
     loginApp: ["./app/Resources/jsx/loginApp.jsx"],
   },
   output: {
-    path: "./web/js/",
+    path: "/mnt/c/Users/Joonas/workspace/taskmanager/web/js/",
     filename: "[name].js"
   },
-  debug: true,
   module: {
     loaders: [
       {

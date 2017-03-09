@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { Link, ReactRouter } from 'react-router';
 import { Confirm } from 'semantic-ui-react'
 

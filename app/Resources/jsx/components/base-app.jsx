@@ -1,6 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
-import appData from 'json!../../../config/react-app.json';
+import appData from 'json-loader!../../../config/react-app.json';
 import { Flag } from 'semantic-ui-react'
 import request from 'superagent';
 
@@ -37,7 +36,7 @@ export default class BaseApp extends React.Component {
     checkPrevNextButtons(rowId) {
         let self = this;
         this.state.data.every(function (obj, index) {
-            if (obj.id == rowId) {
+            if (obj.id === rowId) {
                 self.setState({
                     "prev": self.state.data[index - 1] !== undefined,
                     "next": self.state.data[index + 1] !== undefined
@@ -55,7 +54,7 @@ export default class BaseApp extends React.Component {
         let currentId = this.state.row.id;
 
         this.state.data.every(function (obj, index) {
-            if (obj.id == currentId) {
+            if (obj.id === currentId) {
                 if (self.state.data[index - 1] !== undefined) {
                     self.viewRow(self.state.data[index - 1].id);
                     return false;
@@ -71,7 +70,7 @@ export default class BaseApp extends React.Component {
         let currentId = this.state.row.id;
 
         this.state.data.every(function (obj, index) {
-            if (obj.id == currentId) {
+            if (obj.id === currentId) {
                 if (self.state.data[index + 1] !== undefined) {
                     self.viewRow(self.state.data[index + 1].id);
                     return false;
@@ -121,7 +120,7 @@ export default class BaseApp extends React.Component {
             });
         } else {
             this.state.data.every(function (obj, index) {
-                if (obj.id == rowId) {
+                if (obj.id === rowId) {
                     self.setState({"row": obj});
                     return false;
                 }
@@ -162,7 +161,7 @@ export default class BaseApp extends React.Component {
         let flags = Flag._meta.props.name, validFlags = [];
 
         flags.forEach(function (flag) {
-            if (flag.length == 2) {
+            if (flag.length === 2) {
                 validFlags.push({
                     "value": flag.toUpperCase(),
                     "text": flag.toUpperCase(),

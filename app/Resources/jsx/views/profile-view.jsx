@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import TextField from '../components/text.jsx';
 import { Divider, Button, Header, Modal, Icon, Message, Image, Input, Segment, Menu } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
@@ -79,7 +78,7 @@ export default class ProfileView extends React.Component {
     checkTfa(e) {
         this.state.tfaConfirmation = e.target.value;
 
-        if (this.state.tfaConfirmation.length == 6) {
+        if (this.state.tfaConfirmation.length === 6) {
             this.state.checkingQrCode = true;
 
             let self = this;
@@ -147,7 +146,7 @@ export default class ProfileView extends React.Component {
                                             size="massive"
                                             value={this.state.tfaConfirmation}
                                             onChange={this.checkTfa}
-                                            error={this.state.tfaConfirmation.length == 6 && !this.state.checkingQrCode && !this.state.tfaConfirmed}
+                                            error={this.state.tfaConfirmation.length === 6 && !this.state.checkingQrCode && !this.state.tfaConfirmed}
                                             placeholder='123 456' />
                                     </div>
 
