@@ -54,7 +54,7 @@ class User extends BaseUser implements \Serializable, TwoFactorInterface
     private $googleAuthenticatorSecret;
 
     /**
-     * @ORM\Column(name="tfa_enabled", type="boolean")
+     * @ORM\Column(name="tfa_enabled", type="boolean", nullable=true)
      */
     private $isTfaEnabled;
 

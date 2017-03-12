@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, ReactRouter } from 'react-router';
 import { Confirm } from 'semantic-ui-react'
+import DefaultApp from './defaultApp.jsx';
 
 export default class MenuApp extends React.Component{
     constructor(props, context) {
@@ -35,9 +36,7 @@ export default class MenuApp extends React.Component{
             <div className="ui menu">
                 <div className="ui container">
                     <div className="ui pointing menu">
-                        <a className="active item">
-                            Taskio
-                        </a>
+                        <Link to={"/"} className="item">Taskio</Link>
 
                         <a className="item" href="#todo">Time tracking</a>
 

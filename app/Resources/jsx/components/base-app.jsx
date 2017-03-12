@@ -30,7 +30,11 @@ export default class BaseApp extends React.Component {
     }
 
     createNew() {
-        this.setState({"row": {}, "next": false, "prev": false});
+        this.setState({"row": this.getEmptyModel(), "next": false, "prev": false});
+    }
+
+    getEmptyModel() {
+        return {};
     }
 
     checkPrevNextButtons(rowId) {
@@ -83,11 +87,14 @@ export default class BaseApp extends React.Component {
 
     loadData() {
         let self = this;
-        this.setState({"isLoading": true});
 
-        this.getData(BaseApp.getApplicationDataUrl(this.state.app), function (error, result) {
-            self.setState({"data": result, "isLoading": false});
-        });
+        if (this.state.app !== 'default') {
+            this.setState({"isLoading": true});
+
+            this.getData(BaseApp.getApplicationDataUrl(this.state.app), function (error, result) {
+                self.setState({"data": result, "isLoading": false});
+            });
+        }
     }
 
     componentDidMount() {
@@ -141,6 +148,8 @@ export default class BaseApp extends React.Component {
     }
 
     handleChange(event) {
+        console.log(event.target.name, event.target.value);
+
         this.state.row[event.target.name] = event.target.value;
         this.setState({"row": this.state.row});
     }

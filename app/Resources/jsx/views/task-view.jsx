@@ -29,12 +29,9 @@ export default class TaskView extends React.Component {
 
                 <Segment attached='bottom'>
                     <div className={"ui form " + (this.props.loading ? "loading" : "")}>
-
-                        <TextField readonly={true} name="name" label="Name" value={this.props.row.customerItem.name} handleChange={this.props.handleChange} />
-                        <TextField name="description" label="Description" value={this.props.row.description} handleChange={this.props.handleChange} />
-
-                        <SelectField name="customer" label="Customer" options={this.props.customers} value={this.props.row.customer.id} handleChange={this.props.handleSelectChange} />
-
+                        <SelectField name="name" label="Name" options={this.props.items} handleChange={this.props.handleSelectChange} />
+                        <TextField name="description" label="Description" value={this.props.row.description} handleChange={this.props.handleChange}/>
+                        <SelectField name="customer" label="Customer" options={this.props.customers} handleChange={this.props.handleSelectChange} />
                     </div>
                 </Segment>
 

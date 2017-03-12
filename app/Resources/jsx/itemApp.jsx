@@ -32,18 +32,33 @@ export default class ItemApp extends BaseApp {
     handleSubmit(event) {
         event.preventDefault();
 
-        request
-            .put(BaseApp.getApplicationDataUrl(this.state.app))
-            .send(this.state.row)
-            .end(function (err, res) {
-                if (!err) {
-                    NotificationManager.success("Row updated!", "Success");
-                    return true;
-                }
+        if (this.state.row.hasOwnProperty('id')) {
+            request
+                .put(BaseApp.getApplicationDataUrl(this.state.app))
+                .send(this.state.row)
+                .end(function (err, res) {
+                    if (!err) {
+                        NotificationManager.success("Row added!", "Success");
+                        return true;
+                    }
 
-                self.setState({"errors": res.body.error_fields});
-                NotificationManager.error("An error occured", "Problems detected");
-            });
+                    self.setState({"errors": res.body.error_fields});
+                    NotificationManager.error("An error occured", "Problems detected");
+                });
+        } else {
+            request
+                .post(BaseApp.getApplicationDataUrl(this.state.app))
+                .send(this.state.row)
+                .end(function (err, res) {
+                    if (!err) {
+                        NotificationManager.success("Row added!", "Success");
+                        return true;
+                    }
+
+                    self.setState({"errors": res.body.error_fields});
+                    NotificationManager.error("An error occured", "Problems detected");
+                });
+        }
     }
 
     render() {
@@ -69,5 +84,18 @@ export default class ItemApp extends BaseApp {
                 row={this.state.row}
                 data={this.state.data}/>
         </div>
+    }
+
+    getEmptyModel() {
+        return {
+            'name': '',
+            'price': 0,
+            'category': {
+                'id': 0
+            },
+            'unit': {
+                'id': 0
+            }
+        }
     }
 }

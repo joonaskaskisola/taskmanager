@@ -4,7 +4,7 @@ module.exports = {
     loginApp: ["./app/Resources/jsx/loginApp.jsx"],
   },
   output: {
-    path: "/mnt/c/Users/Joonas/workspace/taskmanager/web/js/",
+    path: __dirname + "/web/js/",
     filename: "[name].js"
   },
   module: {

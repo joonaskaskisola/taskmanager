@@ -13,7 +13,7 @@ web_profiler:
 
 twig:
     globals:
-        js_path: "http://localhost:8080"
+        js_path: "http://localhost/js"
 
 monolog:
     handlers:

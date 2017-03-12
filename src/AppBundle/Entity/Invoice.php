@@ -99,7 +99,7 @@ class Invoice
     /**
      * Get customer
      *
-     * @return integer 
+     * @return Customer
      */
     public function getCustomer()
     {

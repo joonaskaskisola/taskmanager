@@ -7,7 +7,7 @@ export default class NavigationButton extends React.Component {
             return <div/>
         }
 
-        return <Button onClick={this.props.onClick}>
+        return <Button primary={this.props.primary || false} onClick={this.props.onClick}>
             {this.props.leftLabel}
             <Icon name={this.props.icon}/>
             {this.props.rightLabel}

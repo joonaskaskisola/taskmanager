@@ -479,10 +479,13 @@ class Task
     }
 
     /**
-     * @param CustomerItem $customerItem
+     * @param mixed $customerItem
+     * @return $this
      */
     public function setCustomerItem($customerItem)
     {
         $this->customerItem = $customerItem;
+
+        return $this;
     }
 }

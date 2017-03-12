@@ -36,8 +36,12 @@ export default class ItemView extends React.Component {
                         </div>
 
                         <div className="two fields">
-                            <SelectField name="category" label="Category" options={this.props.categories} value={this.props.row.category.id} handleChange={this.props.handleSelectChange} />
-                            <SelectField name="unit" label="Unit" options={this.props.units} value={this.props.row.unit.id} handleChange={this.props.handleSelectChange} />
+                            <SelectField name="category" label="Category" options={this.props.categories} value={
+                                this.props.row.category.id
+                            } handleChange={this.props.handleSelectChange} />
+                            <SelectField name="unit" label="Unit" options={this.props.units} value={
+                                this.props.row.unit.id
+                            } handleChange={this.props.handleSelectChange} />
                         </div>
 
                     </div>

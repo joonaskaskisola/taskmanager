@@ -107,4 +107,55 @@ class ItemController extends Controller
 
         return new JsonResponse();
     }
+
+    /**
+     * @Route("/api/item", name="postItem")
+     * @Method({"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function postItemAction(Request $request)
+    {
+        $item = new Item();
+
+        $item
+            ->setName($request->request->get('name'))
+            ->setPrice($request->request->get('price'))
+            ->setCategory(
+                $this
+                    ->getDoctrine()
+                    ->getRepository('AppBundle:Category')
+                    ->findOneBy([
+                        'id' => $request->request->get('category')
+                    ])
+            )
+            ->setUnit(
+                $this
+                    ->getDoctrine()
+                    ->getRepository('AppBundle:Unit')
+                    ->findOneBy([
+                        'id' => $request->request->get('unit')
+                    ])
+            );
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($item);
+
+        array_map(function ($customer) use ($item, $em) {
+            $customerItem = new CustomerItem();
+            $customerItem
+                ->setCustomer($customer)
+                ->setItem($item)
+                ->setPrice($item->getPrice());
+            $em->persist($customerItem);
+        }, $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Customer')
+            ->findAll()
+        );
+
+        $em->flush();
+
+        return new JsonResponse();
+    }
 }

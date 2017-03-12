@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Route, ReactRouter, Router, browserHistory } from 'react-router';
+import { IndexRoute, Route, ReactRouter, Router, browserHistory } from 'react-router';
+import DefaultApp from './defaultApp.jsx';
 import CustomerApp from './customerApp.jsx';
 import CategoryApp from './categoryApp.jsx';
 import CountryApp from './countryApp.jsx';
@@ -14,6 +15,8 @@ import MenuApp from './menu.jsx';
 render(
     <Router history={browserHistory}>
         <Route path='/' component={MenuApp}>
+            <IndexRoute component={DefaultApp}/>.
+
             <Route path='customers' component={CustomerApp}/>
             <Route path='category' component={CategoryApp}/>
             <Route path='country' component={CountryApp}/>

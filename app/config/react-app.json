@@ -38,5 +38,10 @@
     "title": "profile",
     "url": "/api/profile",
     "fetchDetailedRowDetails": false
+  },
+  "default": {
+    "title": "Default",
+    "url": "/api/taskio",
+    "fetchDetailedRowDetails": false
   }
 }

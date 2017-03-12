@@ -26,24 +26,46 @@ export default class TaskApp extends BaseApp {
             });
         });
 
+        this.state.items = [];
+        this.getData("/api/item", function (err, data) {
+            data.forEach(function(item) {
+                self.state.items.push({'value': item.id, 'text': item.name});
+            });
+        });
+
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event) {
         event.preventDefault();
 
-        request
-            .put(BaseApp.getApplicationDataUrl(this.state.app))
-            .send(this.state.row)
-            .end(function (err, res) {
-                if (!err) {
-                    NotificationManager.success("Row updated!", "Success");
-                    return true;
-                }
+        if (this.state.row.hasOwnProperty('id')) {
+            request
+                .put(BaseApp.getApplicationDataUrl(this.state.app))
+                .send(this.state.row)
+                .end(function (err, res) {
+                    if (!err) {
+                        NotificationManager.success("Row updated!", "Success");
+                        return true;
+                    }
 
-                self.setState({"errors": res.body.error_fields});
-                NotificationManager.error("An error occured", "Problems detected");
-            });
+                    self.setState({"errors": res.body.error_fields});
+                    NotificationManager.error("An error occurred", "Problems detected");
+                });
+        } else {
+            request
+                .post(BaseApp.getApplicationDataUrl(this.state.app))
+                .send(this.state.row)
+                .end(function (err, res) {
+                    if (!err) {
+                        NotificationManager.success("Row updated!", "Success");
+                        return true;
+                    }
+
+                    self.setState({"errors": res.body.error_fields});
+                    NotificationManager.error("An error occurred", "Problems detected");
+                });
+        }
     }
 
     render() {
@@ -53,6 +75,7 @@ export default class TaskApp extends BaseApp {
             <TaskView
                 users={this.state.users}
                 customers={this.state.customers}
+                items={this.state.items}
 
                 e={this.state.errors}
                 createNew={this.createNew}
@@ -69,5 +92,9 @@ export default class TaskApp extends BaseApp {
                 row={this.state.row}
                 data={this.state.data}/>
         </div>
+    }
+
+    getEmptyModel() {
+        return {}
     }
 }

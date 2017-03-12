@@ -13,3 +13,4 @@ node_modules/
 /composer.phar
 .idea/
 /web/js/*App.js
+/web/js/app.js
