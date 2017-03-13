@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CustomerController extends Controller
+class CustomerController extends AbstractController
 {
     /**
      * @Route("/customers", name="listCustomer")
@@ -38,10 +38,10 @@ class CustomerController extends Controller
             /** @var Customer $customer */
             return [
                 'id' => $customer->getId(),
-                'name' => $customer->getName() ?? "",
-                'businessId' => $customer->getBusinessId() ?? "",
-                'streetAddress' => $customer->getStreetAddress() ?? "",
-                'country' => $customer->getCountry() ?? "",
+                'name' => $customer->getName() ?? '',
+                'businessId' => $customer->getBusinessId() ?? '',
+                'streetAddress' => $customer->getStreetAddress() ?? '',
+                'country' => $customer->getCountry() ?? '',
             ];
         }, $repository->findBy([], ['name' => 'ASC']));
 
@@ -89,7 +89,7 @@ class CustomerController extends Controller
 //
 //        return $response;
 
-        $em = $this->getDoctrine()->getManager();
+        /** @var CustomerRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
 
         /** @var Customer $customer */
@@ -109,8 +109,7 @@ class CustomerController extends Controller
             ->setCountry($request->request->get('country'))
             ->setModifiedAt(new Chronos());
 
-        $em->persist($customer);
-        $em->flush();
+        $this->persist($customer);
 
         return new JsonResponse();
     }

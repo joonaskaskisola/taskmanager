@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class UserController extends Controller
+class UserController extends AbstractController
 {
     /**
      * @Route("/user", name="listUser")
@@ -109,7 +109,7 @@ class UserController extends Controller
      */
     public function editUserAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var UserRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:User');
 
         /** @var User $user */
@@ -121,8 +121,7 @@ class UserController extends Controller
             ->setFirstName($request->request->get('firstName'))
             ->setLastName($request->request->get('lastName'));
 
-        $em->persist($user);
-        $em->flush();
+        $this->persist($user);
 
         return new JsonResponse();
     }
@@ -131,13 +130,12 @@ class UserController extends Controller
      * @Route("/api/user/new", name="newUserAction")
      * @Method({"GET"})
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
     public function newUserAction(Request $request)
     {
         $faker = Factory::create('fi_FI');
 
-        $em = $this->getDoctrine()->getManager();
         $user = new User();
         $password = $this->get('security.password_encoder')
             ->encodePassword($user, 'moi');
@@ -146,7 +144,7 @@ class UserController extends Controller
             ->setRoles(['ROLE_ADMIN'])
             ->setEnabled(true)
             ->setCustomer(
-                $em->getRepository('AppBundle:Customer')->findOneBy(['id' => 1])
+                $this->getDoctrine()->getRepository('AppBundle:Customer')->findOneBy(['id' => 1])
             )
             ->setEmail($faker->email)
             ->setFirstName($faker->firstName)
@@ -154,12 +152,11 @@ class UserController extends Controller
             ->setPassword($password)
             ->setUsername($faker->userName)
             ->setCountry(
-                $em->getRepository('AppBundle:Country')->findOneBy(['id' => 1])
+                $this->getDoctrine()->getRepository('AppBundle:Country')->findOneBy(['id' => 1])
             )
             ->setPhone($faker->phoneNumber);
 
-        $em->persist($user);
-        $em->flush();
+        $this->persist($user);
 
         return (new JsonResponse(['username' => $user->getUsername()]))->setStatusCode(201);
     }

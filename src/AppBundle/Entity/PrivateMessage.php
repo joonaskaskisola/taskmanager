@@ -106,7 +106,7 @@ class PrivateMessage
     /**
      * Set toUser
      *
-     * @param User $toUser
+     * @param User|object $toUser
      *
      * @return PrivateMessage
      */

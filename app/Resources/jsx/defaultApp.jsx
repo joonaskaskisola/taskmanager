@@ -8,11 +8,36 @@ export default class DefaultApp extends BaseApp {
     constructor(props, context) {
         super(props, context);
 
-        this.state.app = "default";
+        this.state = {
+            app: 'default',
+            events: []
+        };
+
+        let self = this;
+        this.getData('/api/events', function (err, eventData) {
+            self.setState({"events": eventData});
+        });
     }
 
     render() {
+        let events = [];
+
+        this.state.events.forEach(function(event, i) {
+            events.push(<List.Item name={i} key={"event-" + i}>
+                    <List.Icon name='heartbeat' size='large' verticalAlign='middle' />
+                    <List.Content>
+                        <List.Header as='a'>{ event.name } ( { event.data.user.username } ): { event.data.name }</List.Header>
+                        <List.Description as='a'>
+                            { event.datetime }
+                            &nbsp; <List.Icon name='hashtag' size='small' verticalAlign='middle' />{ event.data.id }
+                        </List.Description>
+                    </List.Content>
+                </List.Item>
+            );
+        });
+
         return <div className="ui segment">
+
         <NotificationContainer/>
             <Link to={"/tasks"} className="item">
                 <Button primary fluid>View tasks</Button>
@@ -21,27 +46,7 @@ export default class DefaultApp extends BaseApp {
             <Divider horizontal>Latest changes</Divider>
 
             <List divided relaxed>
-                <List.Item>
-                    <List.Icon name='github' size='large' verticalAlign='middle' />
-                    <List.Content>
-                        <List.Header as='a'>Semantic-Org/Semantic-UI</List.Header>
-                        <List.Description as='a'>Updated 10 mins ago</List.Description>
-                    </List.Content>
-                </List.Item>
-                <List.Item>
-                    <List.Icon name='github' size='large' verticalAlign='middle' />
-                    <List.Content>
-                        <List.Header as='a'>Semantic-Org/Semantic-UI-Docs</List.Header>
-                        <List.Description as='a'>Updated 22 mins ago</List.Description>
-                    </List.Content>
-                </List.Item>
-                <List.Item>
-                    <List.Icon name='github' size='large' verticalAlign='middle' />
-                    <List.Content>
-                        <List.Header as='a'>Semantic-Org/Semantic-UI-Meteor</List.Header>
-                        <List.Description as='a'>Updated 34 mins ago</List.Description>
-                    </List.Content>
-                </List.Item>
+                { events }
             </List>
         </div>
     }

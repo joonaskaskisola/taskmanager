@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Validator\Constraints\Time;
 
-class TimeRowController extends Controller
+class TimeRowController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_ADMIN')")
@@ -79,10 +79,7 @@ class TimeRowController extends Controller
                 throw new \Exception("End cannot be later than start");
             }
 
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($timeRow);
-            $em->flush();
+            $this->persist($timeRow);
 
             return $this->redirectToRoute('listTimeRow', [
                 'user' => $timeUser->getId(),

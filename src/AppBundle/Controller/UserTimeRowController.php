@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\UserTimeRow;
+use AppBundle\Repository\UserTimeRowRepository;
 use Cake\Chronos\Chronos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserTimeRowController extends Controller
+class UserTimeRowController extends AbstractController
 {
     /**
      * @Route("/usertime/status", name="statusUserTime")
@@ -43,6 +44,7 @@ class UserTimeRowController extends Controller
     {
         $now = new Chronos();
 
+        /** @var UserTimeRowRepository $userTimeRowRepository */
         $userTimeRowRepository = $this->getDoctrine()
             ->getRepository('AppBundle:UserTimeRow');
 
@@ -65,9 +67,7 @@ class UserTimeRowController extends Controller
             ->setUser($this->container->get('security.context')->getToken()->getUser())
             ->setStartDateTime($now);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($userTimeRow);
-        $em->flush();
+        $this->persist($userTimeRow);
 
         return new JsonResponse([
             'success' => true,
@@ -86,8 +86,7 @@ class UserTimeRowController extends Controller
     {
         $now = new Chronos();
 
-        $em = $this->getDoctrine()->getManager();
-
+        /** @var UserTimeRowRepository $userTimeRowRepository */
         $userTimeRowRepository = $this->getDoctrine()
             ->getRepository('AppBundle:UserTimeRow');
 
@@ -119,8 +118,7 @@ class UserTimeRowController extends Controller
         $userTimeRow
             ->setDuration($duration);
 
-        $em->persist($userTimeRow);
-        $em->flush();
+        $this->persist($userTimeRow);
 
         return new JsonResponse([
             'success' => true,

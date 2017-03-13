@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Country;
-use AppBundle\Helper\FormHelper;
 use AppBundle\Repository\CountryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class CountryController extends Controller
+class CountryController extends AbstractController
 {
     /**
      * @Route("/country", name="listCountry")
@@ -77,7 +76,7 @@ class CountryController extends Controller
      */
     public function editCountryAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var CountryRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Country');
 
         /** @var Country $country */
@@ -90,8 +89,7 @@ class CountryController extends Controller
             ->setCode($request->request->get('code'))
             ->setLangCode($request->request->get('langCode'));
 
-        $em->persist($country);
-        $em->flush();
+        $this->persist($country);
 
         return new JsonResponse();
     }

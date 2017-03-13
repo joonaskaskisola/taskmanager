@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class UnitController extends Controller
+class UnitController extends AbstractController
 {
     /**
      * @Route("/unit", name="listUnit")
@@ -75,7 +75,7 @@ class UnitController extends Controller
      */
     public function editUnitAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var UnitRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Unit');
 
         /** @var Unit $unit */
@@ -86,8 +86,7 @@ class UnitController extends Controller
         $unit
             ->setName($request->request->get('name'));
 
-        $em->persist($unit);
-        $em->flush();
+        $this->persist($unit);
 
         return new JsonResponse();
     }

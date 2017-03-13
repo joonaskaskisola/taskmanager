@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\PrivateMessage;
 use AppBundle\Repository\PrivateMessageRepository;
+use AppBundle\Repository\UserRepository;
 use Cake\Chronos\Chronos;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class InboxController extends Controller
+class InboxController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_ADMIN')")
@@ -63,15 +64,14 @@ class InboxController extends Controller
      */
     public function getMessageAction(Request $request, $id)
     {
+        /** @var PrivateMessageRepository $messageRepository */
         $messageRepository = $this->getDoctrine()->getRepository('AppBundle:PrivateMessage');
-        $em = $this->getDoctrine()->getManager();
 
-        $response = array_map(function($message) use ($em) {
+        $response = array_map(function($message) use ($messageRepository) {
             /** @var PrivateMessage $message */
             if (!$message->getIsRead()) {
                 $message->setIsRead(1);
-                $em->persist($message);
-                $em->flush();
+                $messageRepository->persist($message);
             }
 
             return [
@@ -100,8 +100,9 @@ class InboxController extends Controller
     {
         $replyToId = $request->request->get('replyToId');
 
+        /** @var PrivateMessageRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:PrivateMessage');
-        $em = $this->getDoctrine()->getManager();
+
         /** @var PrivateMessage $originalMessage */
         $originalMessage = $repository->find($replyToId);
         if ($originalMessage->getToUser() !== $this->container->get('security.context')->getToken()->getUser()) {
@@ -128,8 +129,7 @@ class InboxController extends Controller
                 )
             )));
 
-        $em->persist($message);
-        $em->flush();
+        $this->persist($message);
 
         return (new JsonResponse())->setStatusCode(200);
     }
@@ -142,7 +142,7 @@ class InboxController extends Controller
      */
     public function postMessageAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var UserRepository $userRepository */
         $userRepository = $this->getDoctrine()->getRepository('AppBundle:User');
 
         /** @var PrivateMessage $message */
@@ -156,8 +156,7 @@ class InboxController extends Controller
             ->setSubject($request->request->get('subject'))
             ->setMessage(strip_tags($request->request->get('message')));
 
-        $em->persist($message);
-        $em->flush();
+        $this->persist($message);
 
         return new JsonResponse();
     }

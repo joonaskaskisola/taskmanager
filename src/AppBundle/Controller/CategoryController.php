@@ -10,10 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class CategoryController extends Controller
+class CategoryController extends AbstractController
 {
     /**
      * @Route("/category", name="listCategory")
@@ -76,7 +75,7 @@ class CategoryController extends Controller
      */
     public function editCategoryAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var CategoryRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Category');
 
         /** @var Category $category */
@@ -87,8 +86,7 @@ class CategoryController extends Controller
         $category
             ->setName($request->request->get('name'));
 
-        $em->persist($category);
-        $em->flush();
+        $this->persist($category);
 
         return new JsonResponse();
     }

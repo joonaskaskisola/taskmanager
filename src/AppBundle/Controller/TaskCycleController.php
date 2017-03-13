@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\TaskCycle;
-use AppBundle\Helper\FormHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -11,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class TaskCycleController extends Controller
+class TaskCycleController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_ADMIN')")
@@ -32,10 +31,7 @@ class TaskCycleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($taskCycle);
-            $em->flush();
+            $this->persist($taskCycle);
 
             return $this->redirectToRoute('listTaskCycle');
         }
@@ -68,10 +64,7 @@ class TaskCycleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($taskCycle);
-            $em->flush();
+            $this->persist($taskCycle);
 
             return $this->redirectToRoute('listTaskCycle');
         }

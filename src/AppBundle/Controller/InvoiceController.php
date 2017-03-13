@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class InvoiceController extends Controller
+class InvoiceController extends AbstractController
 {
     /**
      * @Route("/invoice/new", name="newInvoice")
@@ -47,8 +47,7 @@ class InvoiceController extends Controller
             $invoice->setCustomer($invoiceCustomer);
             $invoice->setCreatedAt(new Chronos());
 
-            $em->persist($invoice);
-            $em->flush();
+            $this->persist($invoice);
 
             return $this->redirectToRoute('chooseInvoiceRows', [
                 'invoiceId' => $invoice->getId(),

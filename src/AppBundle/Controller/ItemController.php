@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class ItemController extends Controller
+class ItemController extends AbstractController
 {
     /**
      * @Route("/items", name="listItem")
@@ -77,8 +77,9 @@ class ItemController extends Controller
      */
     public function putItemsAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var ItemRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Item');
+
         /** @var Item $item */
         $item = $repository->findOneBy(['id' => $request->request->get('id')]);
 
@@ -102,8 +103,7 @@ class ItemController extends Controller
                     ])
             );
 
-        $em->persist($item);
-        $em->flush();
+        $this->persist($item);
 
         return new JsonResponse();
     }
@@ -116,8 +116,10 @@ class ItemController extends Controller
      */
     public function postItemAction(Request $request)
     {
-        $item = new Item();
+        /** @var ItemRepository $repository */
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Item');
 
+        $item = new Item();
         $item
             ->setName($request->request->get('name'))
             ->setPrice($request->request->get('price'))
@@ -138,23 +140,20 @@ class ItemController extends Controller
                     ])
             );
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($item);
+        $this->persist($item);
 
-        array_map(function ($customer) use ($item, $em) {
+        array_map(function ($customer) use ($item, $repository) {
             $customerItem = new CustomerItem();
             $customerItem
                 ->setCustomer($customer)
                 ->setItem($item)
                 ->setPrice($item->getPrice());
-            $em->persist($customerItem);
+            $repository->persist($customerItem);
         }, $this
             ->getDoctrine()
             ->getRepository('AppBundle:Customer')
             ->findAll()
         );
-
-        $em->flush();
 
         return new JsonResponse();
     }

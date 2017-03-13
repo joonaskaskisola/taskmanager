@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class TwoFactorAuthenticationController extends Controller
+class TwoFactorAuthenticationController extends AbstractController
 {
     /**
      * @Route("/api/tfa/qrcode", name="getUserTfaQrCode")
@@ -75,14 +75,11 @@ class TwoFactorAuthenticationController extends Controller
      */
     public function enableTfa(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /** @var User $user */
         $user = $this->container->get('security.context')->getToken()->getUser();
 
         $user->setTfaEnabled(true);
-        $em->persist($user);
-        $em->flush();
+        $this->persist($user);
 
         return new JsonResponse();
     }
@@ -101,8 +98,7 @@ class TwoFactorAuthenticationController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
 
         $user->setTfaEnabled(false);
-        $em->persist($user);
-        $em->flush();
+        $this->persist($user);
 
         return new JsonResponse();
     }

@@ -5,8 +5,10 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\CustomerItem;
 use AppBundle\Entity\TaskStatus;
+use AppBundle\Repository\CustomerItemRepository;
 use AppBundle\Repository\CustomerRepository;
 use AppBundle\Repository\TaskRepository;
+use AppBundle\Repository\TaskStatusRepository;
 use Cake\Chronos\Chronos;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,7 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TaskController extends Controller
+class TaskController extends AbstractController
 {
     /**
      * @Route("/tasks/{searchBy}/{searchValue}", name="listTask")
@@ -87,19 +89,25 @@ class TaskController extends Controller
     public function postTaskAction(Request $request)
     {
         $task = new Task();
+
+        /** @var CustomerRepository $customerRepository */
         $customerRepository = $this->getDoctrine()->getRepository(Customer::class);
         $customer = $customerRepository->find(
             $request->request->get('customer')
         );
 
+        /** @var CustomerItemRepository $customerItemRepository */
         $customerItemRepository = $this->getDoctrine()->getRepository(CustomerItem::class);
+
         /** @var CustomerItem $customerItem */
         $customerItem = $customerItemRepository->findOneBy([
             'customer' => $request->request->get('customer'),
             'item' => $request->request->get('name')
         ]);
 
+        /** @var TaskStatusRepository $taskStatusRepository */
         $taskStatusRepository = $this->getDoctrine()->getRepository(TaskStatus::class);
+
         /** @var TaskStatus $taskStatus */
         $taskStatus = $taskStatusRepository->find(1);
 
@@ -114,9 +122,7 @@ class TaskController extends Controller
             ->setStatus($taskStatus)
             ->setAmount($request->request->get('amount') ?? 0);
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $em->persist($task);
-        $em->flush();
+        $this->persist($task);
 
         return new Response();
     }
