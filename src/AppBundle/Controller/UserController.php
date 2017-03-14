@@ -16,26 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="listUser")
-     * @param Request $request
-     * @return Response
-     */
-    public function listUserAction(Request $request)
-    {
-        return $this->render('base.html.twig');
-    }
-
-    /**
-     * @Route("/profile", name="profile")
-     * @param Request $request
-     * @return Response
-     */
-    public function profileAction(Request $request)
-    {
-        return $this->render('base.html.twig');
-    }
-
-    /**
      * @Route("/api/profile", name="getProfileAction")
      * @Method({"GET"})
      * @param Request $request

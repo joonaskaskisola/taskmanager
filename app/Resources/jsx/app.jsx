@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { IndexRoute, Route, ReactRouter, Router, browserHistory } from 'react-router';
+import { IndexRoute, Route, ReactRouter, Router, useRouterHistory } from 'react-router';
+import { createHashHistory } from 'history';
 import DefaultApp from './defaultApp.jsx';
 import CustomerApp from './customerApp.jsx';
 import CategoryApp from './categoryApp.jsx';
@@ -12,18 +13,52 @@ import UnitApp from './unitApp.jsx';
 import ProfileApp from './profileApp.jsx';
 import MenuApp from './menu.jsx';
 
-render(
-    <Router history={browserHistory}>
-        <Route path='/' component={MenuApp}>
-            <IndexRoute component={DefaultApp}/>.
+const appHistory = useRouterHistory(createHashHistory)({
+    queryKey: false
+});
 
-            <Route path='customers' component={CustomerApp}/>
-            <Route path='category' component={CategoryApp}/>
-            <Route path='country' component={CountryApp}/>
+render(
+    <Router history={appHistory}>
+        <Route path='/' component={MenuApp}>
+            <IndexRoute component={DefaultApp}/>
+
+            <Route path='customer'>
+                <IndexRoute showEditor={false} component={CustomerApp}/>
+                <Route path='new' showEditor={true} component={CustomerApp} />
+                <Route path=':id' showEditor={true} component={CustomerApp} />
+            </Route>
+
+            <Route path='category'>
+                <IndexRoute showEditor={false} component={CategoryApp}/>
+                <Route path='new' showEditor={true} component={CategoryApp} />
+                <Route path=':id' showEditor={true} component={CategoryApp} />
+            </Route>
+
+            <Route path='country'>
+                <IndexRoute showEditor={false} component={CountryApp}/>
+                <Route path='new' showEditor={true} component={CountryApp} />
+                <Route path=':id' showEditor={true} component={CountryApp} />
+            </Route>
+
+            <Route path='item'>
+                <IndexRoute showEditor={false} component={ItemApp}/>
+                <Route path='new' showEditor={true} component={ItemApp} />
+                <Route path=':id' showEditor={true} component={ItemApp} />
+            </Route>
+
+            <Route path='task'>
+                <IndexRoute showEditor={false} component={TaskApp}/>
+                <Route path='new' showEditor={true} component={TaskApp} />
+                <Route path=':id' showEditor={true} component={TaskApp} />
+            </Route>
+
+            <Route path='unit'>
+                <IndexRoute showEditor={false} component={UnitApp}/>
+                <Route path='new' showEditor={true} component={UnitApp} />
+                <Route path=':id' showEditor={true} component={UnitApp} />
+            </Route>
+
             <Route path='inbox' component={InboxApp}/>
-            <Route path='items' component={ItemApp}/>
-            <Route path='tasks' component={TaskApp}/>
-            <Route path='unit' component={UnitApp}/>
             <Route path='profile' component={ProfileApp}/>
         </Route>
     </Router>,

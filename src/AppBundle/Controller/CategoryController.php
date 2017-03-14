@@ -14,17 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CategoryController extends AbstractController
 {
-    /**
-     * @Route("/category", name="listCategory")
-     * @param Request $request
-     * @return Response
-     */
-    public function listCategoryAction(Request $request)
-    {
-        return $this->render('base.html.twig');
-    }
-
-    /**
+     /**
      * @Route("/api/category", name="getCategoriesAction")
      * @Method({"GET"})
      * @param Request $request

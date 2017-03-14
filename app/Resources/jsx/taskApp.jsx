@@ -77,6 +77,7 @@ export default class TaskApp extends BaseApp {
                 customers={this.state.customers}
                 items={this.state.items}
 
+                showEditor={this.props.route.showEditor}
                 e={this.state.errors}
                 createNew={this.createNew}
                 showNext={this.state.next}

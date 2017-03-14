@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Input, Menu, Item } from 'semantic-ui-react'
 import Row from '../components/row.jsx';
 import Sort from '../components/sort.jsx';
+import { Link } from 'react-router';
 
 export default class GridContainer extends React.Component {
     constructor(props, context) {
@@ -115,19 +116,21 @@ export default class GridContainer extends React.Component {
          */
         this.state.results.forEach(function(row) {
             if (self.props.viewRow) {
-                rows.push(<Row fields={self.props.fields} row={row} key={row.id} viewRow={self.props.viewRow}/>);
+                rows.push(<Row app={self.props.app} fields={self.props.fields} row={row} key={row.id} viewRow={self.props.viewRow}/>);
             } else {
-                rows.push(<Row fields={self.props.fields} row={row} key={row.id} viewRow={function(rowId) { }}/>);
+                rows.push(<Row app={self.props.app} fields={self.props.fields} row={row} key={row.id} viewRow={function(rowId) { }}/>);
             }
         });
 
         return <div>
             <Menu pointing>
-                <Menu.Item name='home' active={false} />
+                <Menu.Item name={this.props.app} active={false} />
                 <Menu.Menu position='right'>
                     <Menu.Item>
                         {this.props.createNew && <div className="column">
-                            <Button primary onClick={this.props.createNew}>Add new</Button>
+                            <Link to={"/" + this.props.app + "/new"} onClick={this.props.createNew}>
+                                <Button primary>Create new</Button>
+                            </Link>
                         </div>}
                     </Menu.Item>
 

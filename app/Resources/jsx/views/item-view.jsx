@@ -1,11 +1,13 @@
 import React from 'react';
+import AbstractView from './abstract-view.jsx';
+
 import TextField from '../components/text.jsx';
 import SelectField from '../components/select.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
 import { Divider, Menu, Input, Segment } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
 
-export default class ItemView extends React.Component {
+export default class ItemView extends AbstractView {
     constructor(props, context) {
         super(props, context);
     }
@@ -20,6 +22,7 @@ export default class ItemView extends React.Component {
                 <Menu attached='top' tabular>
                     <Menu.Item name='Details' active={true}/>
                     <NavigationButtons
+                        app='item'
                         header={true}
                         nextRow={this.props.nextRow}
                         previousRow={this.props.previousRow}
@@ -49,6 +52,7 @@ export default class ItemView extends React.Component {
 
                 <Menu attached='bottom' tabular>
                     <NavigationButtons
+                        app='item'
                         footer={true}
                         closeRow={this.props.closeRow}
                         handleSubmit={this.props.handleSubmit}/>
@@ -57,6 +61,7 @@ export default class ItemView extends React.Component {
         }
 
         return <GridContainer
+            app='item'
             search={true}
             fields={['name', 'price']}
             columns={['Name', 'Price']}

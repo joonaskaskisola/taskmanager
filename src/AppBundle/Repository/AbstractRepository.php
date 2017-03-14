@@ -36,7 +36,9 @@ abstract class AbstractRepository extends EntityRepository
                 'id' => $object->getId(),
                 'name' => method_exists($object, 'getName')
                     ? $object->getName()
-                    : 'unknown',
+                    : ($reflect->getShortName() == 'User'
+                        ? $object->getUsername()
+                        : 'unknown'),
                 'user' => [
                     'id' => $user->getId(),
                     'username' => $user->getUsername()

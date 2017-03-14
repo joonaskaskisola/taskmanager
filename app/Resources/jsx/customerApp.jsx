@@ -46,6 +46,7 @@ export default class CustomerApp extends BaseApp {
             <NotificationContainer/>
 
             <CustomerView
+                showEditor={this.props.route.showEditor}
                 e={this.state.errors}
                 createNew={this.createNew}
                 countries={this.state.countries}

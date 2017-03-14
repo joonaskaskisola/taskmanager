@@ -18,17 +18,6 @@ class InboxController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/inbox", name="listPrivateMessage")
-     * @param Request $request
-     * @return Response
-     */
-    public function listAction(Request $request)
-    {
-        return $this->render('base.html.twig');
-    }
-
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/api/inbox", name="getPrivateMessages")
      * @Method({"GET"})
      * @param Request $request

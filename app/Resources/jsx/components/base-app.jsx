@@ -98,6 +98,15 @@ export default class BaseApp extends React.Component {
     }
 
     componentDidMount() {
+        let self = this;
+        if (this.props.params.hasOwnProperty('id')) {
+            this.getData(BaseApp.getApplicationDataUrl(this.state.app) + '/' + this.props.params.id, function(err, data) {
+                if (!err) {
+                    self.setState({"row": data[0]});
+                }
+            });
+        }
+
         this.loadData();
     }
 

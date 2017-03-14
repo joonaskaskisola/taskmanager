@@ -16,16 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class CountryController extends AbstractController
 {
     /**
-     * @Route("/country", name="listCountry")
-     * @param Request $request
-     * @return Response
-     */
-    public function listCountryAction(Request $request)
-    {
-        return $this->render('base.html.twig');
-    }
-
-    /**
      * @Route("/api/country", name="getCountriesAction")
      * @Method({"GET"})
      * @param Request $request

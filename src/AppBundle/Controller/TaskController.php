@@ -22,18 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 class TaskController extends AbstractController
 {
     /**
-     * @Route("/tasks/{searchBy}/{searchValue}", name="listTask")
-     * @param Request $request
-     * @param null|mixed $searchBy
-     * @param null|mixed $searchValue
-     * @return Response
-     */
-    public function listAction(Request $request, $searchBy = null, $searchValue = null)
-    {
-        return $this->render('base.html.twig');
-    }
-
-    /**
      * @Route("/api/task", name="getTasks")
      * @Method({"GET"})
      * @param Request $request

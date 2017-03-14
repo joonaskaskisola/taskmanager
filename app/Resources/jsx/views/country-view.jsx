@@ -1,11 +1,13 @@
 import React from 'react';
+import AbstractView from './abstract-view.jsx';
+
 import SelectField from '../components/select.jsx';
 import TextField from '../components/text.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
 import { Divider, Menu, Item, Segment } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
 
-export default class CountryView extends React.Component {
+export default class CountryView extends AbstractView {
     constructor(props, context) {
         super(props, context);
     }
@@ -20,6 +22,7 @@ export default class CountryView extends React.Component {
                 <Menu attached='top' tabular>
                     <Menu.Item name='Details' active={true}/>
                     <NavigationButtons
+                        app='country'
                         header={true}
                         nextRow={this.props.nextRow}
                         previousRow={this.props.previousRow}
@@ -42,6 +45,7 @@ export default class CountryView extends React.Component {
 
                 <Menu attached='bottom' tabular>
                     <NavigationButtons
+                        app='country'
                         footer={true}
                         closeRow={this.props.closeRow}
                         handleSubmit={this.props.handleSubmit}/>
@@ -50,6 +54,7 @@ export default class CountryView extends React.Component {
         }
 
         return <GridContainer
+            app='country'
             search={true}
             fields={['name', 'code', 'langCode']}
             columns={['Name', 'Code', 'Lang code']}

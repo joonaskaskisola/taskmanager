@@ -43,10 +43,10 @@ export default class MenuApp extends React.Component{
                         <div className="ui simple dropdown item">
                             Entities <i className="dropdown icon"></i>
                             <div className="menu">
-                                <Link to={"/customers"} className="item">Customers</Link>
-                                <Link to={"/tasks"} className="item">Tasks</Link>
+                                <Link to={"/customer"} className="item">Customers</Link>
+                                <Link to={"/task"} className="item">Tasks</Link>
                                 <Link to={"/category"} className="item">Categories</Link>
-                                <Link to={"/items"} className="item">Items</Link>
+                                <Link to={"/item"} className="item">Items</Link>
                                 <Link to={"/unit"} className="item">Units</Link>
                                 <Link to={"/country"} className="item">Countries</Link>
                             </div>

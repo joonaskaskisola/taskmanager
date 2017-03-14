@@ -26,7 +26,7 @@ export default class LoginApp extends React.Component {
             })
             .end(function (err, res) {
                 if (!err) {
-                    window.location = '/customers';
+                    window.location = '/';
                 } else {
                     location.reload();
                 }

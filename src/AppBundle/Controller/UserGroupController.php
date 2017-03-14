@@ -12,23 +12,4 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserGroupController extends AbstractController
 {
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Route("/groups", name="listGroup")
-     * @param Request $request
-     * @return Response
-     */
-    public function listAction(Request $request)
-    {
-        $userGroupRepository = $this->getDoctrine()
-            ->getRepository('AppBundle:UserGroup');
-
-        $groups = $userGroupRepository->findAll();
-
-        return $this->render('grid.html.twig', [
-            'view' => 'user_group',
-            'groups' => $groups,
-            'new' => $this->generateUrl('newGroup')
-        ]);
-    }
 }

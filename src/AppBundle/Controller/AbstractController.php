@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
 use AppBundle\Repository\AbstractRepository;
 use AppBundle\Repository\CategoryRepository;
 use AppBundle\Repository\EventRepository;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 abstract class AbstractController extends Controller
 {
@@ -20,11 +22,15 @@ abstract class AbstractController extends Controller
     {
         /** @var UserRepository|CategoryRepository $repository */
         $repository = $this->getDoctrine()->getRepository(get_class($object));
+
+        /** @var null|UsernamePasswordToken $token */
+        if ($token = $this->get('security.token_storage')->getToken()) {
+            $user = $token->getUser();
+        }
+
         $repository->persist(
             $object,
-            $this->get('security.token_storage')
-                ->getToken()
-                ->getUser()
+            $user ?? (new User())
         );
     }
 }

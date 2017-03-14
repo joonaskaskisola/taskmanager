@@ -15,16 +15,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class UnitController extends AbstractController
 {
     /**
-     * @Route("/unit", name="listUnit")
-     * @param Request $request
-     * @return Response
-     */
-    public function listUnitAction(Request $request)
-    {
-        return $this->render('base.html.twig');
-    }
-
-    /**
      * @Route("/api/unit", name="getUnitsAction")
      * @Method({"GET"})
      * @param Request $request

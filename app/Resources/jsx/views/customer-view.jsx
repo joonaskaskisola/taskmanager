@@ -1,11 +1,13 @@
 import React from 'react';
+import AbstractView from './abstract-view.jsx';
+
 import TextField from '../components/text.jsx';
 import SelectField from '../components/select.jsx';
 import GridContainer from '../helpers/grid-container.jsx';
 import { Divider, Menu, Input, Segment } from 'semantic-ui-react';
 import NavigationButtons from '../helpers/navigation-buttons.jsx';
 
-export default class CustomerView extends React.Component {
+export default class CustomerView extends AbstractView {
     constructor(props, context) {
         super(props, context);
 
@@ -25,12 +27,13 @@ export default class CustomerView extends React.Component {
             return <div></div>
         }
 
-        if (this.props.row) {
+        if ((!this.props.showEditor && this.props.row) || this.props.showEditor) {
             return <div className="ui segment">
                 <Menu attached='top' tabular>
                     <Menu.Item name='Details' active={this.state.activeItem === 'Details'} onClick={this.changeActiveItem} />
                     <Menu.Item name='Tasks' active={this.state.activeItem === 'Tasks'} onClick={this.changeActiveItem} />
                     <NavigationButtons
+                        app='customer'
                         header={true}
                         nextRow={this.props.nextRow}
                         previousRow={this.props.previousRow}
@@ -72,6 +75,7 @@ export default class CustomerView extends React.Component {
 
                 <Menu attached='bottom' tabular>
                     <NavigationButtons
+                        app='customer'
                         footer={true}
                         closeRow={this.props.closeRow}
                         handleSubmit={this.props.handleSubmit}/>
@@ -80,6 +84,7 @@ export default class CustomerView extends React.Component {
         }
 
         return <GridContainer
+            app='customer'
             search={true}
             fields={['name', 'businessId', 'streetAddress', 'country']}
             columns={['Name', 'Business id', 'Street address', 'Country']}

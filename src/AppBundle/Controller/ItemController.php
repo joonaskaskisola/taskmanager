@@ -17,16 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class ItemController extends AbstractController
 {
     /**
-     * @Route("/items", name="listItem")
-     * @param Request $request
-     * @return Response
-     */
-    public function listAction(Request $request)
-    {
-        return $this->render('base.html.twig');
-    }
-
-    /**
      * @Route("/api/item", name="getItems")
      * @Method({"GET"})
      * @param Request $request

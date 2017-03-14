@@ -35,6 +35,7 @@ export default class CategoryApp extends BaseApp {
             <NotificationContainer/>
 
             <CategoryView
+                showEditor={this.props.route.showEditor}
                 e={this.state.errors}
                 createNew={this.createNew}
                 showNext={this.state.next}

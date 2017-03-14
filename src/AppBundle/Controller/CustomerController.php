@@ -15,16 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 class CustomerController extends AbstractController
 {
     /**
-     * @Route("/customers", name="listCustomer")
-     * @param Request $request
-     * @return Response
-     */
-    public function listAction(Request $request)
-    {
-        return $this->render('base.html.twig');
-    }
-
-    /**
      * @Route("/api/customer", name="getCustomers")
      * @Method({"GET"})
      * @param Request $request

@@ -37,6 +37,7 @@ export default class CountryApp extends BaseApp {
             <CountryView
                 flags={BaseApp.getValidFlags()}
 
+                showEditor={this.props.route.showEditor}
                 e={this.state.errors}
                 createNew={this.createNew}
                 showNext={this.state.next}
