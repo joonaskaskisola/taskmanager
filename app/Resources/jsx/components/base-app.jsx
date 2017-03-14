@@ -2,6 +2,12 @@ import React from 'react';
 import appData from 'json-loader!../../../config/react-app.json';
 import { Flag } from 'semantic-ui-react'
 import request from 'superagent';
+import { useRouterHistory } from 'react-router';
+import { createHashHistory } from 'history';
+
+const appHistory = useRouterHistory(createHashHistory)({
+    queryKey: false
+});
 
 export default class BaseApp extends React.Component {
     constructor(props, context) {
@@ -39,7 +45,7 @@ export default class BaseApp extends React.Component {
 
     checkPrevNextButtons(rowId) {
         let self = this;
-        this.state.data.every(function (obj, index) {
+        this.state.data.forEach(function (obj, index) {
             if (obj.id === rowId) {
                 self.setState({
                     "prev": self.state.data[index - 1] !== undefined,
@@ -53,39 +59,49 @@ export default class BaseApp extends React.Component {
         });
     }
 
+    getPreviousId(currentId, data, callback) {
+        data.forEach(function (obj, index) {
+            if (obj.id === currentId && data[index - 1] !== undefined) {
+                return callback(data[index - 1].id);
+            }
+        });
+    }
+
     previousRow() {
         let self = this;
-        let currentId = this.state.row.id;
 
-        this.state.data.every(function (obj, index) {
-            if (obj.id === currentId) {
-                if (self.state.data[index - 1] !== undefined) {
-                    self.viewRow(self.state.data[index - 1].id);
-                    return false;
-                }
+        this.getPreviousId(
+            this.state.row.id,
+            this.state.data,
+            function (prevId) {
+                appHistory.push("/" + self.state.app + "/" + prevId);
+                self.viewRow(prevId);
             }
+        );
+    }
 
-            return true;
+    getNextId(currentId, data, callback) {
+        data.forEach(function (obj, index) {
+            if (obj.id === currentId && data[index + 1] !== undefined) {
+                return callback(data[index + 1].id);
+            }
         });
     }
 
     nextRow() {
         let self = this;
-        let currentId = this.state.row.id;
 
-        this.state.data.every(function (obj, index) {
-            if (obj.id === currentId) {
-                if (self.state.data[index + 1] !== undefined) {
-                    self.viewRow(self.state.data[index + 1].id);
-                    return false;
-                }
+        this.getNextId(
+            this.state.row.id,
+            this.state.data,
+            function (nextId) {
+                appHistory.push("/" + self.state.app + "/" + nextId);
+                self.viewRow(nextId);
             }
-
-            return true;
-        });
+        );
     }
 
-    loadData() {
+    loadData(cb) {
         let self = this;
 
         if (this.state.app !== 'default') {
@@ -93,21 +109,24 @@ export default class BaseApp extends React.Component {
 
             this.getData(BaseApp.getApplicationDataUrl(this.state.app), function (error, result) {
                 self.setState({"data": result, "isLoading": false});
+
+                if (typeof cb !== 'undefined') {
+                    cb();
+                }
             });
         }
     }
 
     componentDidMount() {
         let self = this;
-        if (this.props.params.hasOwnProperty('id')) {
-            this.getData(BaseApp.getApplicationDataUrl(this.state.app) + '/' + this.props.params.id, function(err, data) {
-                if (!err) {
-                    self.setState({"row": data[0]});
-                }
-            });
-        }
 
-        this.loadData();
+        if (this.props.params.hasOwnProperty('id')) {
+            this.loadData(function() {
+                self.viewRow(parseInt(self.props.params.id));
+            });
+        } else {
+            this.loadData();
+        }
     }
 
     getData(dataUrl, callback) {

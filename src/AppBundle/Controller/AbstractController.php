@@ -33,4 +33,16 @@ abstract class AbstractController extends Controller
             $user ?? (new User())
         );
     }
+
+    public function jsonResponse($data, $statusCode)
+    {
+        $response = new JsonResponse();
+        $response->setStatusCode($statusCode ?? 200);
+
+        return $response->setData(
+            ($statusCode === 404
+                ? ['message' => 'not found']
+                : $data)
+        );
+    }
 }

@@ -40,7 +40,7 @@ class InboxController extends AbstractController
             'toUser' => $this->container->get('security.context')->getToken()->getUser()
         ], ['isRead' => 'ASC', 'timestamp' => 'DESC']));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**
@@ -75,7 +75,7 @@ class InboxController extends AbstractController
             'id' => $id
         ]));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**

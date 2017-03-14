@@ -33,6 +33,6 @@ class EventController extends AbstractController
             ];
         }, $repository->findBy([], ['createdAt' => 'DESC'], 15));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 }

@@ -35,7 +35,7 @@ class CustomerController extends AbstractController
             ];
         }, $repository->findBy([], ['name' => 'ASC']));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**
@@ -43,7 +43,7 @@ class CustomerController extends AbstractController
      * @param $id
      * @Method({"GET"})
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
     public function getCustomerAction(Request $request, $id)
     {
@@ -57,7 +57,7 @@ class CustomerController extends AbstractController
             return json_decode($serializer->serialize($customer, 'json'), true);
         }, $repository->findBy(['id' => $id]));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**

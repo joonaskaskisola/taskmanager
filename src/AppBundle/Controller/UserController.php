@@ -35,7 +35,7 @@ class UserController extends AbstractController
             'id' => $this->container->get('security.context')->getToken()->getUser()->getId()
         ]));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**
@@ -56,7 +56,7 @@ class UserController extends AbstractController
             ];
         }, $repository->findBy([], ['firstName' => 'ASC', 'lastName' => 'ASC']));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**
@@ -78,7 +78,7 @@ class UserController extends AbstractController
             ];
         }, $repository->findBy(['id' => $id], ['name' => 'ASC']));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**

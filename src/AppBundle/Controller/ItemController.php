@@ -34,7 +34,7 @@ class ItemController extends AbstractController
             return json_decode($serializer->serialize($item, 'json'), true);
         }, $repository->findBy([], ['name' => 'ASC']));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**
@@ -56,7 +56,7 @@ class ItemController extends AbstractController
             return json_decode($serializer->serialize($item, 'json'), true);
         }, $repository->findBy(['id' => $id]));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**

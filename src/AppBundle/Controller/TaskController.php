@@ -43,7 +43,7 @@ class TaskController extends AbstractController
             return json_decode($serializer->serialize($task, 'json'));
         }, $repository->findBy($search ?? [], ['createdAt' => 'ASC']));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**
@@ -65,7 +65,7 @@ class TaskController extends AbstractController
             return json_decode($serializer->serialize($task, 'json'));
         }, $repository->findBy(['id' => $id]));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**

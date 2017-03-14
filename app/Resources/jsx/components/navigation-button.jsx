@@ -10,7 +10,7 @@ export default class NavigationButton extends React.Component {
 
         if (this.props.icon === 'remove') {
             return <Link to={"/" + this.props.app}>
-                <Button primary={this.props.primary || false} onClick={this.props.onClick}>
+                <Button primary={this.props.primary || false} onClick={() => {this.props.onClick()}}>
                     {this.props.leftLabel}
                     <Icon name={this.props.icon}/>
                     {this.props.rightLabel}
@@ -18,7 +18,7 @@ export default class NavigationButton extends React.Component {
             </Link>
         }
 
-        return <Button primary={this.props.primary || false} onClick={this.props.onClick}>
+        return <Button primary={this.props.primary || false} onClick={() => {this.props.onClick()}}>
             {this.props.leftLabel}
             <Icon name={this.props.icon}/>
             {this.props.rightLabel}

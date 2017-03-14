@@ -32,7 +32,7 @@ class CategoryController extends AbstractController
             return json_decode($serializer->serialize($category, 'json'), true);
         }, $repository->findBy([], ['name' => 'ASC']));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**
@@ -54,7 +54,7 @@ class CategoryController extends AbstractController
             return json_decode($serializer->serialize($category, 'json'), true);
         }, $repository->findBy(['id' => $id]));
 
-        return new JsonResponse($response);
+        return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
 
     /**
