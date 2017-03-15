@@ -18,8 +18,9 @@ export default class ProfileApp extends BaseApp {
         this.setState({"row": row});
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
+    handleSubmit(e) {
+        console.log(e);
+        e.nativeEvent.stopImmediatePropagation();
 
         request
             .put(BaseApp.getApplicationDataUrl(this.state.app))

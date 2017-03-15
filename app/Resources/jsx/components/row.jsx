@@ -1,12 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import { useRouterHistory } from 'react-router';
-import { createHashHistory } from 'history';
-
-const appHistory = useRouterHistory(createHashHistory)({
-    queryKey: false
-});
+import { hashHistory } from 'react-router';
 
 export default class Row extends React.Component {
     render() {
@@ -32,7 +27,7 @@ export default class Row extends React.Component {
             }
         });
 
-        return <div className="row" onClick={ () => {appHistory.push('/' + this.props.app + "/" + this.props.row.id); this.props.viewRow(this.props.row.id) }}>
+        return <div className="row" onClick={ () => {hashHistory.push('/' + this.props.app + "/" + this.props.row.id); this.props.viewRow(this.props.row.id) }}>
             {fields}
         </div>
     }

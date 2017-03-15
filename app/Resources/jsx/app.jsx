@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { IndexRoute, Route, ReactRouter, Router, useRouterHistory } from 'react-router';
-import { createHashHistory } from 'history';
+import { IndexRoute, Route, ReactRouter, Router, hashHistory } from 'react-router';
 import DefaultApp from './defaultApp.jsx';
 import CustomerApp from './customerApp.jsx';
 import CategoryApp from './categoryApp.jsx';
@@ -13,12 +12,8 @@ import UnitApp from './unitApp.jsx';
 import ProfileApp from './profileApp.jsx';
 import MenuApp from './menu.jsx';
 
-const appHistory = useRouterHistory(createHashHistory)({
-    queryKey: false
-});
-
 render(
-    <Router history={appHistory}>
+    <Router history={hashHistory}>
         <Route path='/' component={MenuApp}>
             <IndexRoute component={DefaultApp}/>
 

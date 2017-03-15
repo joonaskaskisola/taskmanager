@@ -6,7 +6,6 @@ export default class AbstractView extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log("received props:", props);
         if (props.newAction) {
             if (!this.props.row) {
                 props.createNew();

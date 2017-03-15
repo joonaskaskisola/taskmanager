@@ -2,12 +2,7 @@ import React from 'react';
 import appData from 'json-loader!../../../config/react-app.json';
 import { Flag } from 'semantic-ui-react'
 import request from 'superagent';
-import { useRouterHistory } from 'react-router';
-import { createHashHistory } from 'history';
-
-const appHistory = useRouterHistory(createHashHistory)({
-    queryKey: false
-});
+import { hashHistory } from 'react-router';
 
 export default class BaseApp extends React.Component {
     constructor(props, context) {
@@ -74,7 +69,7 @@ export default class BaseApp extends React.Component {
             this.state.row.id,
             this.state.data,
             function (prevId) {
-                appHistory.push("/" + self.state.app + "/" + prevId);
+                hashHistory.push("/" + self.state.app + "/" + prevId);
                 self.viewRow(prevId);
             }
         );
@@ -95,7 +90,7 @@ export default class BaseApp extends React.Component {
             this.state.row.id,
             this.state.data,
             function (nextId) {
-                appHistory.push("/" + self.state.app + "/" + nextId);
+                hashHistory.push("/" + self.state.app + "/" + nextId);
                 self.viewRow(nextId);
             }
         );

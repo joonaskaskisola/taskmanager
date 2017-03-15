@@ -37,8 +37,6 @@ export default class TaskApp extends BaseApp {
     }
 
     handleSubmit(event) {
-        event.preventDefault();
-
         if (this.state.row.hasOwnProperty('id')) {
             request
                 .put(BaseApp.getApplicationDataUrl(this.state.app))
