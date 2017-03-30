@@ -2,6 +2,7 @@ module.exports = {
   entry: {
     app: ["./app/Resources/jsx/app.jsx"],
     loginApp: ["./app/Resources/jsx/loginApp.jsx"],
+    tfaApp: ["./app/Resources/jsx/tfaApp.jsx"],
   },
   output: {
     path: __dirname + "/web/js/",

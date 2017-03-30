@@ -92,8 +92,6 @@ class TwoFactorAuthenticationController extends AbstractController
      */
     public function disableTfa(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
         /** @var User $user */
         $user = $this->container->get('security.context')->getToken()->getUser();
 

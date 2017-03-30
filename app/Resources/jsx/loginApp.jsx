@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import request from 'superagent';
+import { Icon } from 'semantic-ui-react'
 
 export default class LoginApp extends React.Component {
     constructor(props, context) {
@@ -53,7 +54,9 @@ export default class LoginApp extends React.Component {
                             <input readOnly placeholder="hunter" value="moi" type="password" id="password" name="_password" />
                         </div>
 
-                        <button type="submit" className="ui submit button" onClick={this.handleSubmit}>Submit</button>
+                        <button type="submit" className="ui submit button" onClick={this.handleSubmit}>
+                            <Icon name='sign in' size='small' />
+                        </button>
                     </div>
                 </div>
             </div>

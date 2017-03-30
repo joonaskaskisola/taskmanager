@@ -22,3 +22,8 @@ body {
 .clickable {
     cursor: pointer;
 }
+
+div#tfa > input.tfa-number {
+    width: 45px;
+    margin-right: 20px;
+}
