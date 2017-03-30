@@ -1,4 +1,4 @@
-node_modules/
+/node_modules/
 /web/bundles/
 /app/bootstrap.php.cache
 /app/cache/*
@@ -14,3 +14,4 @@ node_modules/
 .idea/
 /web/js/*App.js
 /web/js/app.js
+/semantic/

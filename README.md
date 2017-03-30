@@ -4,8 +4,9 @@ This software is designed to manage customers information, users (+working hours
 
 ## TODO
 - <s>Change date() calls to chronos or something similar</s>
+- <s>Convert to ReactJS app (wip)</s>
 - Form layouts
-- Convert to ReactJS app (wip)
+- Ditch symfony
 
 ## Installation
 
@@ -13,13 +14,14 @@ This software is designed to manage customers information, users (+working hours
 npm install
 composer install
 webpack
+app/console doctrine:schema:update --force
 ```
 
 ## Dev
 
 ```
 app/console server:start
-webpack-dev-server --progress --colors
+node ./node_modules/webpack/bin/webpack.js --watch --progress
 ```
 
 ## Load random data
@@ -37,7 +39,7 @@ Fork & create own branch, do pull request
 ```
 MIT License
 
-Copyright (c) 2016 Joonas Kaskisola
+Copyright (c) 2017 Joonas Kaskisola
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

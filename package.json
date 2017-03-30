@@ -41,7 +41,7 @@
     "semantic-ui-react": "^0.61.1",
     "superagent": "^3.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "webpack": "^1.13.3"
+    "webpack": "^1.14.0"
   },
   "scripts": {
     "install": "./scripts/npm_install.sh"
