@@ -41,11 +41,13 @@ export default class NavigationButtons extends React.Component {
 
                 <Menu.Item>
                     {this.props.handleSubmit && <NavigationButton
+                        icon="refresh"
                         app={this.props.app}
                         primary={true}
                         show={true}
                         float="left"
                         onClick={this.props.handleSubmit}
+                        rightLabel=""
                         leftLabel="Save" />}
                 </Menu.Item>
             </Menu.Menu>
