@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\CustomerItem;
-use AppBundle\Helper\FormHelper;
 use AppBundle\Repository\ItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,7 +19,7 @@ class ItemController extends AbstractController
      * @Route("/api/item", name="getItems")
      * @Method({"GET"})
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
     public function getItemsAction(Request $request)
     {

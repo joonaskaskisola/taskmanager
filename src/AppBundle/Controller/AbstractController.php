@@ -34,6 +34,11 @@ abstract class AbstractController extends Controller
         );
     }
 
+    /**
+     * @param $data
+     * @param $statusCode
+     * @return JsonResponse
+     */
     public function jsonResponse($data, $statusCode)
     {
         $response = new JsonResponse();

@@ -27,7 +27,7 @@ export default class BaseApp extends React.Component {
     }
 
     handleError(error) {
-        console.log(error);
+        console.log("ERRR", error);
     }
 
     createNew() {
@@ -103,6 +103,10 @@ export default class BaseApp extends React.Component {
             this.setState({"isLoading": true});
 
             this.getData(BaseApp.getApplicationDataUrl(this.state.app), function (error, result) {
+                if (result.message === 'not found') {
+                    result = [];
+                }
+
                 self.setState({"data": result, "isLoading": false});
 
                 if (typeof cb !== 'undefined') {

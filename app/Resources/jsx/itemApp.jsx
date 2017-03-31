@@ -14,6 +14,8 @@ export default class ItemApp extends BaseApp {
 
         this.state.categories = [];
         this.getData("/api/category", function (err, data) {
+            if (err && data.response === 'not found') { data = []; }
+
             data.forEach(function(category) {
                 self.state.categories.push({'value': category.id, 'text': category.name});
             });
@@ -21,6 +23,8 @@ export default class ItemApp extends BaseApp {
 
         this.state.units = [];
         this.getData("/api/unit", function (err, data) {
+            if (err && data.response === 'not found') { data = []; }
+
             data.forEach(function(unit) {
                 self.state.units.push({'value': unit.id, 'text': unit.name});
             })

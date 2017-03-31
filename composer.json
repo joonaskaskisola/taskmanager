@@ -24,7 +24,7 @@
         "fzaninotto/faker": "^1.6",
         "giggsey/libphonenumber-for-php": "^7.4",
         "soyuka/seed-bundle": "^1.0",
-        "cakephp/chronos": "^1.0",
+        "cakephp/chronos": "^1.1",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "qandidate/symfony-json-request-transformer": "^1.2",
         "scheb/two-factor-bundle": "^2.8",
