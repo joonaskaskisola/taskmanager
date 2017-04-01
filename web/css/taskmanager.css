@@ -36,6 +36,9 @@ div#app > div > div.ui.menu {
     border: 0;
 }
 
-button.ui.button, div.ui.segment, div.ui.pointing.menu {
+button.ui.button,
+div.ui.segment,
+div.ui.pointing.menu,
+.ui.input input {
     border-radius: 0;
 }
