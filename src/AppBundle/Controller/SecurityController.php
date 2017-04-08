@@ -42,8 +42,8 @@ class SecurityController extends AbstractController
             ->setUsername($faker->userName)
             ->setCountry(
                 $this->getDoctrine()->getRepository('AppBundle:Country')->findOneBy(['id' => 1])
-            )
-            ->setPhone($faker->phoneNumber);
+            );
+            //->setPhone($faker->phoneNumber);
 
         $this->persist($user);
 

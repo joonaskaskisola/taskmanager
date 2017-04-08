@@ -1,0 +1,25 @@
+{
+    "name": "taskmanager",
+    "description": "taskmanager",
+    "repository": "https://github.com/joonaskaskisola/taskmanager",
+    "success_url": "/",
+    "addons": [
+        "cleardb:ignite"
+    ],
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        },
+        {
+            "url": "heroku/php"
+        }
+    ],
+    "env": {
+        "SYMFONY_ENV": {
+            "value": "prod"
+        }
+    },
+    "scripts": {
+        "postdeploy": "php app/console doctrine:schema:update --force"
+    }
+}
