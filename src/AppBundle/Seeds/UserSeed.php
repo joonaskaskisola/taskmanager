@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Soyuka\SeedBundle\Model\SeedInterface;
 use Faker;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class UserSeed extends Seed implements SeedInterface
 {
@@ -29,8 +31,20 @@ class UserSeed extends Seed implements SeedInterface
             );
 
         $user = new User();
-        $password = $this->get('security.password_encoder')
-            ->encodePassword($user, 'admin');
+        $passwordEncoder = new UserPasswordEncoder(
+            new EncoderFactory(array(
+                'FOS\\UserBundle\\Model\\UserInterface' => array(
+                    'class' => 'Symfony\\Component\\Security\\Core\\Encoder\\BCryptPasswordEncoder',
+                    'arguments' => array(0 => 13)
+                ),
+                'AppBundle\\Entity\\User' => array(
+                    'class' => 'Symfony\\Component\\Security\\Core\\Encoder\\BCryptPasswordEncoder',
+                    'arguments' => array(0 => 13)
+                )
+            ))
+        );
+
+        $password = $passwordEncoder->encodePassword($user, 'admin');
 
         $user
             ->setTfaEnabled(false)
