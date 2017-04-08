@@ -60,7 +60,8 @@ class UserSeed extends Seed implements SeedInterface
             ->setUsername("admin")
             ->setCountry($fiCountry);
 
-        $this->persist($user);
+        $this->manager->persist($user);
+        $this->manager->flush();
 
         if (getenv('SYMFONY_ENV') !== 'prod') {
             for ($i = 0; $i < 10; $i++) {
@@ -88,7 +89,6 @@ class UserSeed extends Seed implements SeedInterface
                     ->setPhone($faker->phoneNumber);
 
                 $this->manager->persist($user);
-
                 $this->manager->flush();
             }
         }
