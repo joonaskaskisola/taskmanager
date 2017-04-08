@@ -58,7 +58,7 @@
         "compile": [
             "echo \"Running webpack..\"; ./node_modules/webpack/bin/webpack.js",
             "echo \"Removing app_dev.php..\"; rm web/app_dev.php",
-            "echo \"Updating db schema..\"; bin/console doctrine:schema:update --force"
+            "echo \"Updating db schema..\"; app/console doctrine:schema:update --force"
         ]
     },
     "config": {
