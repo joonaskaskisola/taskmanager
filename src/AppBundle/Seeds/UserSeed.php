@@ -21,40 +21,62 @@ class UserSeed extends Seed implements SeedInterface
     {
         $this->disableDoctrineLogging();
 
-        for ($i = 0; $i < 10; $i++) {
-            $randCountry = $this->manager->getRepository('AppBundle:Country')
-                ->findOneBy(
-                    array(
-                        'langCode' => 'fi_FI',
-                    )
-                );
-
-            $faker = Faker\Factory::create($randCountry->getLangCode());
-
-            $user = new User();
-
-            $user
-                ->setRoles(['ROLE_USER'])
-                ->setEnabled(true)
-                ->setCustomer(
-                    $this->manager->getRepository('AppBundle:Customer')
-                        ->findOneBy(
-                            array(
-                                'id' => 1,
-                            )
-                        )
+        $fiCountry = $this->manager->getRepository('AppBundle:Country')
+            ->findOneBy(
+                array(
+                    'langCode' => 'fi_FI',
                 )
-                ->setEmail($faker->email)
-                ->setFirstName($faker->firstName)
-                ->setLastName($faker->lastName)
-                ->setPassword('')
-                ->setUsername($faker->userName)
-                ->setCountry($randCountry)
-                ->setPhone($faker->phoneNumber);
+            );
 
-            $this->manager->persist($user);
+        $user = new User();
+        $password = $this->get('security.password_encoder')
+            ->encodePassword($user, 'admin');
 
-            $this->manager->flush();
+        $user
+            ->setTfaEnabled(false)
+            ->setRoles(['ROLE_ADMIN'])
+            ->setEnabled(true)
+            ->setCustomer(
+                $this->manager->getRepository('AppBundle:Customer')->findOneBy(['id' => 1])
+            )
+            ->setEmail("admin@localhost")
+            ->setFirstName("Admin")
+            ->setLastName("Administrator")
+            ->setPassword($password)
+            ->setUsername("admin")
+            ->setCountry($fiCountry);
+
+        $this->persist($user);
+
+        if (getenv('SYMFONY_ENV') !== 'prod') {
+            for ($i = 0; $i < 10; $i++) {
+                $faker = Faker\Factory::create($fiCountry->getLangCode());
+
+                $user = new User();
+
+                $user
+                    ->setRoles(['ROLE_USER'])
+                    ->setEnabled(true)
+                    ->setCustomer(
+                        $this->manager->getRepository('AppBundle:Customer')
+                            ->findOneBy(
+                                array(
+                                    'id' => 1,
+                                )
+                            )
+                    )
+                    ->setEmail($faker->email)
+                    ->setFirstName($faker->firstName)
+                    ->setLastName($faker->lastName)
+                    ->setPassword('')
+                    ->setUsername($faker->userName)
+                    ->setCountry($fiCountry)
+                    ->setPhone($faker->phoneNumber);
+
+                $this->manager->persist($user);
+
+                $this->manager->flush();
+            }
         }
     }
 

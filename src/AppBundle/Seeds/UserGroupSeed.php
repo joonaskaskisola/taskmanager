@@ -3,6 +3,7 @@
 namespace AppBundle\Seeds;
 
 use AppBundle\Entity\UserGroup;
+use AppBundle\Repository\UserGroupRepository;
 use Soyuka\SeedBundle\Command\Seed;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
