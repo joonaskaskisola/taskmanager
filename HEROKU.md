@@ -1,8 +1,9 @@
 Before first deployment
 ```
 heroku addons:create cleardb:ignite
-heroku config:set SYMFONY_ENV=prod
+heroku buildpacks:set heroku/php
 heroku buildpacks:add --index 1 heroku/nodejs
+heroku config:set SYMFONY_ENV=prod
 ```
 
 After deployment

@@ -1,6 +1,6 @@
 {
-    "name": "joonas/tasker",
-    "license": "proprietary",
+    "name": "joonaskaskisola/taskmanager",
+    "license": "MIT",
     "type": "project",
     "autoload": {
         "psr-0": {
@@ -12,7 +12,7 @@
         ]
     },
     "require": {
-        "php": ">=5.3.9",
+        "php": ">=7.0.0",
         "symfony/symfony": "2.8.*",
         "doctrine/orm": "^2.4.8",
         "doctrine/doctrine-bundle": "~1.4",
@@ -55,9 +55,11 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
-	"compile": [
-		"./node_modules/webpack/bin/webpack.js &"
-	]
+        "compile": [
+            "echo \"Running webpack..\"; ./node_modules/webpack/bin/webpack.js",
+            "echo \"Removing app_dev.php..\"; rm web/app_dev.php",
+            "echo \"Updating db schema..\"; bin/console doctrine:schema:update --force"
+        ]
     },
     "config": {
         "bin-dir": "bin"
