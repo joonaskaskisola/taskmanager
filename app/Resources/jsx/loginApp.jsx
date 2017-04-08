@@ -9,6 +9,7 @@ export default class LoginApp extends React.Component {
 
         this.state = {
             _username: this.props.children,
+            _password: 'moi',
             errors: []
         };
 
@@ -23,7 +24,7 @@ export default class LoginApp extends React.Component {
             .post("/login")
             .send({
                 _username: this.state._username,
-                _password: 'moi'
+                _password: this.state._password
             })
             .end(function (err, res) {
                 if (!err) {
@@ -51,7 +52,7 @@ export default class LoginApp extends React.Component {
 
                         <div className="field">
                             <label>Password</label>
-                            <input readOnly placeholder="hunter" value="moi" type="password" id="password" name="_password" />
+                            <input placeholder="hunter" value={this.state._password} type="password" id="password" name="_password" onChange={this.handleChange} />
                         </div>
 
                         <button type="submit" className="ui submit button" onClick={this.handleSubmit}>
