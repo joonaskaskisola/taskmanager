@@ -4,7 +4,8 @@
     "repository": "https://github.com/joonaskaskisola/taskmanager",
     "success_url": "/",
     "addons": [
-        "cleardb:ignite"
+        "cleardb:ignite",
+        "memcachedcloud"
     ],
     "buildpacks": [
         {
@@ -17,6 +18,9 @@
     "env": {
         "SYMFONY_ENV": {
             "value": "prod"
+        },
+        "APP_SECRET": {
+            "value": "appsecretgoeshere"
         }
     },
     "scripts": {
