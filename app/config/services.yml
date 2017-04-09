@@ -10,3 +10,11 @@ services:
         class: Qandidate\Common\Symfony\HttpKernel\EventListener\JsonRequestTransformerListener
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 100 }
+    memcached:
+        class: Memcached
+        calls:
+            - [ addServer, [%memcache_server%, %memcache_port%] ]
+
+    session.handler.memcached:
+        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
+        arguments: [ @memcached, { prefix: 'mem_task_', expiretime: 604800 } ]

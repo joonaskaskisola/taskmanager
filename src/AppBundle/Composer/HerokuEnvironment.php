@@ -2,17 +2,16 @@
 
 namespace AppBundle\Composer;
 
-use Composer\Script\Event;
-
 class HerokuEnvironment
 {
     /**
      * Populate Heroku environment
-     *
-     * @param Event $event Event
      */
-    public static function populateEnvironment(Event $event)
+    public static function populateEnvironment()
     {
+        /**
+         * Database
+         */
         $url = getenv('CLEARDB_DATABASE_URL');
 
         if ($url) {
@@ -25,7 +24,14 @@ class HerokuEnvironment
             putenv("DATABASE_NAME={$db}");
         }
 
-        $io = $event->getIO();
-        $io->write('CLEARDB_DATABASE_URL=' . getenv('CLEARDB_DATABASE_URL'));
+        /**
+         * Memcache
+         */
+        $memcache = parse_url(getenv('MEMCACHEDCLOUD_SERVERS'));
+        putenv("MEMCACHE_SERVER={$memcache['host']}");
+        putenv("MEMCACHE_PORT={$memcache['port']}");
+        putenv("MEMCACHE_SESSION_PREFIX=TASKIO");
+        putenv('MEMCACHE_USERNAME=' . getenv('MEMCACHEDCLOUD_USERNAME'));
+        putenv('MEMCACHE_PASSWORD=' . getenv('MEMCACHEDCLOUD_PASSWORD'));
     }
 }
