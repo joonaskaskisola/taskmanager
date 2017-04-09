@@ -20,7 +20,7 @@
             "value": "prod"
         },
         "APP_SECRET": {
-            "value": "appsecretgoeshere"
+            "generator": "secret"
         }
     },
     "scripts": {
