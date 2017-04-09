@@ -1,3 +1,5 @@
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/joonaskaskisola/taskmanager)
+
 # Task, time tracking & invoice manager
 
 This software is designed to manage customers information, users (+working hours), repetitive tasks, invoices, etc..
