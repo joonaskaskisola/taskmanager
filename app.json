@@ -4,8 +4,9 @@
     "repository": "https://github.com/joonaskaskisola/taskmanager",
     "success_url": "/",
     "addons": [
-        "cleardb:ignite",
-        "memcachedcloud"
+        "cleardb",
+        "memcachedcloud",
+        "bonsai"
     ],
     "buildpacks": [
         {

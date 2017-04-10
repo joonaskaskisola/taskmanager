@@ -9,29 +9,43 @@ class HerokuEnvironment
      */
     public static function populateEnvironment()
     {
+        $db = getenv('CLEARDB_DATABASE_URL');
+        $memcache = getenv('MEMCACHEDCLOUD_SERVERS');
+        $elasticSearch = getenv('BONSAI_URL');
+
         /**
          * Database
          */
-        $url = getenv('CLEARDB_DATABASE_URL');
+        if ($db) {
+            $url = parse_url($dn);
 
-        if ($url) {
-            $url = parse_url($url);
-            putenv("DATABASE_HOST={$url['host']}");
-            putenv("DATABASE_USER={$url['user']}");
-            putenv("DATABASE_PASSWORD={$url['pass']}");
-
-            $db = substr($url['path'], 1);
-            putenv("DATABASE_NAME={$db}");
+            putenv("DATABASE_HOST=" . $url['host']);
+            putenv("DATABASE_USER=" . $url['user']);
+            putenv("DATABASE_PASSWORD=" . $url['pass']);
+            putenv("DATABASE_NAME=" . substr($url['path'], 1));
         }
 
         /**
          * Memcache
          */
-        $memcache = parse_url(getenv('MEMCACHEDCLOUD_SERVERS'));
-        putenv("MEMCACHE_SERVER={$memcache['host']}");
-        putenv("MEMCACHE_PORT={$memcache['port']}");
-        putenv("MEMCACHE_SESSION_PREFIX=TASKIO");
-        putenv('MEMCACHE_USERNAME=' . getenv('MEMCACHEDCLOUD_USERNAME'));
-        putenv('MEMCACHE_PASSWORD=' . getenv('MEMCACHEDCLOUD_PASSWORD'));
+        if ($memcache) {
+            $url = parse_url($memcache);
+            putenv("MEMCACHE_SERVER=" . $url['host']);
+            putenv("MEMCACHE_PORT=" . $url['port']);
+            putenv("MEMCACHE_USERNAME=" . getenv('MEMCACHEDCLOUD_USERNAME'));
+            putenv("MEMCACHE_PASSWORD=" . getenv('MEMCACHEDCLOUD_PASSWORD'));
+            putenv("MEMCACHE_SESSION_PREFIX=TASKIO");
+        }
+
+        /**
+         * ElasticSearch
+         */
+        if ($elasticSearch) {
+            $url = parse_url($elasticSearch);
+            putenv("ELASTIC_HOST=" . $url['host']);
+            putenv("ELASTIC_SCHEME=" . $url['scheme']);
+            putenv("ELASTIC_USER=" . $url['user']);
+            putenv("ELASTIC_PASSWORD=" . $url['pass']);
+        }
     }
 }
