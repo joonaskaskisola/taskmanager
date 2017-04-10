@@ -17,7 +17,7 @@ class HerokuEnvironment
          * Database
          */
         if ($db) {
-            $url = parse_url($dn);
+            $url = parse_url($db);
 
             putenv("DATABASE_HOST=" . $url['host']);
             putenv("DATABASE_USER=" . $url['user']);
@@ -30,6 +30,7 @@ class HerokuEnvironment
          */
         if ($memcache) {
             $url = parse_url($memcache);
+
             putenv("MEMCACHE_SERVER=" . $url['host']);
             putenv("MEMCACHE_PORT=" . $url['port']);
             putenv("MEMCACHE_USERNAME=" . getenv('MEMCACHEDCLOUD_USERNAME'));
@@ -42,10 +43,12 @@ class HerokuEnvironment
          */
         if ($elasticSearch) {
             $url = parse_url($elasticSearch);
+
             putenv("ELASTIC_HOST=" . $url['host']);
             putenv("ELASTIC_SCHEME=" . $url['scheme']);
             putenv("ELASTIC_USER=" . $url['user']);
             putenv("ELASTIC_PASSWORD=" . $url['pass']);
+            putenv("ELASTIC_PORT=" . ($url['scheme'] === 'https' && !isset($url['port'])) ? 443 : $url['port']);
         }
     }
 }
