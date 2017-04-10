@@ -28,7 +28,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "qandidate/symfony-json-request-transformer": "^1.2",
         "scheb/two-factor-bundle": "^2.8",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.2",
+        "elasticsearch/elasticsearch": "^5.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
@@ -36,10 +37,15 @@
         "heroku/heroku-buildpack-php": "*"
     },
     "scripts": {
+        "build-parameters": [
+            "AppBundle\\Composer\\HerokuEnvironment::populateEnvironment",
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+        ],
         "pre-install-cmd": [
             "AppBundle\\Composer\\HerokuEnvironment::populateEnvironment"
         ],
         "post-install-cmd": [
+            "AppBundle\\Composer\\HerokuEnvironment::populateEnvironment",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
@@ -48,6 +54,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-update-cmd": [
+            "AppBundle\\Composer\\HerokuEnvironment::populateEnvironment",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
@@ -84,7 +91,7 @@
                 "memcache_pass": "MEMCACHE_PASSWORD",
                 "memcache_port": "MEMCACHE_PORT",
 
-                "elastic_scheme": "ELASTI_SCHEME",
+                "elastic_scheme": "ELASTIC_SCHEME",
                 "elastic_host": "ELASTIC_HOST",
                 "elastic_user": "ELASTIC_USER",
                 "elastic_pass": "ELASTIC_PASSWORD",

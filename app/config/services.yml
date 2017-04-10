@@ -14,7 +14,9 @@ services:
         class: Memcached
         calls:
             - [ addServer, [%memcache_server%, %memcache_port%] ]
-
+    elasticsearch:
+        class: AppBundle\Service\Elasticsearch
+        arguments: [ %elastic_host%, %elastic_port%, %elastic_scheme%, %elastic_user%, %elastic_pass% ]
     session.handler.memcached:
         class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
         arguments: [ @memcached, { prefix: 'mem_task_', expiretime: 604800 } ]

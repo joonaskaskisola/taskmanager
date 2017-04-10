@@ -43,12 +43,15 @@ class HerokuEnvironment
          */
         if ($elasticSearch) {
             $url = parse_url($elasticSearch);
+            $port = ($url['scheme'] === 'https' && !isset($url['port']))
+                ? 443
+                : $url['port'];
 
             putenv("ELASTIC_HOST=" . $url['host']);
             putenv("ELASTIC_SCHEME=" . $url['scheme']);
             putenv("ELASTIC_USER=" . $url['user']);
             putenv("ELASTIC_PASSWORD=" . $url['pass']);
-            putenv("ELASTIC_PORT=" . ($url['scheme'] === 'https' && !isset($url['port'])) ? 443 : $url['port']);
+            putenv("ELASTIC_PORT=" . (string) $port);
         }
     }
 }
