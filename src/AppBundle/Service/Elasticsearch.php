@@ -2,8 +2,6 @@
 
 namespace AppBundle\Service;
 
-use Elasticsearch\ClientBuilder;
-
 class Elasticsearch
 {
     /**
@@ -51,14 +49,27 @@ class Elasticsearch
     /**
      * @return \Elasticsearch\Client
      */
-    public function getClient()
+    private function getClient()
     {
-        return ClientBuilder::create()->setHosts([[
+        return \Elasticsearch\ClientBuilder::create()->setHosts([[
             'host' => $this->host,
             'port' => $this->port,
             'scheme' => $this->scheme,
             'user' => $this->user,
             'pass' => $this->pass
         ]])->build();
+    }
+
+    public function __call($method, $args)
+    {
+        static $client = null;
+
+        if ($client === null) {
+            $client = $this->getClient();
+        }
+
+        var_dump(get_class($client), $method, $args);
+
+        return call_user_func_array([$client, $method], $args);
     }
 }

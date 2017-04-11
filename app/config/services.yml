@@ -13,6 +13,8 @@ services:
     memcached:
         class: Memcached
         calls:
+            - [ setOption, [18, true] ]
+            - [ setSaslAuthData, [%memcache_user%, %memcache_pass%] ]
             - [ addServer, [%memcache_server%, %memcache_port%] ]
     elasticsearch:
         class: AppBundle\Service\Elasticsearch
