@@ -68,8 +68,6 @@ class Elasticsearch
             $client = $this->getClient();
         }
 
-        var_dump(get_class($client), $method, $args);
-
         return call_user_func_array([$client, $method], $args);
     }
 }
