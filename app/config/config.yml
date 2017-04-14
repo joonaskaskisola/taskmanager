@@ -144,3 +144,24 @@ scheb_two_factor:
     # A list of IP addresses, which will not trigger two-factor authentication
     ip_whitelist:
         #- 127.0.0.1
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            url: '%rabbitmq_url%?lazy=1&connection_timeout=6'
+            connection_timeout: 6
+            read_write_timeout: 3
+            keepalive: false
+            heartbeat: 0
+            use_socket: false
+    producers:
+        app:
+            connection:       default
+            exchange_options: {name: 'app', type: direct}
+            service_alias:    my_app_service # no alias by default
+    consumers:
+        app:
+            connection:       default
+            exchange_options: {name: 'app', type: direct}
+            queue_options:    {name: 'app'}
+            callback:         app_consumer

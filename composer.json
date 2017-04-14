@@ -29,7 +29,8 @@
         "qandidate/symfony-json-request-transformer": "^1.2",
         "scheb/two-factor-bundle": "^2.8",
         "guzzlehttp/guzzle": "^6.2",
-        "elasticsearch/elasticsearch": "^5.1"
+        "elasticsearch/elasticsearch": "^5.1",
+        "php-amqplib/rabbitmq-bundle": "^1.12"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
@@ -95,7 +96,12 @@
                 "elastic_host": "ELASTIC_HOST",
                 "elastic_user": "ELASTIC_USER",
                 "elastic_pass": "ELASTIC_PASSWORD",
-                "elastic_port": "ELASTIC_PORT"
+                "elastic_port": "ELASTIC_PORT",
+
+                "rabbitmq_rest_api_url": "RABBITMQ_BIGWIG_REST_API_URL",
+                "rabbitmq_rx": "RABBITMQ_BIGWIG_RX_URL",
+                "rabbitmq_tx": "RABBITMQ_BIGWIG_TX_URL",
+                "rabbitmq_url": "RABBITMQ_BIGWIG_URL"
             }
         }
     }

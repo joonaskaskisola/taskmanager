@@ -105,9 +105,6 @@ class ItemController extends AbstractController
      */
     public function postItemAction(Request $request)
     {
-        /** @var ItemRepository $repository */
-        $repository = $this->getDoctrine()->getRepository('AppBundle:Item');
-
         $item = new Item();
         $item
             ->setName($request->request->get('name'))
@@ -131,18 +128,10 @@ class ItemController extends AbstractController
 
         $this->persist($item);
 
-        array_map(function ($customer) use ($item, $repository) {
-            $customerItem = new CustomerItem();
-            $customerItem
-                ->setCustomer($customer)
-                ->setItem($item)
-                ->setPrice($item->getPrice());
-            $repository->persist($customerItem);
-        }, $this
-            ->getDoctrine()
-            ->getRepository('AppBundle:Customer')
-            ->findAll()
-        );
+        $this->get('old_sound_rabbit_mq.app_producer')->publish(serialize([
+            'event' => 'new_item',
+            'entity' => $item
+        ]));
 
         return new JsonResponse();
     }

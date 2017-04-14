@@ -6,7 +6,8 @@
     "addons": [
         "cleardb",
         "memcachedcloud",
-        "bonsai"
+        "bonsai",
+        "rabbitmq_bigwig"
     ],
     "buildpacks": [
         {

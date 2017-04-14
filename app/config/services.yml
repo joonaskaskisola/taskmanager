@@ -22,3 +22,6 @@ services:
     session.handler.memcached:
         class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
         arguments: [ @memcached, { prefix: 'mem_task_', expiretime: 604800 } ]
+    app_consumer:
+        class: AppBundle\Consumer\AppConsumer
+        arguments: [ @doctrine ]

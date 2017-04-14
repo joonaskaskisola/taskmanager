@@ -10,4 +10,43 @@ namespace AppBundle\Repository;
  */
 class ItemRepository extends AbstractRepository
 {
+    public function insertItemToAllCustomers(Item $item)
+    {
+        $item = new Item();
+        $item
+            ->setName($request->request->get('name'))
+            ->setPrice($request->request->get('price'))
+            ->setCategory(
+                $this
+                    ->getDoctrine()
+                    ->getRepository('AppBundle:Category')
+                    ->findOneBy([
+                        'id' => $request->request->get('category')
+                    ])
+            )
+            ->setUnit(
+                $this
+                    ->getDoctrine()
+                    ->getRepository('AppBundle:Unit')
+                    ->findOneBy([
+                        'id' => $request->request->get('unit')
+                    ])
+            );
+
+        $this->persist($item);
+
+        array_map(function ($customer) use ($item, $repository) {
+            $customerItem = new CustomerItem();
+            $customerItem
+                ->setCustomer($customer)
+                ->setItem($item)
+                ->setPrice($item->getPrice());
+            $repository->persist($customerItem);
+        }, $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Customer')
+            ->findAll()
+        );
+
+    }
 }
