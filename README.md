@@ -2,7 +2,7 @@
 
 # Task, time tracking & invoice manager
 
-This software is designed to manage customers information, users (+working hours), repetitive tasks, invoices, etc..
+This software is designed to manage customers information, users (+working hours), repetitive tasks, invoices etc..
 
 ## TODO
 - <s>Change date() calls to chronos or something similar</s>
@@ -13,6 +13,7 @@ This software is designed to manage customers information, users (+working hours
 ## Installation
 
 ```
+source insert-configs.sh
 npm install
 composer install
 webpack
