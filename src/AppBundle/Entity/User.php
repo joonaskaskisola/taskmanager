@@ -58,6 +58,11 @@ class User extends BaseUser implements \Serializable, TwoFactorInterface
      */
     private $isTfaEnabled;
 
+    /**
+     * @ORM\Column(name="profile_picture_id", type="bigint", nullable=true)
+     */
+    private $profilePictureId;
+
     public function __construct()
     {
         parent::__construct();

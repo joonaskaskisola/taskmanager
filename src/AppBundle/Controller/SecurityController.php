@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Media;
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
+use AppBundle\Service\Cloudinary;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,7 +45,6 @@ class SecurityController extends AbstractController
             ->setCountry(
                 $this->getDoctrine()->getRepository('AppBundle:Country')->findOneBy(['id' => 1])
             );
-            //->setPhone($faker->phoneNumber);
 
         $this->persist($user);
 

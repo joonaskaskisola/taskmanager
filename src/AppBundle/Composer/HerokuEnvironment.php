@@ -12,6 +12,7 @@ class HerokuEnvironment
         $db = getenv('CLEARDB_DATABASE_URL');
         $memcache = getenv('MEMCACHEDCLOUD_SERVERS');
         $elasticSearch = getenv('BONSAI_URL');
+        $cloudinary = getenv('CLOUDINARY_URL');
 
         /**
          * Database
@@ -52,6 +53,17 @@ class HerokuEnvironment
             putenv("ELASTIC_USER=" . $url['user']);
             putenv("ELASTIC_PASSWORD=" . $url['pass']);
             putenv("ELASTIC_PORT=" . (string) $port);
+        }
+
+        /**
+         * Cloudinary
+         */
+        if ($cloudinary) {
+            $url = parse_url($cloudinary);
+
+            putenv('CLOUDINARY_HOST='.$url['host']);
+            putenv('CLOUDINARY_USER='.$url['user']);
+            putenv('CLOUDINARY_PASS='.$url['pass']);
         }
     }
 }

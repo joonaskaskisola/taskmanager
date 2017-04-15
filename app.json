@@ -7,7 +7,8 @@
         "cleardb",
         "memcachedcloud",
         "bonsai",
-        "rabbitmq-bigwig"
+        "rabbitmq-bigwig",
+        "cloudinary"
     ],
     "buildpacks": [
         {

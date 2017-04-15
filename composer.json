@@ -30,7 +30,8 @@
         "scheb/two-factor-bundle": "^2.8",
         "guzzlehttp/guzzle": "^6.2",
         "elasticsearch/elasticsearch": "^5.1",
-        "php-amqplib/rabbitmq-bundle": "^1.12"
+        "php-amqplib/rabbitmq-bundle": "^1.12",
+        "cloudinary/cloudinary_php": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
@@ -101,7 +102,11 @@
                 "rabbitmq_rest_api_url": "RABBITMQ_BIGWIG_REST_API_URL",
                 "rabbitmq_rx": "RABBITMQ_BIGWIG_RX_URL",
                 "rabbitmq_tx": "RABBITMQ_BIGWIG_TX_URL",
-                "rabbitmq_url": "RABBITMQ_BIGWIG_URL"
+                "rabbitmq_url": "RABBITMQ_BIGWIG_URL",
+
+                "cloudinary_host": "CLOUDINARY_HOST",
+                "cloudinary_user": "CLOUDINARY_USER",
+                "cloudinary_pass": "CLOUDINARY_PASS"
             }
         }
     }

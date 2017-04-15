@@ -21,19 +21,14 @@ class LoginListener
      */
     private $securityContext;
 
-    /** @var \Doctrine\ORM\EntityManager */
-    private $em;
-
     /**
      * Constructor
      *
      * @param SecurityContext $securityContext
-     * @param Doctrine $doctrine
      */
-    public function __construct(SecurityContext $securityContext, Doctrine $doctrine)
+    public function __construct(SecurityContext $securityContext)
     {
         $this->securityContext = $securityContext;
-        $this->em = $doctrine->getManager();
     }
 
     /**
@@ -43,37 +38,37 @@ class LoginListener
      */
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
-        $request = $event->getRequest();
-        $user = $event->getAuthenticationToken()->getUser();
-
-        $clientIpAddress = $request->getClientIp();
-
-        $ipRepository = $this->em->getRepository(Ip::class);
-        $ipAddress = $ipRepository->findOneBy(['address' => $clientIpAddress]);
-
-        if (null === $ipAddress) {
-            $ipAddress = new Ip();
-            $ipAddress->setAddress($clientIpAddress);
-            $ipAddress->setWhois(
-                json_decode(
-                    file_get_contents(
-                        sprintf(
-                            "http://ip-api.com/json/%s",
-                            $clientIpAddress
-                        )
-                    ), true
-                )
-            );
-
-            $this->em->persist($ipAddress);
-            $this->em->flush();
-        }
-
-        $userIpLog = new UserIpLog();
-        $userIpLog->setIp($ipAddress);
-        $userIpLog->setUser($user);
-        $userIpLog->setCreatedAt(new Chronos());
-
-        $this->em->persist($userIpLog);
+//        $request = $event->getRequest();
+//        $user = $event->getAuthenticationToken()->getUser();
+//
+//        $clientIpAddress = $request->getClientIp();
+//
+//        $ipRepository = $this->em->getRepository(Ip::class);
+//        $ipAddress = $ipRepository->findOneBy(['address' => $clientIpAddress]);
+//
+//        if (null === $ipAddress) {
+//            $ipAddress = new Ip();
+//            $ipAddress->setAddress($clientIpAddress);
+//            $ipAddress->setWhois(
+//                json_decode(
+//                    file_get_contents(
+//                        sprintf(
+//                            "http://ip-api.com/json/%s",
+//                            $clientIpAddress
+//                        )
+//                    ), true
+//                )
+//            );
+//
+//            $this->em->persist($ipAddress);
+//            $this->em->flush();
+//        }
+//
+//        $userIpLog = new UserIpLog();
+//        $userIpLog->setIp($ipAddress);
+//        $userIpLog->setUser($user);
+//        $userIpLog->setCreatedAt(new Chronos());
+//
+//        $this->em->persist($userIpLog);
     }
 }
