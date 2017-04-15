@@ -105,32 +105,9 @@ class ItemController extends AbstractController
      */
     public function postItemAction(Request $request)
     {
-        $item = new Item();
-        $item
-            ->setName($request->request->get('name'))
-            ->setPrice($request->request->get('price'))
-            ->setCategory(
-                $this
-                    ->getDoctrine()
-                    ->getRepository('AppBundle:Category')
-                    ->findOneBy([
-                        'id' => $request->request->get('category')
-                    ])
-            )
-            ->setUnit(
-                $this
-                    ->getDoctrine()
-                    ->getRepository('AppBundle:Unit')
-                    ->findOneBy([
-                        'id' => $request->request->get('unit')
-                    ])
-            );
-
-        $this->persist($item);
-
         $this->get('old_sound_rabbit_mq.app_producer')->publish(serialize([
             'event' => 'new_item',
-            'entity' => $item
+            'request' => $request->request
         ]));
 
         return new JsonResponse();
