@@ -42,3 +42,7 @@ div.ui.pointing.menu,
 .ui.input input {
     border-radius: 0;
 }
+
+img.profilePicture:hover {
+    cursor: pointer;
+}

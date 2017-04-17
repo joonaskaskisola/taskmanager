@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Media;
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
+use AppBundle\Service\Cloudinary;
 use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\VarDumper\Exception\ThrowingCasterException;
 
 class UserController extends AbstractController
 {
@@ -102,6 +105,33 @@ class UserController extends AbstractController
             ->setLastName($request->request->get('lastName'));
 
         $this->persist($user);
+
+        return new JsonResponse();
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse*
+     * @Route("/api/user/picture", name="editUserPictureAction")
+     * @Method({"PUT", "POST"})
+     */
+    public function editUserPictureAction(Request $request)
+    {
+        try {
+            /** @var Cloudinary $cloudinary */
+            $cloudinary = $this->get('media');
+            /** @var Media $uploaded */
+            $uploaded = $cloudinary->upload($request->request->get('image'));
+
+            /** @var User $user */
+            $user = $this->getDoctrine()->getRepository('AppBundle:User')->find(
+                $this->container->get('security.context')->getToken()->getUser()->getId()
+            );
+
+            $user->setProfilePicture($uploaded);
+
+            $this->persist($user);
+        } catch (\Throwable $e) { }
 
         return new JsonResponse();
     }

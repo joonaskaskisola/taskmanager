@@ -22,13 +22,9 @@ services:
     session.handler.memcached:
         class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
         arguments: [ @memcached, { prefix: 'mem_task_', expiretime: 604800 } ]
-    cloudinary:
-        class: Cloudinary
-        calls:
-            - [ Config, [ cloud_name: '%cloudinary_host%', api_key: '%cloudinary_user%', api_secret: '%cloudinary_pass%' ] ]
     app_consumer:
         class: AppBundle\Consumer\AppConsumer
         arguments: [ @doctrine ]
     media:
         class: AppBundle\Service\Cloudinary
-        arguments: [ @doctrine.orm.entity_manager ]
+        arguments: [ @doctrine.orm.entity_manager, [ cloud_name: '%cloudinary_host%', api_key: '%cloudinary_user%', api_secret: '%cloudinary_pass%' ] ]

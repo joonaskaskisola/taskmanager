@@ -59,9 +59,10 @@ class User extends BaseUser implements \Serializable, TwoFactorInterface
     private $isTfaEnabled;
 
     /**
-     * @ORM\Column(name="profile_picture_id", type="bigint", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Media")
+     * @ORM\JoinColumn(name="profile_picture", referencedColumnName="id")
      */
-    private $profilePictureId;
+    private $profilePicture;
 
     public function __construct()
     {
@@ -223,5 +224,21 @@ class User extends BaseUser implements \Serializable, TwoFactorInterface
     public function getTfaKey()
     {
         return $this->googleAuthenticatorSecret;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    /**
+     * @param mixed $profilePicture
+     */
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
     }
 }

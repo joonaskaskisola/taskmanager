@@ -15,10 +15,19 @@ class Cloudinary
 
     /**
      * Cloudinary constructor.
-     * @param $em
+     * @param EntityManager $em
+     * @param array $cloudinaryConfig
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, array $cloudinaryConfig)
     {
+        $cloudinary = [];
+
+        array_walk_recursive($cloudinaryConfig, function ($a, $b) use (&$cloudinary) {
+            $cloudinary[$b] = $a;
+        });
+
+        \Cloudinary::config($cloudinary);
+
         /** @var EntityManager em */
         $this->em = $em;
     }
