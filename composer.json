@@ -65,7 +65,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "compile": [
-            "echo \"Running webpack..\"; ./node_modules/webpack/bin/webpack.js",
+            "echo \"Running webpack..\"; ./node_modules/webpack/bin/webpack.js -p",
             "echo \"Removing app_dev.php..\"; rm web/app_dev.php",
             "echo \"Updating db schema..\"; app/console doctrine:schema:update --force"
         ]
