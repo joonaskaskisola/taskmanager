@@ -53,7 +53,12 @@ render(
                 <Route path=':id' showEditor={true} component={UnitApp} />
             </Route>
 
-            <Route path='inbox' component={InboxApp}/>
+            <Route path='inbox'>
+                <IndexRoute showEditor={false} component={InboxApp}/>
+                <Route path='new' showEditor={true} component={InboxApp} />
+                <Route path=':id' showEditor={true} component={InboxApp} />
+            </Route>
+
             <Route path='profile' component={ProfileApp}/>
         </Route>
     </Router>,
