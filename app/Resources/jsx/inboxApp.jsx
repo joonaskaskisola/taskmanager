@@ -45,7 +45,7 @@ export default class InboxApp extends BaseApp {
 
             <InboxView
                 users={this.state.users}
-
+                showEditor={this.props.route.showEditor}
                 e={this.state.errors}
                 createNew={this.createNew}
                 showNext={this.state.next}

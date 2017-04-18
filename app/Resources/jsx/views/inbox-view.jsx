@@ -57,6 +57,7 @@ export default class InboxView extends React.Component {
         }
 
         return <GridContainer
+            app='inbox'
             search={true}
             fields={['subject', 'timestamp', 'from']}
             columns={['Subject', 'Timestamp', 'Sender']}
