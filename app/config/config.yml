@@ -31,9 +31,6 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
-    session:
-        name:        hello
-        handler_id:  session.handler.memcached
 
 fos_user:
     db_driver: orm
