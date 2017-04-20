@@ -27,6 +27,7 @@ export default class InboxView extends React.Component {
 
                 <div className={"ui form " + (this.props.loading ? "loading" : "")}>
                     <NavigationButtons
+                        app='inbox'
                         header={true}
                         nextRow={this.props.nextRow}
                         previousRow={this.props.previousRow}
