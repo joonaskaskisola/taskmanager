@@ -8,8 +8,7 @@
         "memcachedcloud",
         "bonsai",
         "rabbitmq-bigwig",
-        "cloudinary",
-        "memcachier"
+        "cloudinary"
     ],
     "buildpacks": [
         {

@@ -15,4 +15,4 @@
 /web/js/*App.js
 /web/js/app.js
 /semantic/
-insert-configs.sh
+/conf/insert-configs.sh
