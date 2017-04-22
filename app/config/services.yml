@@ -11,20 +11,22 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 100 }
     memcached:
-        class: Memcached
+        class: AppBundle\Utils\MemcachedWrapper
+        arguments:
+            persistent_id: 'mem_id_'
         calls:
             - [ setOption, [18, true] ]
-            - [ setSaslAuthData, [%memcache_user%, %memcache_pass%] ]
-            - [ addServer, [%memcache_server%, %memcache_port%] ]
+            - [ setSaslAuthData, ['%memcache_user%', '%memcache_pass%'] ]
+            - [ addServer, ['%memcache_server%', '%memcache_port%'] ]
     elasticsearch:
         class: AppBundle\Service\Elasticsearch
-        arguments: [ %elastic_host%, %elastic_port%, %elastic_scheme%, %elastic_user%, %elastic_pass% ]
+        arguments: [ '%elastic_host%', '%elastic_port%', '%elastic_scheme%', '%elastic_user%', '%elastic_pass%' ]
     session.handler.memcached:
         class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
-        arguments: [ @memcached, { prefix: 'mem_task_', expiretime: 604800 } ]
+        arguments: [ '@memcached', { prefix: 'mem_task_', expiretime: 604800 } ]
     app_consumer:
         class: AppBundle\Consumer\AppConsumer
-        arguments: [ @doctrine ]
+        arguments: [ '@doctrine' ]
     media:
         class: AppBundle\Service\Cloudinary
-        arguments: [ @doctrine.orm.entity_manager, [ cloud_name: '%cloudinary_host%', api_key: '%cloudinary_user%', api_secret: '%cloudinary_pass%' ] ]
+        arguments: [ '@doctrine.orm.entity_manager', [ cloud_name: '%cloudinary_host%', api_key: '%cloudinary_user%', api_secret: '%cloudinary_pass%' ] ]
