@@ -31,7 +31,8 @@
         "guzzlehttp/guzzle": "^6.2",
         "elasticsearch/elasticsearch": "^5.1",
         "php-amqplib/rabbitmq-bundle": "^1.12",
-        "cloudinary/cloudinary_php": "dev-master"
+        "cloudinary/cloudinary_php": "dev-master",
+        "ext-memcached": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
