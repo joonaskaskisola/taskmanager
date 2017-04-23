@@ -6,8 +6,6 @@ services:
     volumes:
         - ./:/var/www/symfony/
         - ./conf/server.conf:/etc/nginx/conf.d/site.conf
-    ports:
-        - 80:80
     links:
         - mysql
         - memcached
