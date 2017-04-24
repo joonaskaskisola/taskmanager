@@ -26,11 +26,14 @@ RUN apt-get install -y wget apt-transport-https lsb-release ca-certificates \
      php7.1-mysql php7.1-readline php7.1-sqlite3 php7.1-xml php7.1-tidy php7.1-bcmath php7.1-bz2 php7.1-fpm \
      php7.1-imap php7.1-intl php7.1-mbstring php7.1-mcrypt php7.1-soap php7.1-xsl php7.1-zip php7.1-memcached
 
-RUN apt-get install -y dnsutils
+RUN apt-get install -y dnsutils mysql-client
 
 RUN apt-get update && apt-get install -y curl sudo && curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash - && apt-get install -y nodejs
 
 RUN usermod -u 1000 www-data
 
+ADD start-building.sh .
+
 EXPOSE 9000
-CMD ["php-fpm", "-F"]
+
+CMD ./start-building.sh

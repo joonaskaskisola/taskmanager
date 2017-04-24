@@ -22,6 +22,12 @@ services:
         - ./:/var/www/symfony/
     networks:
       - vpcbr
+    links:
+      - mysql
+      - memcached
+    depends_on:
+      - mysql
+      - memcached
     restart: always
   mysql:
     container_name: mysql
