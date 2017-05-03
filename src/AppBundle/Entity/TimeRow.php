@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="time_row", uniqueConstraints={@ORM\UniqueConstraint(name="user_date", columns={"user", "date"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TimeRowRepository")
  */
-class TimeRow
+class TimeRow extends AbstractEntity
 {
     /**
      * @var int

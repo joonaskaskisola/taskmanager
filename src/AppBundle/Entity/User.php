@@ -12,7 +12,7 @@ use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User extends BaseUser implements \Serializable, TwoFactorInterface
+class User extends BaseUser  implements \Serializable, TwoFactorInterface
 {
     /**
      * @ORM\Column(type="integer")

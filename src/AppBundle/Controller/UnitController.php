@@ -73,8 +73,7 @@ class UnitController extends AbstractController
             ? $repository->findOneBy(['id' => $request->request->get('id')])
             : new Unit();
 
-        $unit
-            ->setName($request->request->get('name'));
+        $unit->fill($request->request->all());
 
         $this->persist($unit);
 

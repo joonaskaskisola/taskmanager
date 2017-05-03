@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Repository\CustomerRepository;
+use AppBundle\Service\Cache;
 use Cake\Chronos\Chronos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,18 +23,20 @@ class CustomerController extends AbstractController
      */
     public function getCustomersAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
+        $response = $this->get('cache')->cache('customers', function() {
+            $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
 
-        $response = array_map(function($customer) {
-            /** @var Customer $customer */
-            return [
-                'id' => $customer->getId(),
-                'name' => $customer->getName() ?? '',
-                'businessId' => $customer->getBusinessId() ?? '',
-                'streetAddress' => $customer->getStreetAddress() ?? '',
-                'country' => $customer->getCountry() ?? '',
-            ];
-        }, $repository->findBy([], ['name' => 'ASC']));
+            return array_map(function($customer) {
+                /** @var Customer $customer */
+                return [
+                    'id' => $customer->getId(),
+                    'name' => $customer->getName() ?? '',
+                    'businessId' => $customer->getBusinessId() ?? '',
+                    'streetAddress' => $customer->getStreetAddress() ?? '',
+                    'country' => $customer->getCountry() ?? '',
+                ];
+            }, $repository->findBy([], ['name' => 'ASC']));
+        });
 
         return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
@@ -47,15 +50,17 @@ class CustomerController extends AbstractController
      */
     public function getCustomerAction(Request $request, $id)
     {
-        $serializer = $this->get('serializer');
+        $response = $this->get('cache')->cache('customer' . $id, function() use ($id) {
+            $serializer = $this->get('serializer');
 
-        /** @var CustomerRepository $repository */
-        $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
+            /** @var CustomerRepository $repository */
+            $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
 
-        $response = array_map(function($customer) use ($serializer) {
-            /** @var Customer $customer */
-            return json_decode($serializer->serialize($customer, 'json'), true);
-        }, $repository->findBy(['id' => $id]));
+            return array_map(function ($customer) use ($serializer) {
+                /** @var Customer $customer */
+                return json_decode($serializer->serialize($customer, 'json'), true);
+            }, $repository->findBy(['id' => $id]));
+        });
 
         return $this->jsonResponse($response, empty($response) ? 404 : null);
     }
@@ -68,17 +73,6 @@ class CustomerController extends AbstractController
      */
     public function editCustomerAction(Request $request)
     {
-//        $response = new JsonResponse();
-//        $response->setStatusCode(422);
-//        $response->setData([
-//            'status' => 'error',
-//            'error_fields' => [
-//                'name' => 'Invalid name'
-//            ]
-//        ]);
-//
-//        return $response;
-
         /** @var CustomerRepository $repository */
         $repository = $this->getDoctrine()->getRepository('AppBundle:Customer');
 
@@ -87,19 +81,12 @@ class CustomerController extends AbstractController
             ? $repository->findOneBy(['id' => $request->request->get('id')])
             : (new Customer())->setCreatedAt(new Chronos());
 
-        $customer
-            ->setName($request->request->get('name'))
-            ->setName2($request->request->get('name2'))
-            ->setLocality($request->request->get('locality'))
-            ->setZipCode($request->request->get('zipCode'))
-            ->setStreetAddress($request->request->get('streetAddress'))
-            ->setBusinessId($request->request->get('businessId'))
-            ->setContactPerson($request->request->get('contactPerson'))
-            ->setEmail($request->request->get('email'))
-            ->setCountry($request->request->get('country'))
+        $customer->fill($request->request->all())
             ->setModifiedAt(new Chronos());
 
         $this->persist($customer);
+
+        $this->get('cache')->clear('customer' . $request->request->get('id'));
 
         return new JsonResponse();
     }

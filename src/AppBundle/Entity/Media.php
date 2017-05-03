@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="media")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MediaRepository")
  */
-class Media
+class Media extends AbstractEntity
 {
     /**
      * @ORM\Column(type="integer")

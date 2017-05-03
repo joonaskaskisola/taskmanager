@@ -15,7 +15,7 @@ use AppBundle\Entity\TaskCycle;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TaskRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Task
+class Task extends AbstractEntity
 {
     /**
      * @var int

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="task_status")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TaskStatusRepository")
  */
-class TaskStatus
+class TaskStatus extends AbstractEntity
 {
     /**
      * @var int

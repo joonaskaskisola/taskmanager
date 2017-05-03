@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="private_message")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PrivateMessageRepository")
  */
-class PrivateMessage
+class PrivateMessage extends AbstractEntity
 {
     /**
      * @var int

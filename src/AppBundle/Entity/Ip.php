@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="ip")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\IpRepository")
  */
-class Ip
+class Ip extends AbstractEntity
 {
     /**
      * @var int

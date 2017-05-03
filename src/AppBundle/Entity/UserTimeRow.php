@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user_time_row")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserTimeRowRepository")
  */
-class UserTimeRow
+class UserTimeRow extends AbstractEntity
 {
     /**
      * @var int

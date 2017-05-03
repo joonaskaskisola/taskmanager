@@ -30,3 +30,6 @@ services:
     media:
         class: AppBundle\Service\Cloudinary
         arguments: [ '@doctrine.orm.entity_manager', [ cloud_name: '%cloudinary_host%', api_key: '%cloudinary_user%', api_secret: '%cloudinary_pass%' ] ]
+    cache:
+        class: AppBundle\Service\Cache
+        arguments: [ '@memcached' ]

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="invoice_row")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InvoiceRowRepository")
  */
-class InvoiceRow
+class InvoiceRow extends AbstractEntity
 {
     /**
      * @var int

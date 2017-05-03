@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="unit")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UnitRepository")
  */
-class Unit
+class Unit extends AbstractEntity
 {
     /**
      * @var int

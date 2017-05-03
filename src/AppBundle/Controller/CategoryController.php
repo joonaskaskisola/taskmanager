@@ -73,8 +73,7 @@ class CategoryController extends AbstractController
             ? $repository->findOneBy(['id' => $request->request->get('id')])
             : new Category();
 
-        $category
-            ->setName($request->request->get('name'));
+        $category->fill($request->request->all());
 
         $this->persist($category);
 

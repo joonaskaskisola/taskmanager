@@ -99,16 +99,14 @@ class TaskController extends AbstractController
         /** @var TaskStatus $taskStatus */
         $taskStatus = $taskStatusRepository->find(1);
 
-        $task
+        $task->fill($request->request->all())
             ->setCreatedAt(new Chronos())
             ->setCustomer($customer)
             ->setImportant(0)
-            ->setDescription($request->request->get('description'))
             ->setUser($this->getUser())
             ->setCustomerItem($customerItem)
             ->setPrice($customerItem->getPrice())
-            ->setStatus($taskStatus)
-            ->setAmount($request->request->get('amount') ?? 0);
+            ->setStatus($taskStatus);
 
         $this->persist($task);
 

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="time_vacation")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TimeVacationRepository")
  */
-class TimeVacation
+class TimeVacation extends AbstractEntity
 {
     /**
      * @var int

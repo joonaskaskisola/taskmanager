@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user_ip_log")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserIpLogRepository")
  */
-class UserIpLog
+class UserIpLog extends AbstractEntity
 {
     /**
      * @var int

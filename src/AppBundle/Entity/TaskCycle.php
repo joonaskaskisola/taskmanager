@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="task_cycle")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TaskCycleRepository")
  */
-class TaskCycle
+class TaskCycle extends AbstractEntity
 {
     /**
      * @var int

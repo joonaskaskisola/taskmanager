@@ -74,10 +74,7 @@ class CountryController extends AbstractController
             ? $repository->findOneBy(['id' => $request->request->get('id')])
             : new Country();
 
-        $country
-            ->setName($request->request->get('name'))
-            ->setCode($request->request->get('code'))
-            ->setLangCode($request->request->get('langCode'));
+        $country->fill($request->request->all());
 
         $this->persist($country);
 
