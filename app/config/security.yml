@@ -5,7 +5,7 @@ security:
         strategy: unanimous
     encoders:
         FOS\UserBundle\Model\UserInterface: bcrypt
-        AppBundle\Entity\User:
+        Taskio\Entity\User:
             algorithm: bcrypt
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
@@ -16,7 +16,7 @@ security:
             id: fos_user.user_provider.username
         our_db_provider:
             entity:
-                class: AppBundle:User
+                class: Taskio:User
         in_memory:
             memory: ~
 

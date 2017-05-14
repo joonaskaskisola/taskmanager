@@ -41,14 +41,14 @@
     },
     "scripts": {
         "build-parameters": [
-            "AppBundle\\Composer\\HerokuEnvironment::populateEnvironment",
+            "Taskio\\Composer\\HerokuEnvironment::populateEnvironment",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
         ],
         "pre-install-cmd": [
-            "AppBundle\\Composer\\HerokuEnvironment::populateEnvironment"
+            "Taskio\\Composer\\HerokuEnvironment::populateEnvironment"
         ],
         "post-install-cmd": [
-            "AppBundle\\Composer\\HerokuEnvironment::populateEnvironment",
+            "Taskio\\Composer\\HerokuEnvironment::populateEnvironment",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
@@ -57,7 +57,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-update-cmd": [
-            "AppBundle\\Composer\\HerokuEnvironment::populateEnvironment",
+            "Taskio\\Composer\\HerokuEnvironment::populateEnvironment",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",

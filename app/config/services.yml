@@ -2,7 +2,7 @@ parameters:
 
 services:
     login_listener:
-        class: AppBundle\EventListener\LoginListener
+        class: Taskio\EventListener\LoginListener
         arguments: ['@security.context', '@doctrine']
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
@@ -11,7 +11,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 100 }
     memcached:
-        class: AppBundle\Utils\MemcachedWrapper
+        class: Taskio\Utils\MemcachedWrapper
         arguments:
             persistent_id: 'mem_id_'
         calls:
@@ -19,17 +19,17 @@ services:
             - [ setSaslAuthData, ['%memcache_user%', '%memcache_pass%'] ]
             - [ addServer, ['%memcache_server%', '%memcache_port%'] ]
     elasticsearch:
-        class: AppBundle\Service\Elasticsearch
+        class: Taskio\Service\Elasticsearch
         arguments: [ '%elastic_host%', '%elastic_port%', '%elastic_scheme%', '%elastic_user%', '%elastic_pass%' ]
     session.handler.memcached:
         class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
         arguments: [ '@memcached', { prefix: 'mem_task_', expiretime: 604800 } ]
     app_consumer:
-        class: AppBundle\Consumer\AppConsumer
+        class: Taskio\Consumer\AppConsumer
         arguments: [ '@doctrine' ]
     media:
-        class: AppBundle\Service\Cloudinary
+        class: Taskio\Service\Cloudinary
         arguments: [ '@doctrine.orm.entity_manager', [ cloud_name: '%cloudinary_host%', api_key: '%cloudinary_user%', api_secret: '%cloudinary_pass%' ] ]
     cache:
-        class: AppBundle\Service\Cache
+        class: Taskio\Service\Cache
         arguments: [ '@memcached' ]

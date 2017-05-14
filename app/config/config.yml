@@ -28,7 +28,7 @@ framework:
     trusted_proxies: ~
     session:
         # handler_id set to null will use default session handler from php.ini
-        handler_id:  session.handler.memcached
+#        handler_id:  session.handler.memcached
 
     fragments:       ~
     http_method_override: true
@@ -36,7 +36,7 @@ framework:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: AppBundle\Entity\User
+    user_class: Taskio\Entity\User
     from_email:
         address: taskio@example.com
         sender_name: Taskio
@@ -80,13 +80,13 @@ swiftmailer:
 
 security:
     encoders:
-        AppBundle\Entity\User:
+        Taskio\Entity\User:
             algorithm: bcrypt
 
     providers:
         our_db_provider:
             entity:
-                class: AppBundle:User
+                class: Taskio:User
                 property: username
 
     firewalls:

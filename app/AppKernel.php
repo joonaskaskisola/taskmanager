@@ -2,7 +2,7 @@
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
-use AppBundle\AppBundle;
+use Taskio\Taskio;
 
 class AppKernel extends Kernel
 {
@@ -16,7 +16,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new AppBundle(),
+            new Taskio(),
             new Soyuka\SeedBundle\SoyukaSeedBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Scheb\TwoFactorBundle\SchebTwoFactorBundle(),
