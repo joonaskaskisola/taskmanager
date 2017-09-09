@@ -13,7 +13,7 @@ services:
     memcached:
         class: Taskio\Utils\MemcachedWrapper
         arguments:
-            persistent_id: 'mem_id_'
+            persistent_id: '%session_prefix%'
         calls:
             - [ setOption, [18, true] ]
             - [ setSaslAuthData, ['%memcache_user%', '%memcache_pass%'] ]
@@ -30,12 +30,6 @@ services:
     cache:
         class: Taskio\Service\Cache
         arguments: [ '@memcached' ]
-    session.memcached:
-        class: Memcached
-        arguments:
-            persistent_id: 'sess'
-        calls:
-            - [ addServer, ['%memcache_server%', '%memcache_port%'] ]
     session.handler.memcached:
             class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
-            arguments: [@session.memcached, { prefix: '%memcache_prefix%', expiretime: '%session_expire%' }]
+            arguments: ['@memcached', { prefix: '%session_prefix%', expiretime: '%session_expire%' }]
