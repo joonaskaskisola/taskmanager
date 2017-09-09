@@ -4,6 +4,9 @@
 
 This software is designed to manage customers information, users (+working hours), repetitive tasks, invoices etc..
 
+## AWS instructions
+- https://github.com/joonaskaskisola/aws-taskmanager
+
 ## TODO
 - <s>Change date() calls to chronos or something similar</s>
 - <s>Convert to ReactJS app (wip)</s>
