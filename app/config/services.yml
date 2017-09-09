@@ -21,9 +21,6 @@ services:
     elasticsearch:
         class: Taskio\Service\Elasticsearch
         arguments: [ '%elastic_host%', '%elastic_port%', '%elastic_scheme%', '%elastic_user%', '%elastic_pass%' ]
-    session.handler.memcached:
-        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
-        arguments: [ '@memcached', { prefix: 'mem_task_', expiretime: 604800 } ]
     app_consumer:
         class: Taskio\Consumer\AppConsumer
         arguments: [ '@doctrine' ]
@@ -33,3 +30,12 @@ services:
     cache:
         class: Taskio\Service\Cache
         arguments: [ '@memcached' ]
+    session.memcached:
+        class: Memcached
+        arguments:
+            persistent_id: 'sess'
+        calls:
+            - [ addServer, ['%memcache_server%', '%memcache_port%'] ]
+    session.handler.memcached:
+            class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
+            arguments: [@session.memcached, { prefix: '%memcache_prefix%', expiretime: '%session_expire%' }]
