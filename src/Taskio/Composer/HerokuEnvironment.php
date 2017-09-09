@@ -40,8 +40,8 @@ class HerokuEnvironment
 
 			putenv("MEMCACHE_SERVER=" . $url['host']);
 			putenv("MEMCACHE_PORT=" . $url['port']);
-			putenv("MEMCACHE_USERNAME=" . getenv('MEMCACHEDCLOUD_USERNAME'));
-			putenv("MEMCACHE_PASSWORD=" . getenv('MEMCACHEDCLOUD_PASSWORD'));
+			putenv("MEMCACHE_USERNAME=" . (getenv('MEMCACHEDCLOUD_USERNAME') !== '' ? getenv('MEMCACHEDCLOUD_USERNAME') : 'null'));
+			putenv("MEMCACHE_PASSWORD=" . (getenv('MEMCACHEDCLOUD_PASSWORD') !== '' ? getenv('MEMCACHEDCLOUD_PASSWORD') : 'null'));
 			putenv("MEMCACHE_SESSION_PREFIX=TASKIO");
 		}
 
