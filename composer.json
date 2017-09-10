@@ -1,5 +1,6 @@
 {
     "name": "joonaskaskisola/taskmanager",
+    "description": "taskmanager",
     "license": "MIT",
     "type": "project",
     "autoload": {
