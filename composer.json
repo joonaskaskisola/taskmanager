@@ -40,6 +40,20 @@
         "heroku/heroku-buildpack-php": "*"
     },
     "scripts": {
+	"post-install-cmd": [
+            "Taskio\\Composer\\HerokuEnvironment::populateEnvironment",
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+	],
+	"pre-install-cmd": [
+            "Taskio\\Composer\\HerokuEnvironment::populateEnvironment",
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+	],
         "build-parameters": [
             "Taskio\\Composer\\HerokuEnvironment::populateEnvironment",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
@@ -47,7 +61,7 @@
         "pre-install-cmd": [
             "Taskio\\Composer\\HerokuEnvironment::populateEnvironment"
         ],
-        "post-install-cmd": [
+        "x-post-install-cmd": [
             "Taskio\\Composer\\HerokuEnvironment::populateEnvironment",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
@@ -56,7 +70,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
-        "post-update-cmd": [
+        "x-post-update-cmd": [
             "Taskio\\Composer\\HerokuEnvironment::populateEnvironment",
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
