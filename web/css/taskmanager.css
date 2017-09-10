@@ -1,5 +1,5 @@
 div.row:hover:not(:first-child) {
-    background-color: #545454;
+    background-color: #3f4e5e;
     cursor: pointer;
 }
 
@@ -8,7 +8,7 @@ body > div.ui.main.container {
 }
 
 body {
-    background-color: gray;
+    background-color: #3f4e5e;
 }
 
 .navigation-footer-buttons {
@@ -30,7 +30,7 @@ div#tfa > input.tfa-number {
 }
 
 div#app > div > div.ui.menu {
-    background-color: gray;
+    background-color: #3f4e5e;
     box-shadow: 0 0 0 0;
     padding-top: 10px;
     border: 0;
